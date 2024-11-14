@@ -1,0 +1,6 @@
+@GreenDelight.API_HostAddress = http://localhost:5257
+
+GET {{GreenDelight.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
