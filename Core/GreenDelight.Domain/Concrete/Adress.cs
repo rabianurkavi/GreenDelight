@@ -14,7 +14,8 @@ namespace GreenDelight.Domain.Concrete
         public string Neighborhood { get; set; }
         public string Street { get; set; }
         public string No { get; set; }
-        public int UserID { get; set; }
+
         public virtual User User { get; set; }
+        public Guid UserId { get; set; }
     }
 }
