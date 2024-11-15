@@ -10,7 +10,7 @@ namespace GreenDelight.Domain.Concrete
 {
     public class Order:AuditableEntity
     {
-        public int UserID { get; set; }
+        public Guid UserId { get; set; }
         public decimal TotalAmount { get; set; }
         public OrderStatus Status { get; set; }
 

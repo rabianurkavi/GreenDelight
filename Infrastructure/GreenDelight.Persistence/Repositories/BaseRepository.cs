@@ -13,8 +13,13 @@ namespace GreenDelight.Persistence.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class, IEntityBase, new()
     {
-        private DbSet<T> Table { get => dbContext.Set<T>(); }
+        protected DbSet<T> Table { get => dbContext.Set<T>(); }
         private readonly DbContext dbContext;
+
+        public BaseRepository(DbContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
 
         public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, bool enableTracking = false)
         {

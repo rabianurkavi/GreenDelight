@@ -1,4 +1,7 @@
-﻿using GreenDelight.Apllication.Interfaces.UnitofWorks;
+﻿using GreenDelight.Apllication.Interfaces.Repositories;
+using GreenDelight.Apllication.Interfaces.UnitofWorks;
+using GreenDelight.Persistence.Contexts;
+using GreenDelight.Persistence.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +12,30 @@ namespace GreenDelight.Persistence.UnitOfWorks
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly AppDbContext dbContext;
+        private readonly GreenDelightDbContext _dbContext;
 
-        public UnitOfWork(AppDbContext dbContext)
+        public UnitOfWork(GreenDelightDbContext dbContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
 
-        public async ValueTask DisposeAsync() => await dbContext.DisposeAsync();
-        public async Task<int> SaveAsync() => await dbContext.SaveChangesAsync();
+        public async ValueTask DisposeAsync() => await _dbContext.DisposeAsync();
+        public async Task CommitAsync()
+        {
+            try
+            {
+                await _dbContext.SaveChangesAsync();
 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Hata: {ex.Message}");
+                throw;
+            }
+        }
+
+        IBaseRepository<T> IUnitOfWork.GetGenericRepository<T>()=> new BaseRepository<T>(_dbContext);
 
     }
 }
