@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GreenDelight.Domain.Concrete.BaseEntities
 {
-    public class BaseEntity : IEntity
+    public class BaseEntity : IEntityBase
     {
         public int ID { get; set; }
     }
