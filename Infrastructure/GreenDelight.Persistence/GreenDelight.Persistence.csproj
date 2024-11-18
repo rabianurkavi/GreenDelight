@@ -21,8 +21,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\GreenDelight.Apllication\GreenDelight.Apllication.csproj" />
+    <ProjectReference Include="..\..\Core\GreenDelight.Apllication\GreenDelight.Application.csproj" />
     <ProjectReference Include="..\..\Core\GreenDelight.Domain\GreenDelight.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\AdressServices\" />
+    <Folder Include="Services\OrderItemServices\" />
+    <Folder Include="Services\OrderServices\" />
   </ItemGroup>
 
 </Project>

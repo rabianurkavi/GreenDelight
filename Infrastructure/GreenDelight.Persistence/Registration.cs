@@ -1,7 +1,9 @@
 ﻿using GreenDelight.Apllication.Interfaces.Repositories;
 using GreenDelight.Apllication.Interfaces.UnitofWorks;
+using GreenDelight.Application.Interfaces.Services.ProductServices;
 using GreenDelight.Persistence.Contexts;
 using GreenDelight.Persistence.Repositories;
+using GreenDelight.Persistence.Services.ProductServices;
 using GreenDelight.Persistence.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +22,7 @@ namespace GreenDelight.Persistence
         {
             services.AddDbContext<GreenDelightDbContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
