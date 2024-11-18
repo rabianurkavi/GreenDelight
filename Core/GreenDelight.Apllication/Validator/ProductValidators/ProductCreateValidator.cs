@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using GreenDelight.Apllication.DTOs.ProductDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,11 @@ using System.Threading.Tasks;
 
 namespace GreenDelight.Apllication.Validator.ProductValidators
 {
-    public class ProductCreateValidator : AbstractValidator<>
+    public class ProductCreateValidator : AbstractValidator<ProductUpdateDto>
     {
         public ProductCreateValidator()
         {
-            RuleFor(a => a.EkipmanNo)
-                .GreaterThan(0).WithMessage("Ekipman numarası 0'dan büyük olmalıdır.");
-
-            RuleFor(a => a.Adi)
-                .NotEmpty().WithMessage("Araç adı boş bırakılamaz.")
-                .Length(2, 50).WithMessage("Araç adı 2 ile 50 karakter arasında olmalıdır.");
+            
         }
     }
 }
