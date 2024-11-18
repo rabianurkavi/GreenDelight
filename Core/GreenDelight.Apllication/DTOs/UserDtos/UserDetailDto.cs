@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GreenDelight.Apllication.DTOs.UserDtos
 {
-    public class UserDetailDto
+    public class UserDetailDto:IDto
     {
         public int ID { get; set; }
         public string FirstName { get; set; }
