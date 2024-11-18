@@ -8,7 +8,6 @@ namespace GreenDelight.Domain.Abstract
 {
     public interface IUpdatedEntity
     {
-        public int? UpdatedId { get; set; }
         public DateTime? UpdatedDate { get; set; }
     }
 }
