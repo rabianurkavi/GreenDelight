@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GreenDelight.Apllication.DTOs.ProductDtos
 {
-    public class ProductDetailDto
+    public class ProductDetailDto:IDto
     {
         public int Id { get; set; }
         public string ProductName { get; set; }
