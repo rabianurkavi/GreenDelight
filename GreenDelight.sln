@@ -9,15 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{6CE77E8F-E493-42D7-ACD8-810BA06092AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenDelight.Apllication", "Core\GreenDelight.Apllication\GreenDelight.Apllication.csproj", "{83E153FC-5875-40EE-AB04-F7C253173FEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenDelight.Application", "Core\GreenDelight.Apllication\GreenDelight.Application.csproj", "{83E153FC-5875-40EE-AB04-F7C253173FEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenDelight.Domain", "Core\GreenDelight.Domain\GreenDelight.Domain.csproj", "{E08264D5-06B2-40EB-972E-C5E4825A0667}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenDelight.Domain", "Core\GreenDelight.Domain\GreenDelight.Domain.csproj", "{E08264D5-06B2-40EB-972E-C5E4825A0667}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenDelight.Infrastructure", "Infrastructure\GreenDelight.Infrastructure\GreenDelight.Infrastructure.csproj", "{753665EE-F089-445C-A65D-927DD8ABFACE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenDelight.Infrastructure", "Infrastructure\GreenDelight.Infrastructure\GreenDelight.Infrastructure.csproj", "{753665EE-F089-445C-A65D-927DD8ABFACE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenDelight.Persistence", "Infrastructure\GreenDelight.Persistence\GreenDelight.Persistence.csproj", "{4E6693F3-9C3F-456B-B992-0DD6CE803936}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenDelight.Persistence", "Infrastructure\GreenDelight.Persistence\GreenDelight.Persistence.csproj", "{4E6693F3-9C3F-456B-B992-0DD6CE803936}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenDelight.API", "Presentation\GreenDelight.API\GreenDelight.API.csproj", "{0D9ABE2A-9A29-4DEF-946B-81832E372418}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenDelight.API", "Presentation\GreenDelight.API\GreenDelight.API.csproj", "{0D9ABE2A-9A29-4DEF-946B-81832E372418}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
