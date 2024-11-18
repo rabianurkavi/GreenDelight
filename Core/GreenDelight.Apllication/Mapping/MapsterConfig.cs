@@ -13,10 +13,17 @@ namespace GreenDelight.Apllication.Mapping
     {
         public static void RegisterMappings()
         {
+            // Product -> ProductAddDto mapping
             TypeAdapterConfig<Product, ProductAddDto>.NewConfig()
-            .Map(dest => dest.CategoryName, src => src.Category.Name);
+                .Map(dest => dest.CategoryName, src => src.Category.Name);
+
+            //// ProductAddDto -> Product mapping
+            //TypeAdapterConfig<ProductAddDto, Product>.NewConfig()
+            //    .Ignore(dest => dest.Category)  // Category'yi ignore et
+            //    .Ignore(dest => dest.ID);       // ID'yi de ignore et
             TypeAdapterConfig<Product, ProductDetailDto>.NewConfig()
             .Map(dest => dest.CategoryName, src => src.Category.Name);
+
             TypeAdapterConfig<Product, ProductUpdateDto>.NewConfig()
             .Map(dest => dest.CategoryName, src => src.Category.Name);
             TypeAdapterConfig<Product, ProductDto>.NewConfig()
