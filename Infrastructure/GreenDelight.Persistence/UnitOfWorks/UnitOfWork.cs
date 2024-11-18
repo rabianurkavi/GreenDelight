@@ -21,19 +21,8 @@ namespace GreenDelight.Persistence.UnitOfWorks
 
 
         public async ValueTask DisposeAsync() => await _dbContext.DisposeAsync();
-        public async Task CommitAsync()
-        {
-            try
-            {
-                await _dbContext.SaveChangesAsync();
+        public async Task CommitAsync() => await _dbContext.SaveChangesAsync();
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Hata: {ex.Message}");
-                throw;
-            }
-        }
 
         IBaseRepository<T> IUnitOfWork.GetGenericRepository<T>()=> new BaseRepository<T>(_dbContext);
 
