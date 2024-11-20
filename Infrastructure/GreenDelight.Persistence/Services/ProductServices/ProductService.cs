@@ -1,6 +1,7 @@
 ﻿using GreenDelight.Apllication.DTOs.ProductDtos;
 using GreenDelight.Apllication.Interfaces.UnitofWorks;
 using GreenDelight.Application.Constants;
+using GreenDelight.Application.DTOs.CategoryDtos;
 using GreenDelight.Application.Interfaces.Services.ProductServices;
 using GreenDelight.Domain.Concrete;
 using GreenDelight.Domain.Results;
@@ -52,19 +53,60 @@ namespace GreenDelight.Persistence.Services.ProductServices
             return new SuccessDataResult<List<ProductDetailDto>>(productDtos,Messages.ProductsListed);
         }
 
-        public Task<IDataResult<ProductDto>> GetByIdAsync(int id)
+        public async Task<IDataResult<ProductDto>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            if (id <= 0)
+            {
+                return new ErrorDataResult<ProductDto>("Geçersiz ürün ID.");
+            }
+
+            var product = await _unitOfWork.GetGenericRepository<Product>().GetAsync(x => x.ID == id);
+            if (product == null)
+            {
+                return new ErrorDataResult<ProductDto>("Ürün bulunamadı.");
+            }
+
+            var productDto = product.Adapt<ProductDto>();
+            return new SuccessDataResult<ProductDto>(productDto, Messages.ProductsListed);
         }
 
-        public Task<IResult> RemoveAsync(int id)
+        public async Task<IResult> RemoveAsync(int id)
         {
-            throw new NotImplementedException();
+            if (id <= 0)
+            {
+                return new ErrorResult("Geçersiz ürün ID.");
+            }
+
+            var product = await _unitOfWork.GetGenericRepository<Product>().GetAsync(x => x.ID == id);
+            if (product == null)
+            {
+                return new ErrorResult("Silinecek ürün bulunamadı.");
+            }
+
+            await _unitOfWork.GetGenericRepository<Product>().DeleteAsync(product);
+            await _unitOfWork.CommitAsync();
+
+            return new SuccessResult(Messages.ProductDeleted);
         }
 
-        public Task<IResult> UpdateAsync(ProductUpdateDto productUpdateDto)
+        public async Task<IResult> UpdateAsync(ProductUpdateDto productUpdateDto)
         {
-            throw new NotImplementedException();
+            if (productUpdateDto == null)
+            {
+                return new ErrorResult("Ürün bilgileri eksik.");
+            }
+
+            var product = await _unitOfWork.GetGenericRepository<Product>().GetAsync(x => x.ID == productUpdateDto.Id);
+            if (product == null)
+            {
+                return new ErrorResult("Güncellenecek kategori bulunamadı.");
+            }
+            var productAdapt = productUpdateDto.Adapt(product);
+
+            await _unitOfWork.GetGenericRepository<Product>().UpdateAsync(productAdapt);
+            await _unitOfWork.CommitAsync();
+
+            return new SuccessResult(Messages.ProductUpdated);
         }
     }
 }
