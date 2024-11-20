@@ -17,4 +17,11 @@
     <ProjectReference Include="..\GreenDelight.Domain\GreenDelight.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\Services\AdressServices\" />
+    <Folder Include="Interfaces\Services\UserServices\" />
+    <Folder Include="Interfaces\Services\OrterItemServices\" />
+    <Folder Include="Interfaces\Services\OrderServices\" />
+  </ItemGroup>
+
 </Project>
