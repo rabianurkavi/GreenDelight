@@ -1,5 +1,6 @@
 ﻿using GreenDelight.Apllication.DTOs.ProductDtos;
 using GreenDelight.Application.Interfaces.Services.ProductServices;
+using GreenDelight.Domain.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,10 +22,10 @@ namespace GreenDelight.API.Controllers
 
             if (result.Success)
             {
-                return Ok(result.Message);  // SuccessResult, HTTP 200 döner
+                return Ok(result.Message);
             }
 
-            return BadRequest(result.Message);  // ErrorResult, HTTP 400 döner
+            return BadRequest(result.Message);
         }
         [HttpGet]
         public async Task<IActionResult> GetList()
@@ -33,7 +34,7 @@ namespace GreenDelight.API.Controllers
             try
             {
                 // Ürünü ekle
-               var response =  await _productService.GetAllAsync();
+                var response = await _productService.GetAllAsync();
                 return Ok(response);
             }
             catch (Exception ex)
@@ -41,6 +42,27 @@ namespace GreenDelight.API.Controllers
                 // Hata mesajını döndür
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
+        }
+        [HttpPut]
+        public async Task<IActionResult> UpdateProduct([FromBody] ProductUpdateDto productUpdateDto)
+        {
+            var result = await _productService.UpdateAsync(productUpdateDto);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            var result= await _productService.RemoveAsync(id);
+            if(result.Success)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
+            
         }
 
     }
