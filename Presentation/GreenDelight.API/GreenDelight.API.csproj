@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\GreenDelight.Infrastructure\GreenDelight.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\GreenDelight.Persistence\GreenDelight.Persistence.csproj" />
   </ItemGroup>
 
