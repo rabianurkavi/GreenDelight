@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using GreenDelight.Application.Rules;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,9 @@ namespace GreenDelight.Apllication
 {
     public static class Registration
     {
-        public static void AddAplication(this IServiceCollection services)
+        public static void AddApplication(this IServiceCollection services)
         {
+            services.AddScoped<AuthRules>();
         }
     }
 }
