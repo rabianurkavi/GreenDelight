@@ -1,9 +1,12 @@
 ﻿using GreenDelight.Apllication.Interfaces.Repositories;
 using GreenDelight.Apllication.Interfaces.UnitofWorks;
+using GreenDelight.Application.Interfaces.Services.AuthServices;
 using GreenDelight.Application.Interfaces.Services.CategoryServices;
 using GreenDelight.Application.Interfaces.Services.ProductServices;
+using GreenDelight.Domain.Concrete;
 using GreenDelight.Persistence.Contexts;
 using GreenDelight.Persistence.Repositories;
+using GreenDelight.Persistence.Services.AuthServices;
 using GreenDelight.Persistence.Services.CategoryServices;
 using GreenDelight.Persistence.Services.ProductServices;
 using GreenDelight.Persistence.UnitOfWorks;
@@ -26,8 +29,21 @@ namespace GreenDelight.Persistence
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<DbContext, GreenDelightDbContext>();
+
+
+            services.AddIdentityCore<User>(opt =>
+            {
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequiredLength = 2;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireDigit = false;
+                opt.SignIn.RequireConfirmedEmail = false;
+            }).AddRoles<UserRole>().AddEntityFrameworkStores<GreenDelightDbContext>();
         }
     }
 }
