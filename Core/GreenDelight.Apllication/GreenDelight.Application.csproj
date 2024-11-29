@@ -11,6 +11,7 @@
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,9 +20,9 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\Services\AdressServices\" />
-    <Folder Include="Interfaces\Services\UserServices\" />
     <Folder Include="Interfaces\Services\OrterItemServices\" />
     <Folder Include="Interfaces\Services\OrderServices\" />
+    <Folder Include="Interfaces\Services\UserServices\" />
   </ItemGroup>
 
 </Project>
