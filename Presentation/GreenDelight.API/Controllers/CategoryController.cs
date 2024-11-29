@@ -1,11 +1,13 @@
 ﻿using GreenDelight.Apllication.DTOs.ProductDtos;
 using GreenDelight.Application.DTOs.CategoryDtos;
 using GreenDelight.Application.Interfaces.Services.CategoryServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GreenDelight.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
@@ -16,6 +18,7 @@ namespace GreenDelight.API.Controllers
             _categoryService = categoryService;
         }
         [HttpPost]
+        [Route("[action]")]
         public async Task<IActionResult> AddCategory([FromBody] CategoryAddDto categoryAddDto)
         {
             var result = await _categoryService.AddAsync(categoryAddDto);
