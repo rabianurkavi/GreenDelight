@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenDelight.Persistence", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenDelight.API", "Presentation\GreenDelight.API\GreenDelight.API.csproj", "{0D9ABE2A-9A29-4DEF-946B-81832E372418}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenDelight.WebUI", "Presentation\GreenDelight.WebUI\GreenDelight.WebUI.csproj", "{5A8B2D62-FD96-4DF8-AAA3-8778024DAFF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{0D9ABE2A-9A29-4DEF-946B-81832E372418}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D9ABE2A-9A29-4DEF-946B-81832E372418}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D9ABE2A-9A29-4DEF-946B-81832E372418}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A8B2D62-FD96-4DF8-AAA3-8778024DAFF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A8B2D62-FD96-4DF8-AAA3-8778024DAFF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A8B2D62-FD96-4DF8-AAA3-8778024DAFF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A8B2D62-FD96-4DF8-AAA3-8778024DAFF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{753665EE-F089-445C-A65D-927DD8ABFACE} = {8447B2EA-128E-455C-950D-0C34A97C41B0}
 		{4E6693F3-9C3F-456B-B992-0DD6CE803936} = {8447B2EA-128E-455C-950D-0C34A97C41B0}
 		{0D9ABE2A-9A29-4DEF-946B-81832E372418} = {6CE77E8F-E493-42D7-ACD8-810BA06092AD}
+		{5A8B2D62-FD96-4DF8-AAA3-8778024DAFF8} = {6CE77E8F-E493-42D7-ACD8-810BA06092AD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F7EB1112-7C10-4A43-8955-C23660277662}
