@@ -45,7 +45,7 @@ namespace GreenDelight.Apllication.Mapping
             TypeAdapterConfig<RegisterDto, User>.NewConfig()
                 .Map(dest => dest.FullName, src => src.FullName)
                 .Map(dest => dest.Email, src => src.Email)
-                .Map(dest => dest.UserName, src => src.Email); // Email'i UserName olarak ayarlama
+                .Map(dest => dest.UserName, src => src.UserName); // Email'i UserName olarak ayarlama
         }
     }
 }
