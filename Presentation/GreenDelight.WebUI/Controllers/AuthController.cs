@@ -1,4 +1,5 @@
 ﻿using GreenDelight.Application.DTOs.AuthDtos.LoginDtos;
+using GreenDelight.Application.DTOs.AuthDtos.RegisterDtos;
 using GreenDelight.Application.Interfaces.Services.AuthServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +13,11 @@ namespace GreenDelight.WebUI.Controllers
         {
             _authService = authService;
         }
-
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
         [HttpPost]
         public async Task<IActionResult> Index(LoginDto loginDto)
         {
@@ -34,6 +39,17 @@ namespace GreenDelight.WebUI.Controllers
 
             // Giriş formunu yeniden göster ve kullanıcıya hata mesajlarını ilet
             return View(loginDto);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterDto registerDto)
+        {
+            await _authService.RegisterAsync(registerDto);
+            return RedirectToAction("Index", "Home");
         }
 
     }
