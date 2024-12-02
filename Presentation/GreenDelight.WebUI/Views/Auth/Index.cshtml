@@ -1,6 +1,5 @@
 ﻿@model GreenDelight.Application.DTOs.AuthDtos.LoginDtos.LoginDto
 @{
-    ViewData["Title"] = "Index";
     Layout = null;
 }
 
@@ -10,25 +9,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giriş Sayfası</title>
-    <style>
-        /* CSS kodlarınız burada */
-    </style>
 </head>
-<body>
-    <div class="login-container">
-        <h2>Giriş Yap</h2>
-        <form asp-action="Index" method="post">
-            <div class="input-group">
-                <input type="text" name="Email" placeholder="Kullanıcı Adı" required>
+<body style="
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;">
+
+    <div style="
+        background-color: #f0f0f0;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;">
+
+        <h2 style="
+            color: #000000;
+            text-align: center;
+            margin-bottom: 1.5rem;">
+            Giriş Yap
+        </h2>
+
+        <form asp-controller="Auth" asp-action="Index" method="post">
+            <div style="margin-bottom: 1rem;">
+                <input type="text" name="Email" placeholder="Kullanıcı Adı" required style="
+                    width: 100%;
+                    padding: 0.5rem;
+                    border: 1px solid #b0b435;
+                    border-radius: 5px;
+                    outline: none;
+                    font-size: 1rem;
+                    color: #000000;">
             </div>
-            <div class="input-group">
-                <input type="password" name="Password" placeholder="Şifre" required>
+            <div style="margin-bottom: 1rem;">
+                <input type="password" name="Password" placeholder="Şifre" required style="
+                    width: 100%;
+                    padding: 0.5rem;
+                    border: 1px solid #b0b435;
+                    border-radius: 5px;
+                    outline: none;
+                    font-size: 1rem;
+                    color: #000000;">
             </div>
-            <button type="submit">Giriş</button>
+            <button type="submit" style="
+                width: 100%;
+                background-color: #b0b435;
+                color: #ffffff;
+                border: none;
+                padding: 0.75rem;
+                border-radius: 5px;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: background-color 0.3s;"
+                    onmouseover="this.style.backgroundColor='#8d8b2e'"
+                    onmouseout="this.style.backgroundColor='#b0b435'">
+                Giriş
+            </button>
         </form>
-        <div class="footer-text">
+
+        <div style="
+            text-align: center;
+            margin-top: 1rem;
+            color: #000000;">
             <p>Hesabınız yok mu? <a href="#" style="color: #000000; text-decoration: underline;">Kayıt olun</a></p>
         </div>
+
     </div>
 </body>
 </html>
+
+
