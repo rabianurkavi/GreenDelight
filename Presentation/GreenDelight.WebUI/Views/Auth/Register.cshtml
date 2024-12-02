@@ -1,0 +1,123 @@
+﻿@model GreenDelight.Application.DTOs.AuthDtos.RegisterDtos.RegisterDto
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol</title>
+</head>
+<body style="
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;">
+
+    <div style="
+        background-color: #f0f0f0;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;">
+
+        <h2 style="
+            color: #000000;
+            text-align: center;
+            margin-bottom: 1.5rem;">
+            Kayıt Ol
+        </h2>
+
+        <form asp-controller="Auth" asp-action="Register" method="post">
+            <div style="margin-bottom: 1rem;">
+                <input type="text" name="FullName" placeholder="Ad Soyad" required style="
+                    width: 100%;
+                    padding: 0.5rem;
+                    border: 1px solid #b0b435;
+                    border-radius: 5px;
+                    outline: none;
+                    font-size: 1rem;
+                    color: #000000;">
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <input type="text" name="UserName" placeholder="Kullanıcı Adı" required style="
+                    width: 100%;
+                    padding: 0.5rem;
+                    border: 1px solid #b0b435;
+                    border-radius: 5px;
+                    outline: none;
+                    font-size: 1rem;
+                    color: #000000;">
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <input type="email" name="Email" placeholder="E-posta" required style="
+                    width: 100%;
+                    padding: 0.5rem;
+                    border: 1px solid #b0b435;
+                    border-radius: 5px;
+                    outline: none;
+                    font-size: 1rem;
+                    color: #000000;">
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <input type="password" name="Password" placeholder="Şifre" required style="
+                    width: 100%;
+                    padding: 0.5rem;
+                    border: 1px solid #b0b435;
+                    border-radius: 5px;
+                    outline: none;
+                    font-size: 1rem;
+                    color: #000000;">
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <input type="password" name="ConfirmPassword" placeholder="Şifre" required style="
+                    width: 100%;
+                    padding: 0.5rem;
+                    border: 1px solid #b0b435;
+                    border-radius: 5px;
+                    outline: none;
+                    font-size: 1rem;
+                    color: #000000;">
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <input type="text" name="PhoneNumber" placeholder="Telefon Numarası" required style="
+                    width: 100%;
+                    padding: 0.5rem;
+                    border: 1px solid #b0b435;
+                    border-radius: 5px;
+                    outline: none;
+                    font-size: 1rem;
+                    color: #000000;">
+            </div>
+            <button type="submit" style="
+                width: 100%;
+                background-color: #b0b435;
+                color: #ffffff;
+                border: none;
+                padding: 0.75rem;
+                border-radius: 5px;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: background-color 0.3s;"
+                    onmouseover="this.style.backgroundColor='#8d8b2e'"
+                    onmouseout="this.style.backgroundColor='#b0b435'">
+                Kayıt Ol
+            </button>
+        </form>
+
+        <div style="
+            text-align: center;
+            margin-top: 1rem;
+            color: #000000;">
+            <p>Zaten bir hesabınız var mı? <a href="#" style="color: #000000; text-decoration: underline;">Giriş yap</a></p>
+        </div>
+
+    </div>
+</body>
+</html>
