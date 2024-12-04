@@ -28,7 +28,7 @@ namespace GreenDelight.Persistence.Services.AdressServices
 
         public AddressService(IUnitOfWork unitOfWork, IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
         {
-            _unitOfWork=unitOfWork;
+            _unitOfWork = unitOfWork;
             _httpclientFactory = httpClientFactory;
             _httpContextAccessor = httpContextAccessor;
         }
@@ -40,7 +40,7 @@ namespace GreenDelight.Persistence.Services.AdressServices
                 return new ErrorResult("Kullanıcı bulunamadı.");
             }
             var addressDto = addressAddDto.Adapt<Adress>();
-            addressDto.UserId= Guid.Parse(userId);
+            addressDto.UserId = Guid.Parse(userId);
             await _unitOfWork.GetGenericRepository<Adress>().AddAsync(addressDto);
             await _unitOfWork.CommitAsync();
 
@@ -49,49 +49,51 @@ namespace GreenDelight.Persistence.Services.AdressServices
 
         public async Task<IDataResult<List<AddressDto>>> GetAllAsync()
         {
-           var addresses= await _unitOfWork.GetGenericRepository<Adress>().GetAllAsync();
+            var addresses = await _unitOfWork.GetGenericRepository<Adress>().GetAllAsync();
 
-           var addressDto = addresses.Adapt<List<AddressDto>>();
+            var addressDto = addresses.Adapt<List<AddressDto>>();
 
-           return new SuccessDataResult<List<AddressDto>>(addressDto, Messages.CategorysListed);
+            return new SuccessDataResult<List<AddressDto>>(addressDto, Messages.CategorysListed);
         }
 
         public async Task<IDataResult<AddressDetailDto>> GetByIdAsync(int id)
         {
-            var address = await _unitOfWork.GetGenericRepository<Adress>().GetAsync(x => x.ID == id, include: query=>query.Include(a=>a.User),enableTracking: false);
+            var address = await _unitOfWork.GetGenericRepository<Adress>().GetAsync(x => x.ID == id, include: query => query.Include(a => a.User), enableTracking: false);
             if (address == null)
             {
                 return new ErrorDataResult<AddressDetailDto>("Adres bulunamadı");
             }
-            var addressDto=address.Adapt<AddressDetailDto>();
+            var addressDto = address.Adapt<AddressDetailDto>();
 
             return new SuccessDataResult<AddressDetailDto>(addressDto, Messages.AddressesListed);
 
         }
         public async Task<IResult> RemoveAsync(int id)
         {
-            var adress= await _unitOfWork.GetGenericRepository<Adress>().GetAsync(x => x.ID == id);
+            var adress = await _unitOfWork.GetGenericRepository<Adress>().GetAsync(x => x.ID == id);
             if (adress == null)
             {
                 return new ErrorResult("Adres silme işlemi başarısız.");
             }
 
-                await _unitOfWork.GetGenericRepository<Adress>().DeleteAsync(adress);
+            await _unitOfWork.GetGenericRepository<Adress>().DeleteAsync(adress);
+            await _unitOfWork.CommitAsync();
             return new SuccessResult(Messages.AddressDeleted);
         }
 
         public async Task<IResult> UpdateAsync(AddressUpdateDto addressUpdateDto)
         {
 
-            var adress= await _unitOfWork.GetGenericRepository<Adress>().GetAsync(x=>x.ID == addressUpdateDto.ID);
+            var adress = await _unitOfWork.GetGenericRepository<Adress>().GetAsync(x => x.ID == addressUpdateDto.ID);
             if (adress == null)
             {
                 return new ErrorResult("Güncellenecek adres bulunamadı.Başarısız.");
             }
             var adressDto = addressUpdateDto.Adapt(adress);
             await _unitOfWork.GetGenericRepository<Adress>().UpdateAsync(adressDto);
+            await _unitOfWork.CommitAsync();
             return new SuccessResult(Messages.AddressUpdated);
-            
+
         }
     }
 }
