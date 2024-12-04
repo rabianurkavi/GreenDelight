@@ -1,11 +1,13 @@
 ﻿using GreenDelight.Apllication.Interfaces.Repositories;
 using GreenDelight.Apllication.Interfaces.UnitofWorks;
+using GreenDelight.Application.Interfaces.Services.AdressServices;
 using GreenDelight.Application.Interfaces.Services.AuthServices;
 using GreenDelight.Application.Interfaces.Services.CategoryServices;
 using GreenDelight.Application.Interfaces.Services.ProductServices;
 using GreenDelight.Domain.Concrete;
 using GreenDelight.Persistence.Contexts;
 using GreenDelight.Persistence.Repositories;
+using GreenDelight.Persistence.Services.AdressServices;
 using GreenDelight.Persistence.Services.AuthServices;
 using GreenDelight.Persistence.Services.CategoryServices;
 using GreenDelight.Persistence.Services.ProductServices;
@@ -30,11 +32,13 @@ namespace GreenDelight.Persistence
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IAddressService, AddressService>();
+
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<DbContext, GreenDelightDbContext>();
 
-
+            services.AddHttpContextAccessor();
             services.AddIdentityCore<User>(opt =>
             {
                 opt.Password.RequireNonAlphanumeric = false;
