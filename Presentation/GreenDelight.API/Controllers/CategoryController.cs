@@ -25,10 +25,10 @@ namespace GreenDelight.API.Controllers
 
             if (result.Success)
             {
-                return Ok(result.Message);
+                return Ok(result);
             }
 
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
         [HttpGet]
         public async Task<IActionResult> GetList()
@@ -54,7 +54,7 @@ namespace GreenDelight.API.Controllers
             {
                 return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
         [HttpDelete]
         public async Task<IActionResult> DeleteCategory(int id)
@@ -62,9 +62,9 @@ namespace GreenDelight.API.Controllers
             var result = await _categoryService.RemoveAsync(id);
             if (result.Success)
             {
-                return Ok(result.Message);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
 
         }
     }
