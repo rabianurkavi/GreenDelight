@@ -32,7 +32,6 @@ namespace GreenDelight.Persistence.Services.ProductServices
             }
             var product = productAddDto.Adapt<Product>();
             product.CategoryID = category.ID;
-            product.CreatedDate = DateTime.Now;
             await _unitOfWork.GetGenericRepository<Product>().AddAsync(product);
             await _unitOfWork.CommitAsync();
 
