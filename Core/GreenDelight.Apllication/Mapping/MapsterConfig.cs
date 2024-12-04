@@ -1,5 +1,6 @@
 ﻿using GreenDelight.Apllication.DTOs.ProductDtos;
 using GreenDelight.Apllication.DTOs.UserDtos;
+using GreenDelight.Application.DTOs.AddressDtos;
 using GreenDelight.Application.DTOs.AuthDtos.LoginDtos;
 using GreenDelight.Application.DTOs.AuthDtos.RegisterDtos;
 using GreenDelight.Domain.Concrete;
@@ -37,6 +38,13 @@ namespace GreenDelight.Apllication.Mapping
             TypeAdapterConfig<User, UserDetailDto>.NewConfig();
             TypeAdapterConfig<User, UserDto>.NewConfig();
             TypeAdapterConfig<User, UserUpdateDto>.NewConfig();
+
+            TypeAdapterConfig<Adress, AddressAddDto>.NewConfig();
+            TypeAdapterConfig<Adress, AddressDetailDto>.NewConfig()
+                .Map(dest=> dest.UserFullName,src=>src.User.FullName)
+                .Map(dest=>dest.PhoneNumber, src=>src.User.PhoneNumber);
+            TypeAdapterConfig<Adress, AddressDto>.NewConfig();
+            TypeAdapterConfig<Adress, AddressUpdateDto>.NewConfig();
 
             TypeAdapterConfig<User, LoginDto>.NewConfig()
                 .Map(dest => dest.Email, src => src.Email)
