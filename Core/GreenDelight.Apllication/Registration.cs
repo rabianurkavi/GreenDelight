@@ -1,4 +1,5 @@
-﻿using GreenDelight.Application.Rules;
+﻿using GreenDelight.Application.Exceptions;
+using GreenDelight.Application.Rules;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace GreenDelight.Apllication
     {
         public static void AddApplication(this IServiceCollection services)
         {
+            services.AddTransient<ExceptionMiddleware>();
             services.AddScoped<AuthRules>();
         }
     }
