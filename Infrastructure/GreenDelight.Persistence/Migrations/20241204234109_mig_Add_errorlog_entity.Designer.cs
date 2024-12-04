@@ -4,6 +4,7 @@ using GreenDelight.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GreenDelight.Persistence.Migrations
 {
     [DbContext(typeof(GreenDelightDbContext))]
-    partial class GreenDelightDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241204234109_mig_Add_errorlog_entity")]
+    partial class mig_Add_errorlog_entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,11 +98,11 @@ namespace GreenDelight.Persistence.Migrations
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.ErrorLog", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ErrorCode")
                         .HasColumnType("int");
@@ -131,7 +134,7 @@ namespace GreenDelight.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("ErrorLogs");
                 });
