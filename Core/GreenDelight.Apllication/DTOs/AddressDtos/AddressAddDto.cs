@@ -10,7 +10,7 @@ namespace GreenDelight.Application.DTOs.AddressDtos
     {
         public string City { get; set; }
         public string District { get; set; }
-        public string UserName { get; set; }
+        public Guid UserId { get; set; }
         public string Neighborhood { get; set; }
         public string Street { get; set; }
         public string No { get; set; }
