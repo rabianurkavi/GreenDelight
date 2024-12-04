@@ -28,5 +28,6 @@ namespace GreenDelight.Persistence.Contexts
         DbSet<UserRole> UserRoles { get; set; }
         DbSet<Product> Products { get; set; }
 
+        DbSet<ErrorLog> ErrorLogs { get; set; }
     }
 }
