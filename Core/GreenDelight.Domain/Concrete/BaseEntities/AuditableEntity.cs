@@ -9,7 +9,7 @@ namespace GreenDelight.Domain.Concrete.BaseEntities
 {
     public class AuditableEntity : BaseEntity, ICreatedEntity, IUpdatedEntity
     {
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
         public DateTime? UpdatedDate { get; set; }
     }
 }
