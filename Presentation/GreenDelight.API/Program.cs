@@ -3,6 +3,7 @@ using GreenDelight.Persistence;
 using GreenDelight.Infrastructure;
 using Microsoft.OpenApi.Models;
 using GreenDelight.Apllication;
+using GreenDelight.Application.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,14 +14,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 
+
 MapsterConfig.RegisterMappings();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hepsi API", Version = "v1", Description = "Hepsi APÝ swagger client." });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Green API", Version = "v1", Description = "Hepsi APÝ swagger client." });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name = "Authorization",
@@ -53,8 +56,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseAuthorization();
+app.ConfigureExceptionHandlingMiddleware();
 
 app.MapControllers();
 
