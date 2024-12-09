@@ -39,7 +39,11 @@ namespace GreenDelight.Persistence.Services.AuthServices
         public async Task<TokenResponse> LoginAsync(LoginDto loginDto)
         {
             var user= await _userManager.FindByEmailAsync(loginDto.Email);
+
             bool checkPassword= await _userManager.CheckPasswordAsync(user,loginDto.Password);
+
+            await _authRules.EmailOrPasswordShouldNotBeInvalid(user, checkPassword);
+
             IList<string> roles= await _userManager.GetRolesAsync(user);
 
             //JWT TOKEN OLUŞTURMA
