@@ -12,7 +12,7 @@ namespace GreenDelight.Domain.Concrete
         public string ErrorMessage { get; set; }
         public string StackTrace { get; set; }
         public int ErrorCode { get; set; }
-        public string ErrorDetails { get; set; }
+        public string? ErrorDetails { get; set; }
         public string RequestPath { get; set; }
         public string HttpMethod { get; set; }
         public string UserIpAddress { get; set; }
