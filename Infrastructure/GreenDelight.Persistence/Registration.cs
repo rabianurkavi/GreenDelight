@@ -3,6 +3,7 @@ using GreenDelight.Apllication.Interfaces.UnitofWorks;
 using GreenDelight.Application.Interfaces.Services.AdressServices;
 using GreenDelight.Application.Interfaces.Services.AuthServices;
 using GreenDelight.Application.Interfaces.Services.CategoryServices;
+using GreenDelight.Application.Interfaces.Services.Logging;
 using GreenDelight.Application.Interfaces.Services.ProductServices;
 using GreenDelight.Domain.Concrete;
 using GreenDelight.Persistence.Contexts;
@@ -10,6 +11,7 @@ using GreenDelight.Persistence.Repositories;
 using GreenDelight.Persistence.Services.AdressServices;
 using GreenDelight.Persistence.Services.AuthServices;
 using GreenDelight.Persistence.Services.CategoryServices;
+using GreenDelight.Persistence.Services.Logging;
 using GreenDelight.Persistence.Services.ProductServices;
 using GreenDelight.Persistence.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +35,7 @@ namespace GreenDelight.Persistence
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IAddressService, AddressService>();
+            services.AddScoped<ILogService, LogService>();
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
