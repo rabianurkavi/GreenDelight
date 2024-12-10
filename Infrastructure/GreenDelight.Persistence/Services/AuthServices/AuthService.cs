@@ -5,6 +5,7 @@ using GreenDelight.Application.Interfaces.Services.AuthServices;
 using GreenDelight.Application.Interfaces.Token;
 using GreenDelight.Application.Rules;
 using GreenDelight.Domain.Concrete;
+using GreenDelight.Domain.Results;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
@@ -36,13 +37,17 @@ namespace GreenDelight.Persistence.Services.AuthServices
         }
 
 
-        public async Task<TokenResponse> LoginAsync(LoginDto loginDto)
+        public async Task<IDataResult<TokenResponse>> LoginAsync(LoginDto loginDto)
         {
-            var user= await _userManager.FindByEmailAsync(loginDto.Email);
 
-            bool checkPassword= await _userManager.CheckPasswordAsync(user,loginDto.Password);
+            var user = await _userManager.FindByEmailAsync(loginDto.Email);
+            if (user == null) return new ErrorDataResult<TokenResponse>("E-posta adresi bulunamadı.");
 
-            await _authRules.EmailOrPasswordShouldNotBeInvalid(user, checkPassword);
+            if (!await _userManager.CheckPasswordAsync(user, loginDto.Password))
+                return new ErrorDataResult<TokenResponse>("Girdiğiniz şifre yanlıştır.");
+
+            //bool checkPassword= await _userManager.CheckPasswordAsync(user,loginDto.Password);
+            //await _authRules.EmailOrPasswordShouldNotBeInvalid(user, checkPassword);
 
             IList<string> roles= await _userManager.GetRolesAsync(user);
 
@@ -61,12 +66,13 @@ namespace GreenDelight.Persistence.Services.AuthServices
             // Token'ı kullanıcıya atama
             await _userManager.SetAuthenticationTokenAsync(user, "Default", "AccessToken", _token);
 
-            return new TokenResponse
+            var tokenResponse = new TokenResponse
             {
                 Token = _token,
                 RefreshToken = refreshToken,
-                Expiration = token.ValidTo,
+                Expiration = token.ValidTo
             };
+            return new SuccessDataResult<TokenResponse>(tokenResponse, "Giriş başarılı.");
         }
 
         public async Task RegisterAsync(RegisterDto registerDto)
