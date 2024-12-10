@@ -1,4 +1,4 @@
-﻿using GreenDelight.Apllication.DTOs.ProductDtos;
+﻿using GreenDelight.Application.DTOs.ProductDtos;
 using GreenDelight.Domain.Results;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace GreenDelight.Application.Interfaces.Services.ProductServices
     {
         Task<IResult> AddAsync(ProductAddDto productAddDto);
         Task<IResult> UpdateAsync(ProductUpdateDto productUpdateDto);
-        Task<IDataResult<ProductDto>> GetByIdAsync(int id);
+        Task<IDataResult<ProductDetailDto>> GetByIdAsync(int id);
         Task<IDataResult<List<ProductDetailDto>>> GetAllAsync();
         Task<IResult> RemoveAsync(int id);
     }
