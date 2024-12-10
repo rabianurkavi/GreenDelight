@@ -34,6 +34,8 @@
             Giriş Yap
         </h2>
 
+       
+
         <form asp-controller="Auth" asp-action="Index" method="post">
             <div style="margin-bottom: 1rem;">
                 <input type="text" name="Email" placeholder="Kullanıcı Adı" required style="
@@ -55,6 +57,12 @@
                     font-size: 1rem;
                     color: #000000;">
             </div>
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div style="color: #d9534f; margin-bottom: 1rem; text-align: center;">
+                    @ViewBag.ErrorMessage
+                </div>
+            }
             <button type="submit" style="
                 width: 100%;
                 background-color: #b0b435;
@@ -75,11 +83,9 @@
             text-align: center;
             margin-top: 1rem;
             color: #000000;">
-            <p>Hesabınız yok mu? <a href="#" style="color: #000000; text-decoration: underline;">Kayıt olun</a></p>
+            <p>Hesabınız yok mu? <a href="/Auth/Register" style="color: #000000; text-decoration: underline;">Kayıt olun</a></p>
         </div>
 
     </div>
 </body>
 </html>
-
-
