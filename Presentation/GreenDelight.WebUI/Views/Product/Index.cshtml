@@ -1,0 +1,113 @@
+﻿@model GreenDelight.Domain.Results.SuccessDataResult<List<GreenDelight.Application.DTOs.ProductDtos.ProductDetailDto>>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Start Shop Page  -->
+<div class="shop-box-inner">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
+                <div class="right-product-box">
+  
+                    <div class="product-item-filter row">
+                        <div class="col-12 col-sm-8 text-center text-sm-left">
+                            <div class="toolbar-sorter-right">
+                                <span>Sıralama </span>
+                                <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
+                                    <option data-display="Select">Ürünler</option>
+
+                                </select>
+                            </div>
+                            <p>Genel Listeleme</p>
+                        </div>
+                        <div class="col-12 col-sm-4 text-center text-sm-right">
+                            <ul class="nav nav-tabs ml-auto">
+                                <li>
+                                    <a class="nav-link active" href="#grid-view" data-toggle="tab"> <i class="fa fa-th"></i> </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" href="#list-view" data-toggle="tab"> <i class="fa fa-list-ul"></i> </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="product-categorie-box">
+                        <div class="tab-content">
+                                                  
+                            <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
+                                <div class="row">
+                                    @foreach (var item in Model.Data)
+                                    {
+                                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                        <div class="products-single fix">
+                                            <div class="box-img-hover">
+                                                <div class="type-lb">
+                                                    <p class="sale">@item.CategoryName</p>
+                                                </div>
+                                                <img src="~/freshshop/images/img-pro-01.jpg" class="img-fluid" alt="Image">
+                                                <div class="mask-icon">
+                                                    <ul>
+                                                            <li><a href="~/Product/ProductDetail/@item.ID" data-toggle="tooltip" data-placement="right" title="Detaylı İncele"><i class="fas fa-eye"></i></a></li>
+                                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="Favorilere Ekle"><i class="far fa-heart"></i></a></li>
+                                                    </ul>
+                                                    <a class="cart" href="#">Sepete Ekle</a>
+                                                </div>
+                                            </div>
+                                            <div class="why-text">
+                                                <h4>@item.ProductName</h4>
+                                                    <h5> @item.Price ₺</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="list-view">
+                                @foreach(var item in Model.Data)
+                                {
+                                <div class="list-view-box">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                            <div class="products-single fix">
+                                                <div class="box-img-hover">
+                                                    <div class="type-lb">
+                                                        <p class="new">Ürün</p>
+                                                    </div>
+                                                    <img src="~/freshshop/images/img-pro-01.jpg" class="img-fluid" alt="Image">
+                                                    <div class="mask-icon">
+                                                        <ul>
+                                                                <li><a href="~/Product/ProductDetail/@item.ID" data-toggle="tooltip" data-placement="right" title="Detaylı İncele"><i class="fas fa-eye"></i></a></li>
+                                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="Favorilere Ekle"><i class="far fa-heart"></i></a></li>
+                                                        </ul>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
+                                            <div class="why-text full-width">
+                                                <h4>@item.ProductName</h4>
+                                                    <h5> <del>$ 60.00</del> @item.Price ₺</h5>
+                                                <p>
+                                                    @item.Description
+                                                </p>
+                                                <a class="btn hvr-hover" href="#">Sepete Ekle</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @await Component.InvokeAsync("ProductListByCategory")
+        </div>
+    </div>
+</div>
+<!-- End Shop Page -->
+
