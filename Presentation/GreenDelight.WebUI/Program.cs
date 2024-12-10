@@ -2,6 +2,7 @@ using GreenDelight.Apllication.Mapping;
 using GreenDelight.Persistence;
 using GreenDelight.Infrastructure;
 using GreenDelight.Apllication;
+using GreenDelight.Application.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,9 +30,10 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.ConfigureExceptionHandlingMiddleware();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Auth}/{action=Index}/{id?}");
 
 app.Run();
