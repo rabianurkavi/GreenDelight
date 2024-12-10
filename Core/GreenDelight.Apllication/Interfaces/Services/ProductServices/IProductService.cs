@@ -15,5 +15,6 @@ namespace GreenDelight.Application.Interfaces.Services.ProductServices
         Task<IDataResult<ProductDetailDto>> GetByIdAsync(int id);
         Task<IDataResult<List<ProductDetailDto>>> GetAllAsync();
         Task<IResult> RemoveAsync(int id);
+        Task<IDataResult<List<ProductDetailDto>>> ProductListByCategory(int categoryId);
     }
 }
