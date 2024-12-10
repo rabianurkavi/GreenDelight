@@ -1,6 +1,7 @@
 ﻿using GreenDelight.Application.DTOs.AuthDtos.LoginDtos;
 using GreenDelight.Application.DTOs.AuthDtos.RegisterDtos;
 using GreenDelight.Application.Interfaces.Services.AuthServices;
+using GreenDelight.Domain.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GreenDelight.WebUI.Controllers
@@ -25,21 +26,21 @@ namespace GreenDelight.WebUI.Controllers
             {
                 var response = await _authService.LoginAsync(loginDto);
 
-                if (response != null && !string.IsNullOrEmpty(response.Token))
+                // response veya response.Data null ise, hata mesajını ViewBag'e ekleyerek işlemi devam ettir
+                if (response == null || response.Data == null || string.IsNullOrEmpty(response.Data.Token))
                 {
-                    // Giriş başarılı ise, kullanıcıyı ana sayfaya veya belirli bir sayfaya yönlendir
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.ErrorMessage = response?.Message ?? "Giriş sırasında bir hata oluştu.";
+                    return View(loginDto);
                 }
-                else
-                {
-                    // Giriş başarısız ise, hata mesajını görüntüle
-                    ModelState.AddModelError(string.Empty, "Kullanıcı adı veya şifre hatalı.");
-                }
+
+                // Giriş başarılı ise, kullanıcıyı ana sayfaya veya belirli bir sayfaya yönlendir
+                return RedirectToAction("Index", "Product");
             }
 
-            // Giriş formunu yeniden göster ve kullanıcıya hata mesajlarını ilet
+            // ModelState geçerli değilse, formu ve hata mesajlarını geri gönder
             return View(loginDto);
         }
+
         [HttpGet]
         public async Task<IActionResult> Register()
         {
