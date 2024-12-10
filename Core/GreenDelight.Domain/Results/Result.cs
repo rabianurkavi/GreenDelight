@@ -19,7 +19,7 @@ namespace GreenDelight.Domain.Results
         {
             Success = success;
         }
-        public Result(string message)
+        public Result(string message) : this(true, message) // Burada Message'a değer atıyoruz.
         {
 
         }
