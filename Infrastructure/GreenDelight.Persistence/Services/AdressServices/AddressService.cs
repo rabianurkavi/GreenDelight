@@ -1,5 +1,5 @@
-﻿using GreenDelight.Apllication.DTOs.ProductDtos;
-using GreenDelight.Apllication.Interfaces.UnitofWorks;
+﻿using GreenDelight.Application.DTOs.ProductDtos;
+using GreenDelight.Application.Interfaces.UnitofWorks;
 using GreenDelight.Application.Constants;
 using GreenDelight.Application.DTOs.AddressDtos;
 using GreenDelight.Application.DTOs.CategoryDtos;

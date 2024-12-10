@@ -1,4 +1,4 @@
-﻿using GreenDelight.Apllication.DTOs.UserDtos;
+﻿using GreenDelight.Application.DTOs.UserDtos;
 using GreenDelight.Application.Interfaces.Token;
 using GreenDelight.Domain.Concrete;
 using Microsoft.AspNetCore.Identity;

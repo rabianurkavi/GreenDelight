@@ -1,5 +1,5 @@
-﻿using GreenDelight.Apllication.DTOs.ProductDtos;
-using GreenDelight.Apllication.DTOs.UserDtos;
+﻿using GreenDelight.Application.DTOs.ProductDtos;
+using GreenDelight.Application.DTOs.UserDtos;
 using GreenDelight.Application.DTOs.AddressDtos;
 using GreenDelight.Application.DTOs.AuthDtos.LoginDtos;
 using GreenDelight.Application.DTOs.AuthDtos.RegisterDtos;

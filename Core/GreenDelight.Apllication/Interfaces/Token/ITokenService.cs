@@ -1,4 +1,4 @@
-﻿using GreenDelight.Apllication.DTOs.UserDtos;
+﻿using GreenDelight.Application.DTOs.UserDtos;
 using GreenDelight.Domain.Concrete;
 using System;
 using System.Collections.Generic;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GreenDelight.Apllication.DTOs
+namespace GreenDelight.Application.DTOs
 {
     public interface IDto
     {

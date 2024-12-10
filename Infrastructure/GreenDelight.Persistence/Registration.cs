@@ -1,5 +1,5 @@
-﻿using GreenDelight.Apllication.Interfaces.Repositories;
-using GreenDelight.Apllication.Interfaces.UnitofWorks;
+﻿using GreenDelight.Application.Interfaces.Repositories;
+using GreenDelight.Application.Interfaces.UnitofWorks;
 using GreenDelight.Application.Interfaces.Services.AdressServices;
 using GreenDelight.Application.Interfaces.Services.AuthServices;
 using GreenDelight.Application.Interfaces.Services.CategoryServices;

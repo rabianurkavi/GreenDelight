@@ -1,4 +1,4 @@
-﻿using GreenDelight.Apllication.DTOs.ProductDtos;
+﻿using GreenDelight.Application.DTOs.ProductDtos;
 using GreenDelight.Application.DTOs.CategoryDtos;
 using GreenDelight.Domain.Results;
 using System;

@@ -1,4 +1,4 @@
-﻿using GreenDelight.Apllication.DTOs.ProductDtos;
+﻿using GreenDelight.Application.DTOs.ProductDtos;
 using GreenDelight.Application.Interfaces.Services.ProductServices;
 using GreenDelight.Domain.Results;
 using Microsoft.AspNetCore.Http;

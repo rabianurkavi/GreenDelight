@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using GreenDelight.Apllication.DTOs.ProductDtos;
+using GreenDelight.Application.DTOs.ProductDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GreenDelight.Apllication.DTOs.UserDtos
+namespace GreenDelight.Application.DTOs.UserDtos
 {
     public class UserDto:IDto
     {

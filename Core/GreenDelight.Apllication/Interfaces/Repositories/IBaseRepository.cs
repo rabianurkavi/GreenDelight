@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GreenDelight.Apllication.Interfaces.Repositories
+namespace GreenDelight.Application.Interfaces.Repositories
 {
     public interface IBaseRepository<T> where T : class, IEntityBase, new()
     {

@@ -1,4 +1,4 @@
-﻿using GreenDelight.Apllication.Interfaces.UnitofWorks;
+﻿using GreenDelight.Application.Interfaces.UnitofWorks;
 using GreenDelight.Application.Interfaces.Services.Logging;
 using GreenDelight.Domain.Concrete;
 using System;

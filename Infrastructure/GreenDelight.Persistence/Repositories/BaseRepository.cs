@@ -1,4 +1,4 @@
-﻿using GreenDelight.Apllication.Interfaces.Repositories;
+﻿using GreenDelight.Application.Interfaces.Repositories;
 using GreenDelight.Domain.Abstract;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
