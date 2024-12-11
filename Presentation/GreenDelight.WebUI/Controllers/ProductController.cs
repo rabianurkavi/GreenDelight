@@ -23,5 +23,14 @@ namespace GreenDelight.WebUI.Controllers
             var values= await _productService.GetByIdAsync(id);
             return View(values);    
         }
+        public async Task<IActionResult> ProductListByCategory(int categoryId)
+        {
+            var response= await _productService.ProductListByCategory(categoryId);
+
+            if(response==null || response.Data==null) 
+               ViewBag.ErrorMessage = response?.Message ?? "Ürünler listelenirken bir hata oluştu.";
+
+            return View(response.Data);
+        }
     }
 }
