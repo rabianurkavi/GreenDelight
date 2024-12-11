@@ -29,5 +29,6 @@ namespace GreenDelight.Persistence.Contexts
         DbSet<Product> Products { get; set; }
 
         DbSet<ErrorLog> ErrorLogs { get; set; }
+        DbSet<Comment> Comments { get; set; }
     }
 }
