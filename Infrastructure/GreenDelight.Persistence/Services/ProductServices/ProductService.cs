@@ -70,6 +70,17 @@ namespace GreenDelight.Persistence.Services.ProductServices
             return new SuccessDataResult<ProductDetailDto>(productDto, Messages.ProductsListed);
         }
 
+        public async Task<IDataResult<List<ProductDetailDto>>> ProductListByCategory(int categoryId)
+        {
+            var product=await _unitOfWork.GetGenericRepository<Product>().GetAllAsync(x=>x.CategoryID==categoryId, include: query => query.Include(a=>a.Category), enableTracking: false); 
+            if(product.Count==0)
+            {
+                return new ErrorDataResult<List<ProductDetailDto>>("Bu kategoriye ait ürün bulunamadı.");
+            }
+            var productDto= product.Adapt<List<ProductDetailDto>>();
+            return new SuccessDataResult<List<ProductDetailDto>>(productDto,Messages.ProductsListed); 
+        }
+
         public async Task<IResult> RemoveAsync(int id)
         {
             if (id <= 0)
