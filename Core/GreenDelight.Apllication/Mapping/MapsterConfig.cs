@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GreenDelight.Application.DTOs.CategoryDtos;
 
 namespace GreenDelight.Apllication.Mapping
 {
@@ -49,6 +50,12 @@ namespace GreenDelight.Apllication.Mapping
             TypeAdapterConfig<User, LoginDto>.NewConfig()
                 .Map(dest => dest.Email, src => src.Email)
                 .Map(dest => dest.Password, src => src.PasswordHash);
+
+            TypeAdapterConfig<Category, CategoryDetailDto>.NewConfig()
+                .Map(dest=>dest.ID, src=>src.ID);
+            TypeAdapterConfig<Category, CategoryAddDto>.NewConfig();
+
+
 
             TypeAdapterConfig<RegisterDto, User>.NewConfig()
                 .Map(dest => dest.FullName, src => src.FullName)
