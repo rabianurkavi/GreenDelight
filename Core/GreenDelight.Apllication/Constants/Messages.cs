@@ -28,5 +28,9 @@ namespace GreenDelight.Application.Constants
         public static string AddressMaintenanceTime = "Zaman hatası";
         public static string AddressInvalid = "Adres ismi geçersiz";
         public static string AddressesListed = "Adresler listelendi";
+
+        public static string CommentAdded = "Yorum eklendi";
+        public static string CommentDeleted = "Yorum silindi";
+        public static string CommentListed = "Yorumlar listelendi";
     }
 }
