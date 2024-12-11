@@ -16,7 +16,7 @@
                 
                 @foreach(var item in Model.Data)
                 {
-                    <a href="#" class="list-group-item list-group-item-action"> @item.Name  <small class="text-muted"> </small></a>
+                    <a href="@Url.Action("ProductListByCategory", "Product", new { categoryId = item.ID })" class="list-group-item list-group-item-action"> @item.Name <small class="text-muted"></small></a>
 
                 }
 
