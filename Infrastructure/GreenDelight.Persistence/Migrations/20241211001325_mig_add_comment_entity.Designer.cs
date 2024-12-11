@@ -4,6 +4,7 @@ using GreenDelight.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GreenDelight.Persistence.Migrations
 {
     [DbContext(typeof(GreenDelightDbContext))]
-    partial class GreenDelightDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241211001325_mig_add_comment_entity")]
+    partial class mig_add_comment_entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,9 +111,6 @@ namespace GreenDelight.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -118,8 +118,6 @@ namespace GreenDelight.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
@@ -499,19 +497,11 @@ namespace GreenDelight.Persistence.Migrations
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.Comment", b =>
                 {
-                    b.HasOne("GreenDelight.Domain.Concrete.Product", "Product")
-                        .WithMany("Comments")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("GreenDelight.Domain.Concrete.User", "User")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Product");
 
                     b.Navigation("User");
                 });
@@ -620,16 +610,12 @@ namespace GreenDelight.Persistence.Migrations
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.Product", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.User", b =>
                 {
                     b.Navigation("Adresses");
-
-                    b.Navigation("Comments");
 
                     b.Navigation("Orders");
                 });
