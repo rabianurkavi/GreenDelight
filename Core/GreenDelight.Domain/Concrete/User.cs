@@ -15,5 +15,6 @@ namespace GreenDelight.Domain.Concrete
         public DateTime? RefreshTokenExpiryTime { get; set; }
         public ICollection<Adress> Adresses { get; set; }
         public ICollection<Order> Orders { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }
