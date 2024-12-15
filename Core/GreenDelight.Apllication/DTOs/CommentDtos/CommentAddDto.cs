@@ -10,6 +10,7 @@ namespace GreenDelight.Application.DTOs.CommentDtos
     public class CommentAddDto
     {
         public Guid UserId { get; set; }
+        public int ProductId { get; set; }
         public string CommentDescription { get; set; }
     }
 }

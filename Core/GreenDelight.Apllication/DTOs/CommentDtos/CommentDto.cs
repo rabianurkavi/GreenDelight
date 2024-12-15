@@ -8,8 +8,10 @@ namespace GreenDelight.Application.DTOs.CommentDtos
 {
     public class CommentDto
     {
+        public int ProductId { get; set; }
         public string UserName { get; set; }
         public string UserImageUrl { get; set; }
         public string CommentDescription { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }
