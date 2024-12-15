@@ -7,6 +7,8 @@ using GreenDelight.Domain.Concrete;
 using GreenDelight.Domain.Results;
 using Mapster;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +45,7 @@ namespace GreenDelight.Persistence.Services.CommentServices
                 // userId artık bir Guid türünde kullanılabilir
                 comment.UserId = userId;
             }
+            //comment.ProductId = ;
             await _unitOfWork.GetGenericRepository<Comment>().AddAsync(comment);
             await _unitOfWork.CommitAsync();
 
@@ -51,9 +54,9 @@ namespace GreenDelight.Persistence.Services.CommentServices
 
         public async Task<IDataResult<List<CommentDto>>> GetAllAsync(int productId)
         {
-            var commentList = await _unitOfWork.GetGenericRepository<Comment>().GetAllAsync(x=>x.ProductId==productId);
+            var commentList = await _unitOfWork.GetGenericRepository<Comment>().GetAllAsync(x=>x.ProductId==productId, include: query=>query.Include(a=>a.User).Include(a=>a.Product));
             var commentDto = commentList.Adapt<List<CommentDto>>();
-            return new SuccessDataResult<List<CommentDto>>(commentDto, "dd");
+            return new SuccessDataResult<List<CommentDto>>(commentDto,Messages.CommentListed);
         }
 
         public Task<IResult> RemoveAsync(int id)
