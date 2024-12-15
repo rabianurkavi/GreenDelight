@@ -22,6 +22,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GreenDelight.Application.Interfaces.Services.CommentServices;
+using GreenDelight.Persistence.Services.CommentServices;
 
 namespace GreenDelight.Persistence
 {
@@ -35,6 +37,7 @@ namespace GreenDelight.Persistence
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IAddressService, AddressService>();
+            services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<ILogService, LogService>();
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
