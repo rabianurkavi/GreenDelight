@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GreenDelight.Application.DTOs.CategoryDtos;
+using GreenDelight.Application.DTOs.CommentDtos;
 
 namespace GreenDelight.Apllication.Mapping
 {
@@ -55,7 +56,11 @@ namespace GreenDelight.Apllication.Mapping
                 .Map(dest=>dest.ID, src=>src.ID);
             TypeAdapterConfig<Category, CategoryAddDto>.NewConfig();
 
-
+            TypeAdapterConfig<Comment, CommentAddDto>.NewConfig();
+            TypeAdapterConfig<Comment, CommentDto>.NewConfig()
+                .Map(dest => dest.UserName, src => src.User.FullName)
+                .Map(dest => dest.UserImageUrl, src => src.User.ImageUrl);
+            TypeAdapterConfig<Adress, AddressDto>.NewConfig();
 
             TypeAdapterConfig<RegisterDto, User>.NewConfig()
                 .Map(dest => dest.FullName, src => src.FullName)
