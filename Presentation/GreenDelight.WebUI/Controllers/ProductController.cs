@@ -18,8 +18,7 @@ namespace GreenDelight.WebUI.Controllers
         }
         public async Task<IActionResult> ProductDetail(int id)
         {
-            ViewBag.Id = id;
-            TempData["BlogId"] = id;
+            TempData["ProductId"] = id;
             var values= await _productService.GetByIdAsync(id);
             return View(values);    
         }
