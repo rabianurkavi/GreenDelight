@@ -1,0 +1,33 @@
+﻿@model GreenDelight.Application.DTOs.CommentDtos.CommentAddDto
+
+@{
+    ViewData["Title"] = "CommentAdd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header text-center">
+                    <h3>Yorum Ekle</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Comment" method="post" asp-action="CommentAdd">
+                        <div class="form-group">
+                            <label for="commentDescription">Yorumunuz:</label>
+                            <textarea id="commentDescription" name="CommentDescription" class="form-control" rows="4" required></textarea>
+                        </div>
+
+                        <!-- Hidden field to pass ProductId -->
+                        <input type="hidden" name="ProductId" value="@ViewBag.ProductId" />
+
+                        <button type="submit" class="btn btn-primary btn-block mt-4">
+                            Yorumu Ekle
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
