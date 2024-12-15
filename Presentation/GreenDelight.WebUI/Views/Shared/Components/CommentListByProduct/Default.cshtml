@@ -1,0 +1,40 @@
+﻿@model GreenDelight.Domain.Results.SuccessDataResult<List<GreenDelight.Application.DTOs.CommentDtos.CommentDto>>
+
+<div class="row my-5">
+    <div class="card card-outline-secondary my-4" style="width: 1140px;">
+        <div class="card-header">
+            <h2>Product Reviews</h2>
+        </div>
+        <div class="card-body">
+            <table style="width: 100%; border-spacing: 0; border-collapse: collapse;">
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <div style="color: #d9534f; margin-bottom: 1rem; text-align: center;">
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+                else
+                {
+                    @foreach (var item in Model.Data)
+                    {
+                        <tr style="vertical-align: top; border-bottom: 1px solid #ccc; padding: 10px;">
+                            <!-- Görsel Kolonu -->
+                            <td style="width: 10%; text-align: center; padding: 10px;">
+                                <img class="rounded-circle border"
+                                     src="~/images/@item.UserImageUrl"
+                                     alt="User image"
+                                     style="width: 64px; height: 64px;">
+                            </td>
+                            <!-- Yorum Kolonu, colspan ekleyerek genişlik artırma -->
+                            <td colspan="2" style="padding: 10px; text-align: left;">
+                                <p style="margin-bottom: 5px;">@item.CommentDescription</p>
+                                <small class="text-muted">@item.UserName - @item.CreatedDate</small>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+            <a href="@Url.Action("CommentAdd", "Comment", new { productId = TempData["ProductId"] })" class="btn hvr-hover mt-3">Yorum Ekle</a>
+        </div>
+    </div>
+</div>
