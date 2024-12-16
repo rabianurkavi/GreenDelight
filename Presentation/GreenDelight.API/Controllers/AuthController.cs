@@ -30,5 +30,11 @@ namespace GreenDelight.API.Controllers
             await _authService.RegisterAsync(registerDto);
             return StatusCode(StatusCodes.Status201Created);
         }
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _authService.LogoutAsync();
+            return RedirectToAction("Login", "Auth");
+        }
     }
 }
