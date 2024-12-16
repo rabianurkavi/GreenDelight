@@ -12,7 +12,8 @@ namespace GreenDelight.Application.Interfaces.Services.AuthServices
 {
     public interface IAuthService
     {
-        Task<IDataResult<TokenResponse>> LoginAsync(LoginDto loginDto);
+        Task<IDataResult<bool>> LoginAsync(LoginDto loginDto);
         Task RegisterAsync(RegisterDto registerDto);
+        Task LogoutAsync();
     }
 }
