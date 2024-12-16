@@ -4,6 +4,7 @@ using GreenDelight.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GreenDelight.Persistence.Migrations
 {
     [DbContext(typeof(GreenDelightDbContext))]
-    partial class GreenDelightDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241216190343_mig_update_user_imageurl_be_null")]
+    partial class mig_update_user_imageurl_be_null
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
