@@ -1,6 +1,8 @@
 ﻿using GreenDelight.Application.Interfaces.Token;
 using GreenDelight.Infrastructure.Tokens;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -14,32 +16,23 @@ namespace GreenDelight.Infrastructure
 {
     public static class Registration
     {
-        public static void AddInfrastructure(this IServiceCollection services,IConfiguration configuration)
+        public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<TokenSettings>(configuration.GetSection("JWT"));
             services.AddTransient<ITokenService, TokenService>();
 
             services.AddHttpClient();
-            services.AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, opt =>
-            {
-                // Doğrulanan token’ın HttpContext üzerinde saklanmasını sağlar.
-                opt.SaveToken = true;
-                opt.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateIssuerSigningKey = false,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:SecretKey"])),
-                    ValidateLifetime = false,
-                    ValidIssuer = configuration["JWT:Issuer"],
-                    ValidAudience = configuration["JWT:Audience"],
-                    ClockSkew = TimeSpan.Zero,
-                };
-            });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                   .AddCookie(options =>
+               {
+                   options.LoginPath = "/Auth/Login"; // Giriş sayfası
+                   options.LogoutPath = "/Auth/Logout"; // Çıkış işlemi
+                   options.ExpireTimeSpan = TimeSpan.FromHours(1); // Cookie süresi
+                   options.SlidingExpiration = true; // Yenilenen cookie süresi
+                   options.AccessDeniedPath = "/Auth/AccessDenied"; // Yetkisiz erişim sayfası
+                   options.Cookie.HttpOnly = true; // Güvenlik için
+                   options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // HTTPS zorunlu
+               });
         }
     }
 }
