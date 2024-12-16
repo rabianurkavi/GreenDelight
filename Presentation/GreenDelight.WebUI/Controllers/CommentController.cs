@@ -14,16 +14,16 @@ namespace GreenDelight.WebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CommentAdd(int productId)
+        public async Task<PartialViewResult> PartialAddComment(int productId)
         {
-            ViewBag.ProductId = productId;
-            return View();
+            var model = new CommentAddDto { ProductId = productId }; // Model'e ProductId'yi set et
+            return PartialView(model);
         }
         [HttpPost]
-        public async Task<IActionResult> CommentAdd(CommentAddDto commentAddDto)
+        public async Task<IActionResult> PartialAddComment(CommentAddDto commentAddDto)
         {
             var comment = await _commentService.AddAsync(commentAddDto);
-            return View();
+            return PartialView(commentAddDto); // Modeli ya da yeni view'ı döndür
         }
     }
 }
