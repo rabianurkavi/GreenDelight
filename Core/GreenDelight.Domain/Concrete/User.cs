@@ -11,7 +11,7 @@ namespace GreenDelight.Domain.Concrete
     public class User : IdentityUser<Guid>
     {
         public string FullName { get; set; }
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
         public string? RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiryTime { get; set; }
         public ICollection<Adress> Adresses { get; set; }
