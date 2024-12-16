@@ -76,7 +76,7 @@
             </div>
         </div>
         @await Component.InvokeAsync("CommentListByProduct", new { productId = Model.Data.ID })
-        <a href="@Url.Action("CommentAdd", "Comment", new { productId = ViewBag.ProductId })" class="btn hvr-hover mt-3">Yorum Ekle</a>
+        @await Html.PartialAsync("~/Views/Comment/PartialAddComment.cshtml", new { ProductId = Model.Data.ID })
     </div>
 </div>
 
