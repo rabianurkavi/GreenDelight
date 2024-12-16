@@ -24,12 +24,12 @@ namespace GreenDelight.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var response = await _authService.LoginAsync(loginDto);
+                var result = await _authService.LoginAsync(loginDto);
 
                 // response veya response.Data null ise, hata mesajını ViewBag'e ekleyerek işlemi devam ettir
-                if (response == null || response.Data == null || string.IsNullOrEmpty(response.Data.Token))
+                if (!result.Success)
                 {
-                    ViewBag.ErrorMessage = response?.Message ?? "Giriş sırasında bir hata oluştu.";
+                    ViewBag.ErrorMessage = result?.Message ?? "Giriş sırasında bir hata oluştu.";
                     return View(loginDto);
                 }
 
@@ -50,7 +50,7 @@ namespace GreenDelight.WebUI.Controllers
         public async Task<IActionResult> Register(RegisterDto registerDto)
         {
             await _authService.RegisterAsync(registerDto);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Product");
         }
 
     }
