@@ -1,8 +1,51 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="slides-shop" class="cover-slides">
+    <ul class="slides-container">
+        <li class="text-center">
+            <img src="~/freshshop/images/banner-01.jpg" alt="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="m-b-20"><strong>GreenDelight'a <br> Hoşgeldiniz</strong></h1>
+                        <p class="m-b-40">Toprağın bereketini evine taşımak artık çok kolay. <br> Dalından kopmuş tazelikte ürünlerle sevdiklerin için sağlıklı bir sofra hazırlamaya şimdi başla!</p>
+                        <p><a class="btn hvr-hover" href="~/Product/Index">Alışverişe Başla</a></p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="text-center">
+            <img src="~/freshshop/images/banner-02.jpg" alt="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="m-b-20"><strong>GreenDelight'a <br> Hoşgeldiniz</strong></h1>
+                        <p class="m-b-40">Doğal ve organik ürünlere ulaşmak hiç bu kadar keyifli olmamıştı.<br> Tazelik dolu alışveriş için hemen keşfe çık!”</p>
+                        <p><a class="btn hvr-hover" href="~/Product/Index">Alışverişe Başla</a></p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="text-center">
+            <img src="~/freshshop/images/banner-03.jpg" alt="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="m-b-20"><strong>GreenDelight'a <br> Hoşgeldiniz</strong></h1>
+                        <p class="m-b-40">Doğanın sunduğu en taze ve en doğal ürünler burada seni bekliyor. <br>Sofranı sağlıklı ve lezzet dolu ürünlerle doldurmak için hemen alışverişe başla!</p>
+                        <p><a class="btn hvr-hover" href="~/Product/Index">Alışverişe Başla</a></p>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <div class="slides-navigation">
+        <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+        <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+    </div>
 </div>
+
