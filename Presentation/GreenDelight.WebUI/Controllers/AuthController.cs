@@ -27,7 +27,7 @@ namespace GreenDelight.WebUI.Controllers
                 var result = await _authService.LoginAsync(loginDto);
 
                 // response veya response.Data null ise, hata mesajını ViewBag'e ekleyerek işlemi devam ettir
-                if (!result.Success)
+                if (!result.Data)
                 {
                     ViewBag.ErrorMessage = result?.Message ?? "Giriş sırasında bir hata oluştu.";
                     return View(loginDto);
