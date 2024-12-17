@@ -1,10 +1,13 @@
 ﻿using GreenDelight.Application.Interfaces.Services.ProductServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GreenDelight.WebUI.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
+        
         private readonly IProductService _productService;
         public ProductController(IProductService productService)
         {
