@@ -34,7 +34,7 @@ namespace GreenDelight.WebUI.Controllers
                 }
 
                 // Giriş başarılı ise, kullanıcıyı ana sayfaya veya belirli bir sayfaya yönlendir
-                return RedirectToAction("Index", "Product");
+                return RedirectToAction("Index", "Home");
             }
 
             // ModelState geçerli değilse, formu ve hata mesajlarını geri gönder
