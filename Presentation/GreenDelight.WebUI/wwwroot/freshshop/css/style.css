@@ -1419,7 +1419,7 @@
 }
  .footer-link ul li a::before {
      font-family: FontAwesome;
-     content: "\f105";
+     content: ;
      position: absolute;
      left: 5px;
      line-height: 35px;
