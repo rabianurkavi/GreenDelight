@@ -32,5 +32,10 @@ namespace GreenDelight.Application.Constants
         public static string CommentAdded = "Yorum eklendi";
         public static string CommentDeleted = "Yorum silindi";
         public static string CommentListed = "Yorumlar listelendi";
+
+        public static string UserTookInfo = "Kullanıcı bilgileri alındı.";
+        public static string UserUpdated = "Kullanıcı güncellendi.";
+
+
     }
 }
