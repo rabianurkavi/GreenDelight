@@ -40,7 +40,12 @@ namespace GreenDelight.WebUI.Controllers
             // ModelState geçerli değilse, formu ve hata mesajlarını geri gönder
             return View(loginDto);
         }
-
+        [HttpGet]
+        public async Task<IActionResult> LogOut()
+        {
+            await _authService.LogoutAsync();
+            return RedirectToAction("Index", "Auth");
+        }
         [HttpGet]
         public async Task<IActionResult> Register()
         {
