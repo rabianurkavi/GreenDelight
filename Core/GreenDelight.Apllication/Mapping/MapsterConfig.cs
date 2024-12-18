@@ -38,8 +38,10 @@ namespace GreenDelight.Apllication.Mapping
 
             TypeAdapterConfig<User, UserAddDto>.NewConfig();
             TypeAdapterConfig<User, UserDetailDto>.NewConfig();
-            TypeAdapterConfig<User, UserDto>.NewConfig();
-            TypeAdapterConfig<User, UserUpdateDto>.NewConfig();
+            TypeAdapterConfig<User, UserDto>.NewConfig()
+                .Map(dest=>dest.ID, src=>src.Id);
+            TypeAdapterConfig<User, User>.NewConfig();
+
 
             TypeAdapterConfig<Adress, AddressAddDto>.NewConfig();
             TypeAdapterConfig<Adress, AddressDetailDto>.NewConfig()
