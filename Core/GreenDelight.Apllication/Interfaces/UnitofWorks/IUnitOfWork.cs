@@ -10,7 +10,7 @@ namespace GreenDelight.Application.Interfaces.UnitofWorks
 {
     public interface IUnitOfWork : IAsyncDisposable
     {
-        IBaseRepository<T> GetGenericRepository<T>() where T : class, IEntityBase, new();
+        IBaseRepository<T> GetGenericRepository<T>() where T : class, new();
 
         Task CommitAsync();
     }

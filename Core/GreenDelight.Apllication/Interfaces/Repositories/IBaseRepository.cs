@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GreenDelight.Application.Interfaces.Repositories
 {
-    public interface IBaseRepository<T> where T : class, IEntityBase, new()
+    public interface IBaseRepository<T> where T : class, new()
     {
         Task<IList<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null,
             Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,//ilişkili tablolar için gerekli

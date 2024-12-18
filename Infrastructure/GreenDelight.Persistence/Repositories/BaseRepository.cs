@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GreenDelight.Persistence.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class, IEntityBase, new()
+    public class BaseRepository<T> : IBaseRepository<T> where T : class, new()
     {
         protected DbSet<T> Table { get => dbContext.Set<T>(); }
         private readonly DbContext dbContext;
