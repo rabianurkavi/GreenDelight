@@ -4,90 +4,145 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="contact-box-main">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-sm-12">
-                <div class="contact-form-right">
-                    <h2>Profilim</h2>
-                    <form id="contactForm" enctype="multipart/form-data">
-                        <div class="row">
-                            <!-- Mevcut Profil Resmi -->
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="profileImagePreview">Mevcut Profil Resmi</label> <br />
-                                    <div style="border: 4px solid #b0b435; display: inline-block;">
-                                        <img id="profileImagePreview" src="~/images/@Model.ImageUrl" alt="Profil Resmi" class="img-fluid" style="width:150px; height:200px; ">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Profil Resmi Yükleme Alanı -->
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="profileImage">Profil Resmi Seç</label>
-                                    <input type="file" class="form-control" id="profileImage" name="profileImage" accept="image/*">
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                            </div>
+<div class="container">
+    <div class="contact_grid_right">
+        <style>
+            body {
+                background-color: white; /* Light gray background */
+            }
 
-                            <!-- İsim Alanı -->
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="name" value="@Model.FullName" name="name" placeholder="İsminizi Girin." required data-error="Please enter your name">
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                            </div>
+            h1 {
+                color: #2c3e50; /* Dark blue heading */
+            }
 
-                            <!-- Email Alanı -->
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="text" placeholder="Your Email" id="email" value="@Model.Email" class="form-control" name="name" required data-error="Please enter your email">
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                            </div>
+            label {
+                color: #2c3e50; /* Dark blue labels */
+            }
 
-                            <!-- Doğum Tarihi Alanı -->
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="subject" name="name" value="@Model.DateOfBirth" placeholder="Subject" required data-error="Please enter your Subject">
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                            </div>
+            .form-control {
+                border: 1px solid #bdc3c7; /* Light gray border */
+            }
 
-                            <!-- Telefon Numarası Alanı -->
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="subject" name="name" value="@Model.PhoneNumber" placeholder="Subject" required data-error="Please enter your Subject">
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                            </div>
+            .btn-primary {
+                background-color: #27ae60; /* Green primary button */
+                border: none;
+                transition: background-color 0.3s ease; /* Smooth transition */
+                padding: 12px 24px; /* Büyük buton boyutu */
+                font-size: 18px; /* Buton metin boyutu */
+            }
 
-                            <!-- Submit Butonu -->
-                            <div class="col-md-12">
-                                <div class="submit-button text-center">
-                                    <button class="btn hvr-hover" id="submit" type="submit">Profili Güncelle</button>
-                                    <div id="msgSubmit" class="h3 text-center hidden"></div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                .btn-primary:hover {
+                    background-color: #219653; /* Darker green on hover */
+                }
+
+            .validation-message {
+                color: red; /* Red validation messages */
+            }
+
+            .profile-picture {
+                border: 5px solid #b0b435; /* Green border */
+                border-radius: 50%; /* Yuvarlak kenarlar */
+                overflow: hidden; /* İçeriğin taşmasını engelle */
+                width: 200px; /* Profil fotoğrafı genişliği */
+                height: 200px; /* Profil fotoğrafı yüksekliği */
+                margin-bottom: 20px; /* Alt kısma boşluk ekle */
+            }
+
+                .profile-picture img {
+                    width: 100%; /* Resmi tam genişlikte göster */
+                    height: 100%; /* Resmi tam yükseklikte göster */
+                    object-fit: cover; /* Resmi kırp ve ölçekle */
+                }
+
+            /* Şifre görünürlüğü */
+            .password-toggle {
+                position: relative;
+            }
+
+                .password-toggle input[type="password"] {
+                    width: calc(100% - 30px); /* Butonun yanında yer kalacak şekilde */
+                    padding-right: 30px; /* Sağ tarafta buton için alan bırak */
+                }
+
+                .password-toggle .eye-icon {
+                    position: absolute;
+                    top: 50%;
+                    right: 10px;
+                    transform: translateY(-50%);
+                    cursor: pointer;
+                }
+        </style>
+
+        @using (Html.BeginForm("UserProfile", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="row contact_left_grid">
+                <div class="col-md-6 con-left">
+                    <br>
+                    @Html.Label("Profil Fotoğrafı")
+                    <br />
+                    <div class="profile-picture">
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            <img src="~/images/@Model.ImageUrl" alt="Profil Fotoğrafı" class="img-fluid" />
+                        }
+                    </div>
+
+                    @Html.HiddenFor(x => x.ImageUrl) <!-- Mevcut görsel yolunu korumak için gizli alan -->
+                    @Html.TextBox("ImageUrl", null, new { @class = "form-control", type = "file" }) <!-- Dosya yükleme girişi -->
+                    @Html.ValidationMessageFor(x => x.ImageUrl)
+                    <br>
+                    @Html.Label("İsim Soyisim")
+                    @Html.TextBoxFor(x => x.FullName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.FullName, "", new { @class = "validation-message" })
+                    <br />
+                    @Html.Label("Email")
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Email, "", new { @class = "validation-message", type = "email" })
+                    <br />
+                    @Html.Label("Telefon Numarası")
+                    <br />
+                    @Html.EditorFor(x => x.PhoneNumber, new { @class = "form-control", type = "tel" })
+                    @Html.ValidationMessageFor(x => x.PhoneNumber, "", new { @class = "validation-message" })
+                    <br />
+                    <br />
+                    @Html.Label("Şifre")
+                    <div class="password-toggle">
+                        @Html.PasswordFor(x => x.Password, new { @class = "form-control", id = "passwordField" })
+                        <i class="fas fa-eye eye-icon" id="togglePassword" onclick="togglePasswordVisibility()"></i> <!-- Göster/Gizle ikonu -->
+                    </div>
+                    @Html.ValidationMessageFor(x => x.Password, "", new { @class = "validation-message" })
+                    <br />
+                    @Html.Label("Doğum Tarihi")
+                    @Html.EditorFor(x => x.DateOfBirth, new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(x => x.DateOfBirth)
+                    <br />
+                    <br />
+                    <br />
+                    @Html.HiddenFor(x => x.ID)
+
+                    <button class="btn hvr-hover" onmouseover="this.style.color='white'">Değişiklikleri Kaydet</button>
+                    <br />
+                    <br />
                 </div>
             </div>
-        </div>
+        }
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
 <script>
-    // Profil resmini yüklerken, görüntüyü önizleyebilmek için JavaScript ekleyelim
-    document.getElementById('profileImage').addEventListener('change', function (event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                document.getElementById('profileImagePreview').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
+    // Şifreyi gösterme/gizleme fonksiyonu
+    function togglePasswordVisibility() {
+        const passwordField = document.getElementById('passwordField');
+        const eyeIcon = document.getElementById('togglePassword');
+        if (passwordField.type === "password") {
+            passwordField.type = "text"; // Şifreyi göster
+            eyeIcon.classList.remove('fa-eye'); // 'Göster' simgesini değiştir
+            eyeIcon.classList.add('fa-eye-slash'); // 'Gizle' simgesini ekle
+        } else {
+            passwordField.type = "password"; // Şifreyi gizle
+            eyeIcon.classList.remove('fa-eye-slash'); // 'Gizle' simgesini değiştir
+            eyeIcon.classList.add('fa-eye'); // 'Göster' simgesini ekle
         }
-    });
+    }
 </script>
