@@ -13,5 +13,6 @@ namespace GreenDelight.Application.Interfaces.Services.UserServices
     {
         Task<UserDto> TakeUserInformation(string userName);
         Task<SuccessDataResult<UserDto>> TakeUserInfo(string username);
+        Task<IResult> UpdateProfile(UserDto userDto);
     }
 }
