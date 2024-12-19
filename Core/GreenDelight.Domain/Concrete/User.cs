@@ -13,6 +13,7 @@ namespace GreenDelight.Domain.Concrete
         public string FullName { get; set; }
         public string? ImageUrl { get; set; }
         public string? RefreshToken { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public DateTime? RefreshTokenExpiryTime { get; set; }
         public ICollection<Adress> Adresses { get; set; }
         public ICollection<Order> Orders { get; set; }
