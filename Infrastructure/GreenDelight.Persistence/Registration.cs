@@ -26,6 +26,8 @@ using GreenDelight.Application.Interfaces.Services.CommentServices;
 using GreenDelight.Persistence.Services.CommentServices;
 using GreenDelight.Application.Interfaces.Services.UserServices;
 using GreenDelight.Persistence.Services.UserServices;
+using GreenDelight.Application.Interfaces.Services.ContactServices;
+using GreenDelight.Persistence.Services.ContactServices;
 
 namespace GreenDelight.Persistence
 {
@@ -42,6 +44,7 @@ namespace GreenDelight.Persistence
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<ILogService, LogService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IContactService, ContactService>();
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
