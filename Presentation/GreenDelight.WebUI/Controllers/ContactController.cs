@@ -21,8 +21,11 @@ namespace GreenDelight.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> SendMessage(ContactDto contactDto)
         {
-            await _contactService.AddAsync(contactDto);
-            ViewBag.Message = contactDto.Message;
+            var result= await _contactService.AddAsync(contactDto);
+            if (result.Success)
+            {
+                ViewBag.Message = result.Message;
+            }
             return View();
         }
     }
