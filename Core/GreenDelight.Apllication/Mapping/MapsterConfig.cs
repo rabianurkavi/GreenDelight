@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GreenDelight.Application.DTOs.CategoryDtos;
 using GreenDelight.Application.DTOs.CommentDtos;
+using GreenDelight.Application.DTOs.ContactDtos;
 
 namespace GreenDelight.Apllication.Mapping
 {
@@ -57,6 +58,9 @@ namespace GreenDelight.Apllication.Mapping
             TypeAdapterConfig<Category, CategoryDetailDto>.NewConfig()
                 .Map(dest=>dest.ID, src=>src.ID);
             TypeAdapterConfig<Category, CategoryAddDto>.NewConfig();
+
+            TypeAdapterConfig<Contact, ContactDto>.NewConfig();
+
 
             TypeAdapterConfig<Comment, CommentAddDto>.NewConfig();
             TypeAdapterConfig<Comment, CommentDto>.NewConfig()
