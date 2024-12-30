@@ -22,14 +22,18 @@ namespace GreenDelight.Persistence.Services.ContactServices
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IResult> AddAsync(ContactDto contactDto)
+        public async Task<IDataResult<bool>> AddAsync(ContactDto contactDto)
         {
             var contact = contactDto.Adapt<Contact>();
 
+            if (contact == null) 
+            {
+                return new ErrorDataResult<bool>("Ürün eklenemedi");
+            }
             await _unitOfWork.GetGenericRepository<Contact>().AddAsync(contact);
             await _unitOfWork.CommitAsync();
-
-            return new SuccessResult(Messages.ContactAdded);
+            
+            return new SuccessDataResult<bool>(true,Messages.ContactAdded);
         }
     }
 }
