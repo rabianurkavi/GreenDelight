@@ -11,6 +11,6 @@ namespace GreenDelight.Application.Interfaces.Services.ContactServices
 {
     public interface IContactService
     {
-        Task<IResult> AddAsync(ContactDto contactDto);
+        Task<IDataResult<bool>> AddAsync(ContactDto contactDto);
     }
 }
