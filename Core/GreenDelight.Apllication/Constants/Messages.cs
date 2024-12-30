@@ -36,6 +36,8 @@ namespace GreenDelight.Application.Constants
         public static string UserTookInfo = "Kullanıcı bilgileri alındı.";
         public static string UserUpdated = "Kullanıcı güncellendi.";
 
+        public static string ContactAdded = "İletişim mesajı gönderildi.";
+
 
     }
 }
