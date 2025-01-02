@@ -31,5 +31,6 @@ namespace GreenDelight.Persistence.Contexts
         DbSet<ErrorLog> ErrorLogs { get; set; }
         DbSet<Comment> Comments { get; set; }
         DbSet<Contact> Contacts { get; set; }
+        DbSet<About> Abouts { get; set; }
     }
 }
