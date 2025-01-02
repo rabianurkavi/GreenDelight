@@ -38,6 +38,9 @@ namespace GreenDelight.Application.Constants
 
         public static string ContactAdded = "İletişim mesajı gönderildi.";
 
+        public static string AboutList = "Hakkımızda yazısı geldi.";
+
+
 
     }
 }
