@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using GreenDelight.Application.DTOs.CategoryDtos;
 using GreenDelight.Application.DTOs.CommentDtos;
 using GreenDelight.Application.DTOs.ContactDtos;
+using GreenDelight.Application.DTOs.AboutDtos;
 
 namespace GreenDelight.Apllication.Mapping
 {
@@ -60,6 +61,8 @@ namespace GreenDelight.Apllication.Mapping
             TypeAdapterConfig<Category, CategoryAddDto>.NewConfig();
 
             TypeAdapterConfig<Contact, ContactDto>.NewConfig();
+
+            TypeAdapterConfig<About, AboutDto>.NewConfig();
 
 
             TypeAdapterConfig<Comment, CommentAddDto>.NewConfig();
