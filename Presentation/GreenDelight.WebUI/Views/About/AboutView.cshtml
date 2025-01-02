@@ -1,0 +1,49 @@
+﻿@model GreenDelight.Application.DTOs.AboutDtos.AboutDto
+@{
+    ViewData["Title"] = "AboutView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <div class="about-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="banner-frame">
+                        <img class="img-fluid" src="/images/@Model.ImageFile" alt="" style="width: 540px; height: 420px;" />
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="noo-sh-title-top"><span>@Model.Title</span></h2>
+                    <p>
+                        @Model.Description
+                    </p>
+                </div>
+            </div>
+            <div class="row my-5">
+                <div class="col-sm-6 col-lg-4">
+                    <div class="service-block-inner">
+                        <h3>Güveniliriz</h3>
+                        <p>Organik ürünlerimizi tedarik ederken, her zaman güvenilir ve kaliteli üreticilerle çalışıyoruz. Müşterilerimize sunduğumuz ürünlerin her biri doğallığından ve sağlıklılığından emin olduğumuz ürünlerdir.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <div class="service-block-inner">
+                        <h3>Profesyoneliz</h3>
+                        <p>Uzman kadromuz, organik tarımın gereksinimlerini ve en iyi üretim tekniklerini bilerek, müşterilerimize en yüksek kaliteli ürünleri sunar. Her aşamada profesyonel yaklaşımımızı sürdürürüz.</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <div class="service-block-inner">
+                        <h3>Uzmanız</h3>
+                        <p>Organik pazar konusunda yıllardır edindiğimiz deneyimle, müşterilerimize sağlıklı, güvenli ve sürdürülebilir ürünler sunmak için çalışıyoruz. Alanındaki en iyi uzmanlardan oluşan bir ekibe sahibiz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
