@@ -29,6 +29,7 @@
   <ItemGroup>
     <Folder Include="Services\OrderItemServices\" />
     <Folder Include="Services\OrderServices\" />
+    <Folder Include="Services\OtherProjectServices\PersonelServices\" />
   </ItemGroup>
 
 </Project>

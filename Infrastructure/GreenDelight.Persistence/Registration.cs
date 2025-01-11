@@ -30,6 +30,8 @@ using GreenDelight.Application.Interfaces.Services.ContactServices;
 using GreenDelight.Persistence.Services.ContactServices;
 using GreenDelight.Application.Interfaces.Services.AboutServices;
 using GreenDelight.Persistence.Services.AboutServices;
+using GreenDelight.Application.Interfaces.Services.OtherProject.VardiyaServices;
+using GreenDelight.Persistence.Services.OtherProjectServices.VardiyaServices;
 
 namespace GreenDelight.Persistence
 {
@@ -48,6 +50,7 @@ namespace GreenDelight.Persistence
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IAboutService, AboutService>();
+            services.AddScoped<IVardiyaService, VardiyaService>();
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();

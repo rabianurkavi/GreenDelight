@@ -4,6 +4,7 @@ using GreenDelight.Infrastructure;
 using Microsoft.OpenApi.Models;
 using GreenDelight.Apllication;
 using GreenDelight.Application.Exceptions;
+using Mapster;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,7 @@ builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 
 
-MapsterConfig.RegisterMappings();
+MapsterConfig.RegisterMappings(TypeAdapterConfig.GlobalSettings);
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Green API", Version = "v1", Description = "Hepsi APÝ swagger client." });

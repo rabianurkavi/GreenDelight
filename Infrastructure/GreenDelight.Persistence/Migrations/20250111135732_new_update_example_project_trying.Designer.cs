@@ -4,6 +4,7 @@ using GreenDelight.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GreenDelight.Persistence.Migrations
 {
     [DbContext(typeof(GreenDelightDbContext))]
-    partial class GreenDelightDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250111135732_new_update_example_project_trying")]
+    partial class new_update_example_project_trying
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -797,9 +800,6 @@ namespace GreenDelight.Persistence.Migrations
                         .HasColumnType("smallint")
                         .HasColumnName("mesai_tur_id");
 
-                    b.Property<int?>("PersonelId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("PersonelNo")
                         .HasColumnType("int")
                         .HasColumnName("personel_no");
@@ -809,7 +809,7 @@ namespace GreenDelight.Persistence.Migrations
 
                     b.HasIndex("MesaiTurId");
 
-                    b.HasIndex("PersonelId");
+                    b.HasIndex("PersonelNo");
 
                     b.ToTable("mesai", (string)null);
                 });
@@ -909,8 +909,6 @@ namespace GreenDelight.Persistence.Migrations
 
                     b.HasKey("PersonelId")
                         .HasName("personel_pk");
-
-                    b.HasAlternateKey("PersonelNo");
 
                     b.HasIndex("OrgBirimKod");
 
@@ -1583,11 +1581,15 @@ namespace GreenDelight.Persistence.Migrations
                         .HasForeignKey("MesaiTurId")
                         .HasConstraintName("mesai_fk");
 
-                    b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Personel", null)
+                    b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Personel", "PersonelNoNavigation")
                         .WithMany("Mesai")
-                        .HasForeignKey("PersonelId");
+                        .HasForeignKey("PersonelNo")
+                        .HasPrincipalKey("PersonelNo")
+                        .HasConstraintName("mesai_fk2");
 
                     b.Navigation("MesaiTur");
+
+                    b.Navigation("PersonelNoNavigation");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.Personel", b =>

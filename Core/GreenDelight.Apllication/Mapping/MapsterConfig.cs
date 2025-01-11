@@ -15,66 +15,102 @@ using GreenDelight.Application.DTOs.CategoryDtos;
 using GreenDelight.Application.DTOs.CommentDtos;
 using GreenDelight.Application.DTOs.ContactDtos;
 using GreenDelight.Application.DTOs.AboutDtos;
+using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.GunlukVardiyaDtos;
+using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.MesaiDtos;
+using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos;
+using GreenDelight.Domain.Concrete.TryEntities;
+using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.PersonelDtos;
 
 namespace GreenDelight.Apllication.Mapping
 {
     public class MapsterConfig
     {
-        public static void RegisterMappings()
+        public static void RegisterMappings(TypeAdapterConfig config)
         {
-            // Product -> ProductAddDto mapping
-            TypeAdapterConfig<Product, ProductAddDto>.NewConfig()
+
+            //    config.NewConfig<Product, ProductAddDto>()
+            //    .Map(dest => dest.CategoryName, src => src.Category.Name);
+
+            //    config.NewConfig<ProductAddDto, Product>()
+            //        .Ignore(dest => dest.Category)
+            //        .Ignore(dest => dest.ID);
+
+            config.NewConfig<Product, ProductDetailDto>()
                 .Map(dest => dest.CategoryName, src => src.Category.Name);
 
-            //// ProductAddDto -> Product mapping
-            //TypeAdapterConfig<ProductAddDto, Product>.NewConfig()
-            //    .Ignore(dest => dest.Category)  // Category'yi ignore et
-            //    .Ignore(dest => dest.ID);       // ID'yi de ignore et
-            TypeAdapterConfig<Product, ProductDetailDto>.NewConfig()
-            .Map(dest => dest.CategoryName, src => src.Category.Name);
+            config.NewConfig<Product, ProductUpdateDto>()
+                .Map(dest => dest.CategoryName, src => src.Category.Name);
 
-            TypeAdapterConfig<Product, ProductUpdateDto>.NewConfig()
-            .Map(dest => dest.CategoryName, src => src.Category.Name);
-            TypeAdapterConfig<Product, ProductDto>.NewConfig()
-            .Map(dest => dest.CategoryName, src => src.Category.Name);
+            config.NewConfig<Product, ProductDto>()
+                .Map(dest => dest.CategoryName, src => src.Category.Name);
 
-            TypeAdapterConfig<User, UserAddDto>.NewConfig();
-            TypeAdapterConfig<User, UserDetailDto>.NewConfig();
-            TypeAdapterConfig<User, UserDto>.NewConfig()
-                .Map(dest=>dest.ID, src=>src.Id);
-            TypeAdapterConfig<User, User>.NewConfig();
+            config.NewConfig<User, UserAddDto>();
 
+            config.NewConfig<User, UserDetailDto>();
 
-            TypeAdapterConfig<Adress, AddressAddDto>.NewConfig();
-            TypeAdapterConfig<Adress, AddressDetailDto>.NewConfig()
-                .Map(dest=> dest.UserFullName,src=>src.User.FullName)
-                .Map(dest=>dest.PhoneNumber, src=>src.User.PhoneNumber);
-            TypeAdapterConfig<Adress, AddressDto>.NewConfig();
-            TypeAdapterConfig<Adress, AddressUpdateDto>.NewConfig();
+            config.NewConfig<User, UserDto>()
+                .Map(dest => dest.ID, src => src.Id);
 
-            TypeAdapterConfig<User, LoginDto>.NewConfig()
+            config.NewConfig<User, User>();
+
+            config.NewConfig<Adress, AddressAddDto>();
+
+            config.NewConfig<Adress, AddressDetailDto>()
+                .Map(dest => dest.UserFullName, src => src.User.FullName)
+                .Map(dest => dest.PhoneNumber, src => src.User.PhoneNumber);
+
+            config.NewConfig<Adress, AddressDto>();
+
+            config.NewConfig<Adress, AddressUpdateDto>();
+
+            config.NewConfig<User, LoginDto>()
                 .Map(dest => dest.Email, src => src.Email)
                 .Map(dest => dest.Password, src => src.PasswordHash);
 
-            TypeAdapterConfig<Category, CategoryDetailDto>.NewConfig()
-                .Map(dest=>dest.ID, src=>src.ID);
-            TypeAdapterConfig<Category, CategoryAddDto>.NewConfig();
+            config.NewConfig<Category, CategoryDetailDto>()
+                .Map(dest => dest.ID, src => src.ID);
 
-            TypeAdapterConfig<Contact, ContactDto>.NewConfig();
+            config.NewConfig<Category, CategoryAddDto>();
 
-            TypeAdapterConfig<About, AboutDto>.NewConfig();
+            config.NewConfig<Contact, ContactDto>();
 
+            config.NewConfig<About, AboutDto>();
 
-            TypeAdapterConfig<Comment, CommentAddDto>.NewConfig();
-            TypeAdapterConfig<Comment, CommentDto>.NewConfig()
+            config.NewConfig<Comment, CommentAddDto>();
+
+            config.NewConfig<Comment, CommentDto>()
                 .Map(dest => dest.UserName, src => src.User.FullName)
                 .Map(dest => dest.UserImageUrl, src => src.User.ImageUrl);
-            TypeAdapterConfig<Adress, AddressDto>.NewConfig();
 
-            TypeAdapterConfig<RegisterDto, User>.NewConfig()
+            config.NewConfig<Adress, AddressDto>();
+
+            config.NewConfig<RegisterDto, User>()
                 .Map(dest => dest.FullName, src => src.FullName)
                 .Map(dest => dest.Email, src => src.Email)
-                .Map(dest => dest.UserName, src => src.UserName); // Email'i UserName olarak ayarlama
+                .Map(dest => dest.UserName, src => src.UserName);
+
+
+            //DEMİRYOLU PROJESİ İÇİN
+            config.NewConfig<(Masa Masa, List<IGrouping<DateTime, GunlukVardiyaMasa>> GunlukVardiyalar), VardiyaDetaylariDto>()
+              .Map(dest => dest.MasaId, src => src.Masa.MasaId)
+              .Map(dest => dest.MasaIsmi, src => src.Masa.Tanim)
+              .Map(dest => dest.GunlukVardiyalar, src => src.GunlukVardiyalar.Adapt<List<GunlukVardiyaDto>>());
+
+            config.NewConfig<IGrouping<DateTime, GunlukVardiyaMasa>, GunlukVardiyaDto>()
+                .Map(dest => dest.GunlukVardiyaTarih, src => src.Key)
+                .Map(dest => dest.Vardiyalar, src => src.Select(x => x.Adapt<VardiyaDto>()).ToList());
+
+            config.NewConfig<GunlukVardiyaMasa, VardiyaDto>()
+                .Map(dest => dest.BaslangicSaat,
+                    src => new DateTime(src.Tarih.Year, src.Tarih.Month, src.Tarih.Day, src.Vardiya.BaslangicSaat.Hour, src.Vardiya.BaslangicSaat.Minute, 0))
+                .Map(dest => dest.BitisSaat,
+                    src => new DateTime(src.Tarih.Year, src.Tarih.Month, src.Tarih.Day, src.Vardiya.BitisSaat.Hour, src.Vardiya.BitisSaat.Minute, 0))
+                .Map(dest => dest.Personel,
+                    src => src.Personel.Adapt<PersonelFiltreDto>());
+
+            config.NewConfig<Personel, PersonelFiltreDto>()
+                .Map(dest => dest.PersonelAd, src => src.Ad)
+                .Map(dest => dest.PersonelSoyad, src => src.Soyad);
         }
     }
 }

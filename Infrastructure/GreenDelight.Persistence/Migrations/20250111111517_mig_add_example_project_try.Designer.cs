@@ -4,6 +4,7 @@ using GreenDelight.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GreenDelight.Persistence.Migrations
 {
     [DbContext(typeof(GreenDelightDbContext))]
-    partial class GreenDelightDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250111111517_mig_add_example_project_try")]
+    partial class mig_add_example_project_try
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -356,113 +359,86 @@ namespace GreenDelight.Persistence.Migrations
                 {
                     b.Property<short>("BolgeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
-                        .HasColumnName("bolge_id");
+                        .HasColumnType("smallint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("BolgeId"));
 
                     b.Property<string>("BolgeAd")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("bolge_ad");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BolgeKisaAd")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("bolge_kisa_ad");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("BolgeId")
-                        .HasName("bolge_pk");
+                    b.HasKey("BolgeId");
 
-                    b.ToTable("bolge", (string)null);
+                    b.ToTable("Bolge");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.GorevTur", b =>
                 {
                     b.Property<short>("GorevTurId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
-                        .HasColumnName("gorev_tur_id");
+                        .HasColumnType("smallint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("GorevTurId"));
 
                     b.Property<string>("Tanim")
                         .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("tanim");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("GorevTurId")
-                        .HasName("gorev_tur_pk");
+                    b.HasKey("GorevTurId");
 
-                    b.HasIndex(new[] { "Tanim" }, "gorev_tur_un")
-                        .IsUnique();
-
-                    b.ToTable("gorev_tur", (string)null);
+                    b.ToTable("GorevTur");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.Gorevlendirme", b =>
                 {
                     b.Property<long>("GorevlendirmeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("gorevlendirme_id");
+                        .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("GorevlendirmeId"));
 
                     b.Property<string>("Aciklama")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("aciklama");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BelgenetSayi")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("belgenet_sayi");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("BelgenetTarih")
-                        .HasColumnType("datetime")
-                        .HasColumnName("belgenet_tarih");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("BirimAdi")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("birim_adi");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BirimTur")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("birim_tur");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<short>("GorevTurId")
-                        .HasColumnType("smallint")
-                        .HasColumnName("gorev_tur_id");
+                        .HasColumnType("smallint");
 
                     b.Property<int>("GorevlendirilecekPersonelNo")
-                        .HasColumnType("int")
-                        .HasColumnName("gorevlendirilecek_personel_no");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("GorevlendirmeBaslangic")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasColumnName("gorevlendirme_baslangic")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("GorevlendirmeBirim")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("gorevlendirme_birim")
-                        .HasComment("org_birim_kod");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("GorevlendirmeBitis")
-                        .HasColumnType("datetime")
-                        .HasColumnName("gorevlendirme_bitis");
+                        .HasColumnType("datetime2");
 
                     b.Property<short>("GorevlendirmeTurId")
-                        .HasColumnType("smallint")
-                        .HasColumnName("gorevlendirme_tur_id");
+                        .HasColumnType("smallint");
 
                     b.Property<int?>("PersonelId")
-                        .HasColumnType("int")
-                        .HasColumnName("personel_id");
+                        .HasColumnType("int");
 
-                    b.HasKey("GorevlendirmeId")
-                        .HasName("gorevlendirme_pk");
+                    b.HasKey("GorevlendirmeId");
 
                     b.HasIndex("GorevTurId");
 
@@ -470,610 +446,497 @@ namespace GreenDelight.Persistence.Migrations
 
                     b.HasIndex("PersonelId");
 
-                    b.ToTable("gorevlendirme", (string)null);
+                    b.ToTable("Gorevlendirme");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.GorevlendirmeTur", b =>
                 {
                     b.Property<short>("GorevlendirmeTurId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
-                        .HasColumnName("gorevlendirme_tur_id");
+                        .HasColumnType("smallint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("GorevlendirmeTurId"));
 
                     b.Property<string>("Tanim")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("tanim");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("GorevlendirmeTurId")
-                        .HasName("gorevlendirme_tur_pk");
+                    b.HasKey("GorevlendirmeTurId");
 
-                    b.ToTable("gorevlendirme_tur", (string)null);
+                    b.ToTable("GorevlendirmeTur");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.GunlukVardiyaIstasyonBirim", b =>
                 {
                     b.Property<long>("GunlukVardiyaIstasyonBirimId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("gunluk_vardiya_istasyon_birim_id");
+                        .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("GunlukVardiyaIstasyonBirimId"));
 
                     b.Property<int>("IstasyonBirimId")
-                        .HasColumnType("int")
-                        .HasColumnName("istasyon_birim_id");
+                        .HasColumnType("int");
 
                     b.Property<int>("PersonelId")
-                        .HasColumnType("int")
-                        .HasColumnName("personel_id");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Tarih")
-                        .HasColumnType("datetime")
-                        .HasColumnName("tarih");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("VardiyaId")
-                        .HasColumnType("int")
-                        .HasColumnName("vardiya_id");
+                        .HasColumnType("int");
 
-                    b.HasKey("GunlukVardiyaIstasyonBirimId")
-                        .HasName("gunluk_vardiya_istasyon_pkey_1");
+                    b.HasKey("GunlukVardiyaIstasyonBirimId");
+
+                    b.HasIndex("IstasyonBirimId");
 
                     b.HasIndex("PersonelId");
 
-                    b.HasIndex(new[] { "IstasyonBirimId" }, "fki_fk_gunluk_vardiya_istasyon_birim_id");
+                    b.HasIndex("VardiyaId");
 
-                    b.HasIndex(new[] { "VardiyaId" }, "fki_fk_gunluk_vardiya_istasyon_vardiya_id");
-
-                    b.ToTable("gunluk_vardiya_istasyon_birim", (string)null);
+                    b.ToTable("GunlukVardiyaIstasyonBirim");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.GunlukVardiyaMasa", b =>
                 {
                     b.Property<long>("GunlukVardiyaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("gunluk_vardiya_id");
+                        .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("GunlukVardiyaId"));
 
                     b.Property<short>("MasaId")
-                        .HasColumnType("smallint")
-                        .HasColumnName("masa_id");
+                        .HasColumnType("smallint");
 
                     b.Property<int>("PersonelId")
-                        .HasColumnType("int")
-                        .HasColumnName("personel_id");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Tarih")
-                        .HasColumnType("datetime")
-                        .HasColumnName("tarih");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("VardiyaId")
-                        .HasColumnType("int")
-                        .HasColumnName("vardiya_id");
+                        .HasColumnType("int");
 
-                    b.HasKey("GunlukVardiyaId")
-                        .HasName("gunluk_vardiya_pkey");
+                    b.HasKey("GunlukVardiyaId");
 
-                    b.HasIndex(new[] { "MasaId" }, "fki_fk_gunluk_vardiya_masa_id");
+                    b.HasIndex("MasaId");
 
-                    b.HasIndex(new[] { "VardiyaId" }, "fki_fk_gunluk_vardiya_masa_vardiya_id");
+                    b.HasIndex("PersonelId");
 
-                    b.HasIndex(new[] { "PersonelId" }, "fki_fk_gunluk_vardiya_personel_id");
+                    b.HasIndex("VardiyaId");
 
-                    b.ToTable("gunluk_vardiya_masa", (string)null);
+                    b.ToTable("GunlukVardiyaMasa");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.Istasyon", b =>
                 {
                     b.Property<int>("IstasyonId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("istasyon_id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IstasyonId"));
 
                     b.Property<DateTime?>("GuncellenmeTarihi")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("guncellenme_tarihi")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("IstasyonAd")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("istasyon_ad");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IstasyonKod")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("istasyon_kod");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IstasyonId")
-                        .HasName("istasyon_pk");
+                    b.HasKey("IstasyonId");
 
-                    b.ToTable("istasyon", (string)null);
+                    b.ToTable("Istasyon");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.IstasyonBirim", b =>
                 {
                     b.Property<int>("IstasyonBirimId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("istasyon_birim_id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IstasyonBirimId"));
 
                     b.Property<short>("IstasyonBirimTurId")
-                        .HasColumnType("smallint")
-                        .HasColumnName("istasyon_birim_tur_id");
+                        .HasColumnType("smallint");
 
                     b.Property<int>("IstasyonId")
-                        .HasColumnType("int")
-                        .HasColumnName("istasyon_id");
+                        .HasColumnType("int");
 
-                    b.HasKey("IstasyonBirimId")
-                        .HasName("istasyon_birim_pk");
+                    b.HasKey("IstasyonBirimId");
 
-                    b.HasIndex(new[] { "IstasyonBirimTurId" }, "fki_fk_birim_istasyon_birim_tur_id");
+                    b.HasIndex("IstasyonBirimTurId");
 
-                    b.HasIndex(new[] { "IstasyonId" }, "fki_fk_birim_istasyon_id");
+                    b.HasIndex("IstasyonId");
 
-                    b.ToTable("istasyon_birim", (string)null);
+                    b.ToTable("IstasyonBirim");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.IstasyonBirimTur", b =>
                 {
                     b.Property<short>("IstasyonBirimTurId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
-                        .HasColumnName("istasyon_birim_tur_id");
+                        .HasColumnType("smallint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("IstasyonBirimTurId"));
 
                     b.Property<string>("IstasyonBirimTurTanim")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("istasyon_birim_tur_tanim");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IstasyonBirimTurId")
-                        .HasName("istasyon_birim_tur_pk");
+                    b.HasKey("IstasyonBirimTurId");
 
-                    b.ToTable("istasyon_birim_tur", (string)null);
+                    b.ToTable("IstasyonBirimTur");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.IstasyonDurum", b =>
                 {
                     b.Property<int>("IstasyonDurumId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("istasyon_durum_id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IstasyonDurumId"));
 
                     b.Property<DateTime?>("BaslangicZamani")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("baslangic_zamani");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("BitisZamani")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("bitis_zamani");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("GecerlilikBaslangic")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("gecerlilik_baslangic");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("GecerlilikBitis")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("gecerlilik_bitis");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("IstasyonDurumTurId")
-                        .HasColumnType("int")
-                        .HasColumnName("istasyon_durum_tur_id");
+                        .HasColumnType("int");
 
                     b.Property<int>("IstasyonId")
-                        .HasColumnType("int")
-                        .HasColumnName("istasyon_id");
+                        .HasColumnType("int");
 
-                    b.HasKey("IstasyonDurumId")
-                        .HasName("istasyon_durum_pkey");
+                    b.HasKey("IstasyonDurumId");
 
                     b.HasIndex("IstasyonDurumTurId");
 
                     b.HasIndex("IstasyonId");
 
-                    b.ToTable("istasyon_durum", (string)null);
+                    b.ToTable("IstasyonDurum");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.IstasyonDurumTur", b =>
                 {
                     b.Property<int>("IstasyonDurumTurId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("istasyon_durum_tur_id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IstasyonDurumTurId"));
 
                     b.Property<string>("Tanim")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("tanim");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IstasyonDurumTurId")
-                        .HasName("istasyon_durum_tur_pkey");
+                    b.HasKey("IstasyonDurumTurId");
 
-                    b.ToTable("istasyon_durum_tur", (string)null);
+                    b.ToTable("IstasyonDurumTur");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.IzinTur", b =>
                 {
                     b.Property<short>("IzinTurId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
-                        .HasColumnName("izin_tur_id");
+                        .HasColumnType("smallint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("IzinTurId"));
 
                     b.Property<string>("Aciklama")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("aciklama");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tanim")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("tanim");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IzinTurId")
-                        .HasName("izin_tur_pk");
+                    b.HasKey("IzinTurId");
 
-                    b.ToTable("izin_tur", (string)null);
+                    b.ToTable("IzinTur");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.Masa", b =>
                 {
                     b.Property<short>("MasaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
-                        .HasColumnName("masa_id");
+                        .HasColumnType("smallint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("MasaId"));
 
                     b.Property<bool>("Aktif")
-                        .HasColumnType("bit")
-                        .HasColumnName("aktif");
+                        .HasColumnType("bit");
 
                     b.Property<bool?>("IsClone")
-                        .HasColumnType("bit")
-                        .HasColumnName("is_clone");
+                        .HasColumnType("bit");
 
                     b.Property<short?>("ParentId")
-                        .HasColumnType("smallint")
-                        .HasColumnName("parent_id");
+                        .HasColumnType("smallint");
 
                     b.Property<string>("Renk")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("renk");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tanim")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("tanim");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<short>("TrafikYonetimMerkeziId")
-                        .HasColumnType("smallint")
-                        .HasColumnName("trafik_yonetim_merkezi_id");
+                        .HasColumnType("smallint");
 
-                    b.HasKey("MasaId")
-                        .HasName("masa_pkey");
+                    b.HasKey("MasaId");
 
-                    b.HasIndex(new[] { "ParentId" }, "fki_fk_masa_parent_id");
+                    b.HasIndex("ParentId");
 
-                    b.HasIndex(new[] { "TrafikYonetimMerkeziId" }, "fki_fk_masa_trafik_yonetim_merkezi_id");
+                    b.HasIndex("TrafikYonetimMerkeziId");
 
-                    b.ToTable("masa", (string)null);
+                    b.ToTable("Masa");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.Mesai", b =>
                 {
                     b.Property<long>("MesaiId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("mesai_id");
+                        .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("MesaiId"));
 
                     b.Property<DateTime?>("MesaiBaslangic")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("mesai_baslangic");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("MesaiBitis")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("mesai_bitis");
+                        .HasColumnType("datetime2");
 
                     b.Property<short?>("MesaiTurId")
-                        .HasColumnType("smallint")
-                        .HasColumnName("mesai_tur_id");
-
-                    b.Property<int?>("PersonelId")
-                        .HasColumnType("int");
+                        .HasColumnType("smallint");
 
                     b.Property<int?>("PersonelNo")
-                        .HasColumnType("int")
-                        .HasColumnName("personel_no");
+                        .HasColumnType("int");
 
-                    b.HasKey("MesaiId")
-                        .HasName("mesai_pk");
+                    b.Property<int?>("PersonelNoNavigationPersonelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MesaiId");
 
                     b.HasIndex("MesaiTurId");
 
-                    b.HasIndex("PersonelId");
+                    b.HasIndex("PersonelNoNavigationPersonelId");
 
-                    b.ToTable("mesai", (string)null);
+                    b.ToTable("Mesai");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.MesaiTur", b =>
                 {
                     b.Property<short>("MesaiTurId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
-                        .HasColumnName("mesai_tur_id");
+                        .HasColumnType("smallint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("MesaiTurId"));
 
                     b.Property<string>("Birim")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("birim");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MesaiTurTanim")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("mesai_tur_tanim");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("MesaiTurId")
-                        .HasName("mesai_tur_pk");
+                    b.HasKey("MesaiTurId");
 
-                    b.ToTable("mesai_tur", (string)null);
+                    b.ToTable("MesaiTur");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.OrgBirim", b =>
                 {
                     b.Property<long>("OrgBirimId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasColumnName("org_birim_id");
+                        .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OrgBirimId"));
 
                     b.Property<string>("OrgBirimKod")
                         .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("org_birim_kod");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrgBirimTanim")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("org_birim_tanim");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UstOrgBirimKod")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ust_org_birim_kod");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("OrgBirimId")
-                        .HasName("org_birim_pk");
+                    b.HasKey("OrgBirimId");
 
-                    b.HasIndex(new[] { "OrgBirimKod" }, "org_birim_un")
-                        .IsUnique();
-
-                    b.ToTable("org_birim", (string)null);
+                    b.ToTable("OrgBirim");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.Personel", b =>
                 {
                     b.Property<int>("PersonelId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("personel_id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PersonelId"));
 
                     b.Property<string>("Ad")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ad");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrgBirimKod")
                         .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("org_birim_kod");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("OrgBirimKodNavigationOrgBirimId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("PersonelNo")
-                        .HasColumnType("int")
-                        .HasColumnName("personel_no");
+                        .HasColumnType("int");
 
                     b.Property<string>("SicilNo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("sicil_no");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soyad")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("soyad");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("TcKimlikNo")
-                        .HasColumnType("bigint")
-                        .HasColumnName("tc_kimlik_no");
+                        .HasColumnType("bigint");
 
-                    b.HasKey("PersonelId")
-                        .HasName("personel_pk");
+                    b.HasKey("PersonelId");
 
-                    b.HasAlternateKey("PersonelNo");
+                    b.HasIndex("OrgBirimKodNavigationOrgBirimId");
 
-                    b.HasIndex("OrgBirimKod");
-
-                    b.HasIndex(new[] { "PersonelNo" }, "personel_un")
-                        .IsUnique();
-
-                    b.ToTable("personel", (string)null);
+                    b.ToTable("Personel");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.PersonelIzin", b =>
                 {
                     b.Property<int>("PersonelIzinId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("personel_izin_id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PersonelIzinId"));
 
                     b.Property<string>("Aciklama")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("aciklama");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("IzinBaslangicTarihi")
-                        .HasColumnType("datetime")
-                        .HasColumnName("izin_baslangic_tarihi");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("IzinBitisTarihi")
-                        .HasColumnType("datetime")
-                        .HasColumnName("izin_bitis_tarihi");
+                        .HasColumnType("datetime2");
 
                     b.Property<short>("IzinTurId")
-                        .HasColumnType("smallint")
-                        .HasColumnName("izin_tur_id");
+                        .HasColumnType("smallint");
 
                     b.Property<int>("PersonelId")
-                        .HasColumnType("int")
-                        .HasColumnName("personel_id");
+                        .HasColumnType("int");
 
-                    b.HasKey("PersonelIzinId")
-                        .HasName("personel_izin_pk");
+                    b.HasKey("PersonelIzinId");
 
                     b.HasIndex("IzinTurId");
 
                     b.HasIndex("PersonelId");
 
-                    b.ToTable("personel_izin", (string)null);
+                    b.ToTable("PersonelIzin");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.TrafikYonetimMerkezi", b =>
                 {
                     b.Property<short>("TrafikYonetimMerkeziId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
-                        .HasColumnName("trafik_yonetim_merkezi_id");
+                        .HasColumnType("smallint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<short>("TrafikYonetimMerkeziId"));
 
                     b.Property<bool>("Aktif")
-                        .HasColumnType("bit")
-                        .HasColumnName("aktif");
+                        .HasColumnType("bit");
 
                     b.Property<string>("BirimKodu")
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("birim_kodu");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<short>("BolgeId")
-                        .HasColumnType("smallint")
-                        .HasColumnName("bolge_id");
+                        .HasColumnType("smallint");
 
                     b.Property<string>("Tanim")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("tanim");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("TrafikYonetimMerkeziId")
-                        .HasName("trafik_yonetim_merkezi_pkey");
+                    b.HasKey("TrafikYonetimMerkeziId");
 
-                    b.HasIndex(new[] { "BolgeId" }, "fki_fk_trafik_yonetim_merkezi_bolge");
+                    b.HasIndex("BolgeId");
 
-                    b.HasIndex(new[] { "BolgeId" }, "fki_fk_tym_bolge_id");
-
-                    b.HasIndex(new[] { "BirimKodu" }, "trafik_yonetim_merkezi_un")
-                        .IsUnique()
-                        .HasFilter("[birim_kodu] IS NOT NULL");
-
-                    b.ToTable("trafik_yonetim_merkezi", (string)null);
+                    b.ToTable("TrafikYonetimMerkezi");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.Vardiya", b =>
                 {
                     b.Property<int>("VardiyaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("vardiya_id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VardiyaId"));
 
                     b.Property<TimeOnly>("BaslangicSaat")
-                        .HasColumnType("time")
-                        .HasColumnName("baslangic_saat");
+                        .HasColumnType("time");
 
                     b.Property<TimeOnly>("BitisSaat")
-                        .HasColumnType("time")
-                        .HasColumnName("bitis_saat");
+                        .HasColumnType("time");
 
                     b.Property<short?>("SiraNo")
-                        .HasColumnType("smallint")
-                        .HasColumnName("sira_no");
+                        .HasColumnType("smallint");
 
                     b.Property<int>("VardiyaSablonId")
-                        .HasColumnType("int")
-                        .HasColumnName("vardiya_sablon_id");
+                        .HasColumnType("int");
 
-                    b.HasKey("VardiyaId")
-                        .HasName("vardiya_pkey");
+                    b.HasKey("VardiyaId");
 
-                    b.HasIndex(new[] { "VardiyaSablonId" }, "fki_fk_vardiya_vardiya_sablon_id");
+                    b.HasIndex("VardiyaSablonId");
 
-                    b.ToTable("vardiya", (string)null);
+                    b.ToTable("Vardiya");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.VardiyaSablonYer", b =>
                 {
                     b.Property<int>("VardiyaSablonYerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("vardiya_sablon_yer_id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VardiyaSablonYerId"));
 
                     b.Property<DateTime?>("GecerlilikBaslangic")
-                        .HasColumnType("datetime")
-                        .HasColumnName("gecerlilik_baslangic");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("GecerlilikBitis")
-                        .HasColumnType("datetime")
-                        .HasColumnName("gecerlilik_bitis");
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("IstasyonBirimId")
-                        .HasColumnType("int")
-                        .HasColumnName("istasyon_birim_id");
+                        .HasColumnType("int");
 
                     b.Property<short?>("MasaId")
-                        .HasColumnType("smallint")
-                        .HasColumnName("masa_id");
+                        .HasColumnType("smallint");
 
                     b.Property<short>("MaxVardiya")
-                        .HasColumnType("smallint")
-                        .HasColumnName("max_vardiya");
+                        .HasColumnType("smallint");
 
                     b.Property<string>("Tanim")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("tanim");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("VardiyaSablonYerId")
-                        .HasName("vardiya_sablon_pkey");
+                    b.HasKey("VardiyaSablonYerId");
 
                     b.HasIndex("IstasyonBirimId");
 
                     b.HasIndex("MasaId");
 
-                    b.ToTable("vardiya_sablon_yer", (string)null);
+                    b.ToTable("VardiyaSablonYer");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.User", b =>
@@ -1186,26 +1049,6 @@ namespace GreenDelight.Persistence.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("IdentityRole<Guid>");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
@@ -1228,59 +1071,6 @@ namespace GreenDelight.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser<System.Guid>", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("IdentityUser<Guid>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
@@ -1309,19 +1099,21 @@ namespace GreenDelight.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("UserId");
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
@@ -1436,19 +1228,18 @@ namespace GreenDelight.Persistence.Migrations
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.GorevTur", "GorevTur")
                         .WithMany("Gorevlendirme")
                         .HasForeignKey("GorevTurId")
-                        .IsRequired()
-                        .HasConstraintName("gorevlendirme_fk2");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.GorevlendirmeTur", "GorevlendirmeTur")
                         .WithMany("Gorevlendirme")
                         .HasForeignKey("GorevlendirmeTurId")
-                        .IsRequired()
-                        .HasConstraintName("gorevlendirme_fk");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Personel", "Personel")
                         .WithMany("Gorevlendirme")
-                        .HasForeignKey("PersonelId")
-                        .HasConstraintName("gorevlendirme_personel_fk");
+                        .HasForeignKey("PersonelId");
 
                     b.Navigation("GorevTur");
 
@@ -1462,23 +1253,20 @@ namespace GreenDelight.Persistence.Migrations
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.IstasyonBirim", "IstasyonBirim")
                         .WithMany("GunlukVardiyaIstasyonBirim")
                         .HasForeignKey("IstasyonBirimId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_gunluk_vardiya_istasyon_birim_id");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Personel", "Personel")
                         .WithMany("GunlukVardiyaIstasyonBirim")
                         .HasForeignKey("PersonelId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("gunluk_vardiya_istasyon_birim_fk");
+                        .IsRequired();
 
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Vardiya", "Vardiya")
                         .WithMany("GunlukVardiyaIstasyonBirim")
                         .HasForeignKey("VardiyaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_gunluk_vardiya_istasyon_vardiya_id");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("IstasyonBirim");
 
@@ -1492,22 +1280,20 @@ namespace GreenDelight.Persistence.Migrations
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Masa", "Masa")
                         .WithMany("GunlukVardiyaMasa")
                         .HasForeignKey("MasaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_gunluk_vardiya_masa_id");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Personel", "Personel")
                         .WithMany("GunlukVardiyaMasa")
                         .HasForeignKey("PersonelId")
-                        .IsRequired()
-                        .HasConstraintName("gunluk_vardiya_masa_fk");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Vardiya", "Vardiya")
                         .WithMany("GunlukVardiyaMasa")
                         .HasForeignKey("VardiyaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_gunluk_vardiya_masa_vardiya_id");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Masa");
 
@@ -1521,16 +1307,14 @@ namespace GreenDelight.Persistence.Migrations
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.IstasyonBirimTur", "IstasyonBirimTur")
                         .WithMany("IstasyonBirim")
                         .HasForeignKey("IstasyonBirimTurId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_birim_istasyon_birim_tur_id");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Istasyon", "Istasyon")
                         .WithMany("IstasyonBirim")
                         .HasForeignKey("IstasyonId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_birim_istasyon_id");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Istasyon");
 
@@ -1542,14 +1326,14 @@ namespace GreenDelight.Persistence.Migrations
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.IstasyonDurumTur", "IstasyonDurumTur")
                         .WithMany("IstasyonDurum")
                         .HasForeignKey("IstasyonDurumTurId")
-                        .IsRequired()
-                        .HasConstraintName("istasyon_durum_fk");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Istasyon", "Istasyon")
                         .WithMany("IstasyonDurum")
                         .HasForeignKey("IstasyonId")
-                        .IsRequired()
-                        .HasConstraintName("istasyon_istasyon_durum_fk");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Istasyon");
 
@@ -1560,16 +1344,13 @@ namespace GreenDelight.Persistence.Migrations
                 {
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Masa", "Parent")
                         .WithMany("InverseParent")
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_masa_parent_id");
+                        .HasForeignKey("ParentId");
 
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.TrafikYonetimMerkezi", "TrafikYonetimMerkezi")
                         .WithMany("Masa")
                         .HasForeignKey("TrafikYonetimMerkeziId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_masa_trafik_yonetim_merkezi_id");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Parent");
 
@@ -1580,24 +1361,24 @@ namespace GreenDelight.Persistence.Migrations
                 {
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.MesaiTur", "MesaiTur")
                         .WithMany("Mesai")
-                        .HasForeignKey("MesaiTurId")
-                        .HasConstraintName("mesai_fk");
+                        .HasForeignKey("MesaiTurId");
 
-                    b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Personel", null)
+                    b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Personel", "PersonelNoNavigation")
                         .WithMany("Mesai")
-                        .HasForeignKey("PersonelId");
+                        .HasForeignKey("PersonelNoNavigationPersonelId");
 
                     b.Navigation("MesaiTur");
+
+                    b.Navigation("PersonelNoNavigation");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.Personel", b =>
                 {
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.OrgBirim", "OrgBirimKodNavigation")
                         .WithMany("Personel")
-                        .HasForeignKey("OrgBirimKod")
-                        .HasPrincipalKey("OrgBirimKod")
-                        .IsRequired()
-                        .HasConstraintName("personel_fk");
+                        .HasForeignKey("OrgBirimKodNavigationOrgBirimId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("OrgBirimKodNavigation");
                 });
@@ -1607,14 +1388,14 @@ namespace GreenDelight.Persistence.Migrations
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.IzinTur", "IzinTur")
                         .WithMany("PersonelIzin")
                         .HasForeignKey("IzinTurId")
-                        .IsRequired()
-                        .HasConstraintName("personel_izin_fk");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Personel", "Personel")
                         .WithMany("PersonelIzin")
                         .HasForeignKey("PersonelId")
-                        .IsRequired()
-                        .HasConstraintName("personel_personel_izin_fk");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("IzinTur");
 
@@ -1626,8 +1407,8 @@ namespace GreenDelight.Persistence.Migrations
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Bolge", "Bolge")
                         .WithMany("TrafikYonetimMerkezi")
                         .HasForeignKey("BolgeId")
-                        .IsRequired()
-                        .HasConstraintName("trafik_yonetim_merkezi_fk");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Bolge");
                 });
@@ -1637,9 +1418,8 @@ namespace GreenDelight.Persistence.Migrations
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.VardiyaSablonYer", "VardiyaSablon")
                         .WithMany("Vardiya")
                         .HasForeignKey("VardiyaSablonId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_vardiya_vardiya_sablon_id");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("VardiyaSablon");
                 });
@@ -1648,13 +1428,11 @@ namespace GreenDelight.Persistence.Migrations
                 {
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.IstasyonBirim", "IstasyonBirim")
                         .WithMany("VardiyaSablonYer")
-                        .HasForeignKey("IstasyonBirimId")
-                        .HasConstraintName("vardiya_sablon_yer_fk_1");
+                        .HasForeignKey("IstasyonBirimId");
 
                     b.HasOne("GreenDelight.Domain.Concrete.TryEntities.Masa", "Masa")
                         .WithMany("VardiyaSablonYer")
-                        .HasForeignKey("MasaId")
-                        .HasConstraintName("vardiya_sablon_yer_fk");
+                        .HasForeignKey("MasaId");
 
                     b.Navigation("IstasyonBirim");
 

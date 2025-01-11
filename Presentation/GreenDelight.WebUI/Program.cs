@@ -3,6 +3,7 @@ using GreenDelight.Persistence;
 using GreenDelight.Infrastructure;
 using GreenDelight.Apllication;
 using GreenDelight.Application.Exceptions;
+using Mapster;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,7 @@ builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 
-MapsterConfig.RegisterMappings();
+MapsterConfig.RegisterMappings(TypeAdapterConfig.GlobalSettings);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
