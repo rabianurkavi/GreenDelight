@@ -1,4 +1,5 @@
 ﻿using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos;
+using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.MasaDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace GreenDelight.Application.Interfaces.Services.OtherProject.VardiyaServi
 {
     public interface IVardiyaService
     {
-        Task<VardiyaDetaylariDto> GetVardiyaDetaylariByMasaIdAsync(short masaId, DateTime monthDate);
+        Task<MasaDto> GetVardiyaDetaylariByMasaIdAsync(short masaId, DateTime monthDate);
     }
 }
