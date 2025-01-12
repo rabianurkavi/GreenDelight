@@ -20,6 +20,8 @@ using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.MesaiDtos;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos;
 using GreenDelight.Domain.Concrete.TryEntities;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.PersonelDtos;
+using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.MasaDtos;
+using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.SablonDtos;
 
 namespace GreenDelight.Apllication.Mapping
 {
@@ -91,26 +93,35 @@ namespace GreenDelight.Apllication.Mapping
 
 
             //DEMİRYOLU PROJESİ İÇİN
-            config.NewConfig<(Masa Masa, List<IGrouping<DateTime, GunlukVardiyaMasa>> GunlukVardiyalar), VardiyaDetaylariDto>()
-              .Map(dest => dest.MasaId, src => src.Masa.MasaId)
-              .Map(dest => dest.MasaIsmi, src => src.Masa.Tanim)
-              .Map(dest => dest.GunlukVardiyalar, src => src.GunlukVardiyalar.Adapt<List<GunlukVardiyaDto>>());
+    //        config.NewConfig<(Masa Masa, List<VardiyaSablonYer> Sablonlar), MasaDto>()
+    // .Map(dest => dest.MasaId, src => src.Masa.MasaId)
+    // .Map(dest => dest.MasaIsmi, src => src.Masa.Tanim)
+    // .Map(dest => dest.Sablonlar, src => src.Sablonlar.Adapt<List<SablonDetayDto>>());
 
-            config.NewConfig<IGrouping<DateTime, GunlukVardiyaMasa>, GunlukVardiyaDto>()
-                .Map(dest => dest.GunlukVardiyaTarih, src => src.Key)
-                .Map(dest => dest.Vardiyalar, src => src.Select(x => x.Adapt<VardiyaDto>()).ToList());
+    //        config.NewConfig<VardiyaSablonYer, SablonDetayDto>()
+    //            .Map(dest => dest.SablonId, src => src.VardiyaSablonYerId)
+    //            .Map(dest => dest.SablonTanim, src => src.Tanim)
+    //            .Map(dest => dest.SablonBaslangicTarihi, src => src.GecerlilikBaslangic)
+    //            .Map(dest => dest.SablonBitisTarihi, src => src.GecerlilikBitis)
+    //            .Map(dest => dest.MaxVardiya, src => src.MaxVardiya)
+    //            .Map(dest => dest.GunlukVardiyalar, src => src.Vardiya
+    //.SelectMany(v => v.GunlukVardiyaMasa)
+    //.GroupBy(gvm => gvm.Tarih)
+    //.Select(group => group.Adapt<GunlukVardiyaDto>())
+    //.ToList());
 
-            config.NewConfig<GunlukVardiyaMasa, VardiyaDto>()
-                .Map(dest => dest.BaslangicSaat,
-                    src => new DateTime(src.Tarih.Year, src.Tarih.Month, src.Tarih.Day, src.Vardiya.BaslangicSaat.Hour, src.Vardiya.BaslangicSaat.Minute, 0))
-                .Map(dest => dest.BitisSaat,
-                    src => new DateTime(src.Tarih.Year, src.Tarih.Month, src.Tarih.Day, src.Vardiya.BitisSaat.Hour, src.Vardiya.BitisSaat.Minute, 0))
-                .Map(dest => dest.Personel,
-                    src => src.Personel.Adapt<PersonelFiltreDto>());
+    //        config.NewConfig<IGrouping<DateTime, GunlukVardiyaMasa>, GunlukVardiyaDto>()
+    //            .Map(dest => dest.GunlukVardiyaTarih, src => src.Key)
+    //            .Map(dest => dest.Vardiyalar, src => src.Select(x => x.Adapt<VardiyaDto>()).ToList());
 
-            config.NewConfig<Personel, PersonelFiltreDto>()
-                .Map(dest => dest.PersonelAd, src => src.Ad)
-                .Map(dest => dest.PersonelSoyad, src => src.Soyad);
+    //        config.NewConfig<GunlukVardiyaMasa, VardiyaDto>()
+    //            .Map(dest => dest.BaslangicSaat, src => new TimeOnly(src.Vardiya.BaslangicSaat.Hour, src.Vardiya.BaslangicSaat.Minute))
+    //            .Map(dest => dest.BitisSaat, src => new TimeOnly(src.Vardiya.BitisSaat.Hour, src.Vardiya.BitisSaat.Minute))
+    //            .Map(dest => dest.Personel, src => src.Personel.Adapt<PersonelFiltreDto>());
+
+    //        config.NewConfig<Personel, PersonelFiltreDto>()
+    //            .Map(dest => dest.PersonelAd, src => src.Ad)
+    //            .Map(dest => dest.PersonelSoyad, src => src.Soyad);
         }
     }
 }
