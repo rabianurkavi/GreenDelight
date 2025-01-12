@@ -1,7 +1,9 @@
 ﻿using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.GunlukVardiyaDtos;
+using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.MasaDtos;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.MesaiDtos;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.PersonelDtos;
+using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.SablonDtos;
 using GreenDelight.Application.Interfaces.Services.OtherProject.VardiyaServices;
 using GreenDelight.Application.Interfaces.UnitofWorks;
 using GreenDelight.Domain.Concrete.TryEntities;
@@ -22,47 +24,66 @@ namespace GreenDelight.Persistence.Services.OtherProjectServices.VardiyaServices
         {
             _unitOfWork = unitOfWork;
         }
-        public async Task<VardiyaDetaylariDto> GetVardiyaDetaylariByMasaIdAsync(short masaId, DateTime monthDate)
+        public async Task<MasaDto> GetVardiyaDetaylariByMasaIdAsync(short masaId, DateTime monthDate)
         {
             var startDate = new DateTime(monthDate.Year, monthDate.Month, 1);
-            var endDate = startDate.AddMonths(1).AddDays(-1); // Ayın son günü
+            var endDate = startDate.AddMonths(1).AddDays(-1);
 
-            var gunlukVardiyaMasalar = await _unitOfWork.GetGenericRepository<GunlukVardiyaMasa>()
+            // Şablonları alıyoruz
+            var vardiyaSablonYerler = await _unitOfWork.GetGenericRepository<VardiyaSablonYer>()
                 .GetAllAsync(
-                    gvm => gvm.MasaId == masaId && gvm.Tarih >= startDate && gvm.Tarih <= endDate,
+                    vsy => vsy.MasaId == masaId &&
+                           vsy.GecerlilikBaslangic <= endDate &&
+                           vsy.GecerlilikBitis >= startDate,
                     include: query => query
-                        .Include(gvm => gvm.Masa)
-                        .Include(gvm => gvm.Vardiya)
-                        .Include(gvm => gvm.Personel)
+                        .Include(vsy => vsy.Masa)
+                        .Include(vsy => vsy.Vardiya)
+                        .ThenInclude(v => v.GunlukVardiyaMasa)
+                        .ThenInclude(gvm => gvm.Personel)
                 );
 
-            if (!gunlukVardiyaMasalar.Any())
-                throw new KeyNotFoundException("Belirtilen kriterlere uygun vardiya bulunamadı.");
+            if (!vardiyaSablonYerler.Any())
+                throw new KeyNotFoundException(" şablon bulunamadı.");
 
-            var vardiyaDetaylariDto = new VardiyaDetaylariDto
+            var masa = vardiyaSablonYerler.First().Masa;
+            if (masa == null)
+                throw new Exception("yanlış masa bilgisi.");
+
+            var sablonlar = vardiyaSablonYerler.Select(sablon => new SablonDetayDto
             {
-                MasaId = masaId,
-                MasaIsmi = gunlukVardiyaMasalar.First().Masa.Tanim,
-                GunlukVardiyalar = gunlukVardiyaMasalar
+                SablonId = sablon.VardiyaSablonYerId,
+                SablonTanim = sablon.Tanim,
+                SablonBaslangicTarihi = sablon.GecerlilikBaslangic,
+                SablonBitisTarihi = sablon.GecerlilikBitis,
+                MaxVardiya = sablon.MaxVardiya,
+                GunlukVardiyalar = sablon.Vardiya
+                    .SelectMany(v => v.GunlukVardiyaMasa)
+                    .Where(gvm => gvm.Tarih >= startDate && gvm.Tarih <= endDate)
                     .GroupBy(gvm => gvm.Tarih)
                     .Select(group => new GunlukVardiyaDto
                     {
                         GunlukVardiyaTarih = group.Key,
-                        Vardiyalar = group
-                            .Select(gvm => new VardiyaDto
+                        Vardiyalar = group.Select(gvm => new VardiyaDto
+                        {
+                            BaslangicSaat = new TimeOnly(
+                                gvm.Vardiya.BaslangicSaat.Hour, gvm.Vardiya.BaslangicSaat.Minute),
+                            BitisSaat = new TimeOnly(
+                                gvm.Vardiya.BitisSaat.Hour, gvm.Vardiya.BitisSaat.Minute),
+                            Personel = new PersonelFiltreDto
                             {
-                                BaslangicSaat = new TimeOnly(
-                                    gvm.Vardiya.BaslangicSaat.Hour, gvm.Vardiya.BaslangicSaat.Minute),
-                                BitisSaat = new TimeOnly(
-                                    gvm.Vardiya.BitisSaat.Hour, gvm.Vardiya.BitisSaat.Minute),
-                                Personel = gvm.Personel.Adapt<PersonelFiltreDto>()
-                            })
-                            .ToList()
-                    })
-                    .ToList()
-            };
+                                PersonelAd = gvm.Personel.Ad,
+                                PersonelSoyad = gvm.Personel.Soyad
+                            }
+                        }).ToList()
+                    }).ToList()
+            }).ToList();
 
-            return vardiyaDetaylariDto;
+            return new MasaDto
+            {
+                MasaId = masa.MasaId,
+                MasaIsmi = masa.Tanim,
+                Sablonlar = sablonlar
+            };
         }
     }
 }
