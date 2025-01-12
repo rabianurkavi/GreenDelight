@@ -1,4 +1,5 @@
 ﻿using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.GunlukVardiyaDtos;
+using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.SablonDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,6 @@ namespace GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.MasaDtos
     {
         public short MasaId { get; set; }
         public string MasaIsmi { get; set; }
-        public List<GunlukVardiyaDto> GunlukVardiyalar { get; set; } = new List<GunlukVardiyaDto>();
+        public List<SablonDetayDto> Sablonlar { get; set; } = new List<SablonDetayDto>();
     }
 }

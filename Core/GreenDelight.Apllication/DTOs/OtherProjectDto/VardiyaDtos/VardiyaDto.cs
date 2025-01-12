@@ -12,6 +12,5 @@ namespace GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos
         public TimeOnly BaslangicSaat { get; set; }
         public TimeOnly BitisSaat { get; set; }
         public PersonelFiltreDto Personel { get; set; }
-
     }
 }

@@ -11,6 +11,6 @@ namespace GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.GunlukVardiy
     public class GunlukVardiyaDto
     {
         public DateTime GunlukVardiyaTarih { get; set; }
-        public List<VardiyaDto> Vardiyalar { get; set; }
+        public List<VardiyaDto> Vardiyalar { get; set; } = new List<VardiyaDto>();
     }
 }
