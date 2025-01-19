@@ -4,6 +4,7 @@ using GreenDelight.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GreenDelight.Persistence.Migrations
 {
     [DbContext(typeof(GreenDelightDbContext))]
-    partial class GreenDelightDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250113113942_mig_new_property_example_project2")]
+    partial class mig_new_property_example_project2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1024,8 +1027,13 @@ namespace GreenDelight.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnName("vardiya_sablon_id");
 
+                    b.Property<int?>("VardiyaSablonYerId")
+                        .HasColumnType("int");
+
                     b.HasKey("VardiyaId")
                         .HasName("vardiya_pkey");
+
+                    b.HasIndex("VardiyaSablonYerId");
 
                     b.HasIndex(new[] { "VardiyaSablonId" }, "fki_fk_vardiya_vardiya_sablon_id");
 
@@ -1724,6 +1732,10 @@ namespace GreenDelight.Persistence.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_vardiya_vardiya_sablon_id");
 
+                    b.HasOne("GreenDelight.Domain.Concrete.TryEntities.VardiyaSablonYer", null)
+                        .WithMany("Vardiya")
+                        .HasForeignKey("VardiyaSablonYerId");
+
                     b.Navigation("VardiyaSablon");
                 });
 
@@ -1956,6 +1968,11 @@ namespace GreenDelight.Persistence.Migrations
                     b.Navigation("VardiyaSablonMasa");
 
                     b.Navigation("VardiyaSablonYer");
+                });
+
+            modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.VardiyaSablonYer", b =>
+                {
+                    b.Navigation("Vardiya");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.User", b =>

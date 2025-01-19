@@ -4,6 +4,7 @@ using GreenDelight.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GreenDelight.Persistence.Migrations
 {
     [DbContext(typeof(GreenDelightDbContext))]
-    partial class GreenDelightDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250113090931_mig_new_property_example_project")]
+    partial class mig_new_property_example_project
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1024,8 +1027,13 @@ namespace GreenDelight.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnName("vardiya_sablon_id");
 
+                    b.Property<int?>("VardiyaSablonId1")
+                        .HasColumnType("int");
+
                     b.HasKey("VardiyaId")
                         .HasName("vardiya_pkey");
+
+                    b.HasIndex("VardiyaSablonId1");
 
                     b.HasIndex(new[] { "VardiyaSablonId" }, "fki_fk_vardiya_vardiya_sablon_id");
 
@@ -1039,9 +1047,6 @@ namespace GreenDelight.Persistence.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VardiyaSablonId"));
-
-                    b.Property<bool>("BirimeOzgu")
-                        .HasColumnType("bit");
 
                     b.Property<short>("MaxVardiya")
                         .HasColumnType("smallint");
@@ -1717,12 +1722,16 @@ namespace GreenDelight.Persistence.Migrations
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.Vardiya", b =>
                 {
-                    b.HasOne("GreenDelight.Domain.Concrete.TryEntities.VardiyaSablon", "VardiyaSablon")
+                    b.HasOne("GreenDelight.Domain.Concrete.TryEntities.VardiyaSablonYer", "VardiyaSablon")
                         .WithMany("Vardiya")
                         .HasForeignKey("VardiyaSablonId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_vardiya_vardiya_sablon_id");
+
+                    b.HasOne("GreenDelight.Domain.Concrete.TryEntities.VardiyaSablon", null)
+                        .WithMany("Vardiya")
+                        .HasForeignKey("VardiyaSablonId1");
 
                     b.Navigation("VardiyaSablon");
                 });
@@ -1956,6 +1965,11 @@ namespace GreenDelight.Persistence.Migrations
                     b.Navigation("VardiyaSablonMasa");
 
                     b.Navigation("VardiyaSablonYer");
+                });
+
+            modelBuilder.Entity("GreenDelight.Domain.Concrete.TryEntities.VardiyaSablonYer", b =>
+                {
+                    b.Navigation("Vardiya");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.User", b =>
