@@ -77,6 +77,7 @@ namespace GreenDelight.Persistence.Contexts
         public virtual DbSet<Vardiya> Vardiya { get; set; }
 
         public virtual DbSet<VardiyaSablonYer> VardiyaSablonYer { get; set; }
+        public virtual DbSet<VardiyaSablon> VardiyaSablon { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder); // Base metodu çağırarak Identity yapılandırmalarını koruyun
@@ -615,18 +616,19 @@ namespace GreenDelight.Persistence.Contexts
                     .HasColumnName("gecerlilik_bitis");
                 entity.Property(e => e.IstasyonBirimId).HasColumnName("istasyon_birim_id");
                 entity.Property(e => e.MasaId).HasColumnName("masa_id");
-                entity.Property(e => e.MaxVardiya).HasColumnName("max_vardiya");
-                entity.Property(e => e.Tanim)
-                    .HasColumnType("nvarchar(max)")
-                    .HasColumnName("tanim");
+
 
                 entity.HasOne(d => d.IstasyonBirim).WithMany(p => p.VardiyaSablonYer)
-                    .HasForeignKey(d => d.IstasyonBirimId)
+                    .HasForeignKey(d => d.IstasyonBirimId).IsRequired(false)
                     .HasConstraintName("vardiya_sablon_yer_fk_1");
 
                 entity.HasOne(d => d.Masa).WithMany(p => p.VardiyaSablonYer)
-                    .HasForeignKey(d => d.MasaId)
+                    .HasForeignKey(d => d.MasaId).IsRequired(false)
                     .HasConstraintName("vardiya_sablon_yer_fk");
+
+                entity.HasOne(d => d.VardiyaSablon).WithMany(p => p.VardiyaSablonYer)
+                    .HasForeignKey(d => d.VardiyaSablonId)
+                    .HasConstraintName("vardiya_sablon_yer_fk_2");
             });
 
             OnModelCreatingPartial(modelBuilder);
