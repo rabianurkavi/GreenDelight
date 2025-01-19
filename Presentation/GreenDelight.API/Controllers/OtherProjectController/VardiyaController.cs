@@ -1,4 +1,6 @@
 ﻿using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos;
+using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.MasaDtos;
+using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.VardiyaPersonelDto;
 using GreenDelight.Application.Interfaces.Services.OtherProject.VardiyaServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +17,7 @@ namespace GreenDelight.API.Controllers.OtherProjectController
             _vardiyaService = vardiyaService;
         }
         [HttpGet("GetVardiyaDetaylari")]
-        public async Task<ActionResult<VardiyaDetaylariDto>> GetVardiyaDetaylariByMasaIdAsync([FromQuery] short masaId,[FromQuery] DateTime monthDate)
+        public async Task<ActionResult<VardiyaDetaylariDto>> GetVardiyaDetaylariByMasaIdAsync([FromQuery] short masaId, [FromQuery] DateTime monthDate)
         {
             try
             {
@@ -30,6 +32,17 @@ namespace GreenDelight.API.Controllers.OtherProjectController
             {
                 return StatusCode(500, "Sunucu hatası: " + ex.Message);
             }
+        }
+        [HttpPost("personel-ekle")]
+        public async Task<IActionResult> VardiyaPersonelEkle([FromBody] VardiyaPersonelEkleDto vardiyaPersonelEkleDto)
+        {
+
+            if (vardiyaPersonelEkleDto == null)
+                return BadRequest("Geçersiz veri.");
+
+            var eklenenPersonelId = await _vardiyaService.VardiyaPersonelEkleAsync(vardiyaPersonelEkleDto);
+
+            return Ok(eklenenPersonelId);
         }
     }
 }
