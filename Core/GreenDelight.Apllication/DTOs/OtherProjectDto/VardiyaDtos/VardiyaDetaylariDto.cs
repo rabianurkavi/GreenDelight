@@ -10,8 +10,8 @@ namespace GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos
 {
     public class VardiyaDetaylariDto
     {
-        public short MasaId { get; set; }
-        public string MasaIsmi { get; set; }
-        public List<GunlukVardiyaDto> GunlukVardiyalar { get; set; }
+        public int Id { get; set; }
+        public string BaslangicSaat { get; set; }
+        public string BitisSaat { get; set; }
     }
 }
