@@ -11,9 +11,10 @@ namespace GreenDelight.Domain.Concrete.TryEntities
     {
         public int VardiyaSablonYerId { get; set; }
 
-        public string Tanim { get; set; } = null!;
+        //public string Tanim { get; set; } = null!;
 
-        public short MaxVardiya { get; set; }
+        //public short MaxVardiya { get; set; }
+        public int VardiyaSablonId { get; set; }
 
         public DateTime? GecerlilikBaslangic { get; set; }
 
@@ -26,7 +27,7 @@ namespace GreenDelight.Domain.Concrete.TryEntities
         public virtual IstasyonBirim? IstasyonBirim { get; set; }
 
         public virtual Masa? Masa { get; set; }
+        public virtual VardiyaSablon? VardiyaSablon { get; set; }
 
-        public virtual ICollection<Vardiya> Vardiya { get; set; } = new List<Vardiya>();
     }
 }

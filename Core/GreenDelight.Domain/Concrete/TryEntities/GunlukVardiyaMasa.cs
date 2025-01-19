@@ -9,7 +9,6 @@ namespace GreenDelight.Domain.Concrete.TryEntities
 {
     public partial class GunlukVardiyaMasa
     {
-       
         public long GunlukVardiyaId { get; set; }
 
         public DateTime Tarih { get; set; }

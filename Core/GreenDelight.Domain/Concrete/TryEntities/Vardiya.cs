@@ -22,6 +22,6 @@ namespace GreenDelight.Domain.Concrete.TryEntities
 
         public virtual ICollection<GunlukVardiyaMasa> GunlukVardiyaMasa { get; set; } = new List<GunlukVardiyaMasa>();
 
-        public virtual VardiyaSablonYer VardiyaSablon { get; set; } = null!;
+        public virtual VardiyaSablon VardiyaSablon { get; set; } = null!;
     }
 }
