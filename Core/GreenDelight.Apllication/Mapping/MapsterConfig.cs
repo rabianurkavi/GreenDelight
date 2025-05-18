@@ -18,7 +18,6 @@ using GreenDelight.Application.DTOs.AboutDtos;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.GunlukVardiyaDtos;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.MesaiDtos;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos;
-using GreenDelight.Domain.Concrete.TryEntities;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.PersonelDtos;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.MasaDtos;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.SablonDtos;
