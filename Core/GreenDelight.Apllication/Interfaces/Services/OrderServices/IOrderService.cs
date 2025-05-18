@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GreenDelight.Application.Interfaces.Services.OrderServices
 {
-    internal interface IOrderService
+    public interface IOrderService
     {
     }
 }

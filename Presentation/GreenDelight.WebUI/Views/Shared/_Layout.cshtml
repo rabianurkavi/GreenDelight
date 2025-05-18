@@ -39,10 +39,11 @@
     @await Component.InvokeAsync("LoginUserNotification")
 
     @await Html.PartialAsync("_HeaderPartial")
-
     <div class="products-box">
         @RenderBody()
     </div>
+    @await Html.PartialAsync("_ToastPartial")
+
     @await Html.PartialAsync("_FooterPartial")
 
     <!-- Start copyright  -->

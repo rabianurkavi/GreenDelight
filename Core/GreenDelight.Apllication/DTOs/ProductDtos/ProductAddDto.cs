@@ -11,7 +11,7 @@ namespace GreenDelight.Application.DTOs.ProductDtos
         public string ProductName { get; set; }
         public string Description { get; set; }
         public string CategoryName { get; set; }
-        public string Quantity { get; set; }
+        public short Quantity { get; set; }
 
         public decimal Price { get; set; }
         public bool InStock { get; set; }

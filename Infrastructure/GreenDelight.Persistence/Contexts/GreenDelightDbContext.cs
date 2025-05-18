@@ -31,7 +31,7 @@ namespace GreenDelight.Persistence.Contexts
         DbSet<Adress> Adresses { get; set; }
         DbSet<Category> Categories { get; set; }
         DbSet<Order> Orders { get; set; }
-        DbSet<OrderItem> Items { get; set; }
+        DbSet<OrderItem> OrderItems { get; set; }
         DbSet<User> Users { get; set; }
         DbSet<UserRole> UserRoles { get; set; }
         DbSet<Product> Products { get; set; }

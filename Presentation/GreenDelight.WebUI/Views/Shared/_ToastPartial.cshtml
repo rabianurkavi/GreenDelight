@@ -1,0 +1,96 @@
+﻿@* Dinamik ve Şık Toast Bildirim Partial View *@
+<div id="toastContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
+    <div id="dynamicToast" class="toast-custom" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
+        <div id="toastHeader" class="toast-header-custom">
+            <i id="toastIcon" class="fas toast-icon"></i>
+            <span id="toastBody" class="toast-body">Ürün başarıyla sepete eklendi!</span>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Toast Genel Yapısı */
+    #toastContainer {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+    }
+
+    .toast-custom {
+        border-radius: 8px;
+        padding: 10px 15px;
+        min-width: 300px;
+        color: #000;
+        margin-bottom: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        font-family: 'Arial', sans-serif;
+        opacity: 0.95;
+        transition: opacity 0.4s ease-in-out;
+        background-color: #f1f1f1;
+    }
+
+    .toast-header-custom {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        border-radius: 5px;
+        background-color: transparent;
+    }
+
+    .toast-icon {
+        font-size: 24px;
+        margin-right: 10px;
+        color: #b0b435; /* İkon rengi */
+    }
+
+    .toast-body {
+        font-size: 16px;
+        color: #000;
+    }
+
+    /* Başarılı Durum */
+    .bg-success-custom {
+        background-color: #28a745;
+        color: #fff;
+        border-radius: 50%;
+        padding: 4px;
+    }
+</style>
+
+<script type="text/javascript">
+    function showToast(type, message) {
+        var toastEl = $("#dynamicToast");
+        var toastIcon = $("#toastIcon");
+        var toastBody = $("#toastBody");
+
+        // İkon ve Renk Ayarlama
+        var iconClass;
+        switch (type) {
+            case "success":
+                iconClass = "fa-check";
+                break;
+            case "error":
+                iconClass = "fa-times";
+                break;
+            case "warning":
+                iconClass = "fa-exclamation";
+                break;
+            case "info":
+                iconClass = "fa-info";
+                break;
+            default:
+                iconClass = "fa-info";
+                break;
+        }
+
+        // Toast yapısını güncelleme
+        toastIcon.removeClass().addClass("fas " + iconClass + " toast-icon");
+        toastBody.text(message);
+
+        // Toast'u gösterme
+        toastEl.fadeIn(300).delay(3000).fadeOut(400);
+    }
+</script>
