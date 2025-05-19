@@ -8,5 +8,6 @@ namespace GreenDelight.Application.Interfaces.Services.OrderServices
 {
     public interface IOrderService
     {
+        Task<bool> CreateOrderAsync(int basketId, string address, string phoneNumber, string note);
     }
 }

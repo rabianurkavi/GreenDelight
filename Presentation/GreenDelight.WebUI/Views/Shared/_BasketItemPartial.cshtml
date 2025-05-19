@@ -1,0 +1,35 @@
+﻿@model List<GreenDelight.Application.DTOs.BasketItemDtos.BasketItemDto>
+<div class="side">
+    <a href="#" class="close-side"><i class="fa fa-times"></i></a>
+    <li class="cart-box">
+        <ul class="cart-list">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <a href="#" class="photo">
+                            <img src="~/images/@item.ImageUrl" class="cart-thumb" alt="@item.ProductName" />
+                        </a>
+                        <h6><a href="#">@item.ProductName</a></h6>
+                        <p>@item.Quantity x - <span class="price">@item.UnitPrice ₺</span></p>
+                    </li>
+                }
+            }
+            else
+            {
+                <li>
+                    <p>Sepetinizde ürün bulunmamaktadır.</p>
+                </li>
+            }
+
+            <li class="total">
+                <a href="@Url.Action("Index", "Basket")" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
+                <span class="float-right">
+                    <strong>Total</strong>:
+                    @Model?.Sum(x => x.UnitPrice * x.Quantity) ₺
+                </span>
+            </li>
+        </ul>
+    </li>
+</div>

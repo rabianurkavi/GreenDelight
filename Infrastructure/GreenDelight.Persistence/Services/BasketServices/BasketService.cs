@@ -32,7 +32,6 @@ namespace GreenDelight.Persistence.Services.BasketServices
             await _unitOfWork.GetGenericRepository<Basket>().UpdateAsync(basket);
             await _unitOfWork.CommitAsync();
 
-            // Session'daki sepet ID'sini sıfırla
             _httpContextAccessor.HttpContext.Session.Remove("BasketID");
 
             return new SuccessResult("Sepet başarıyla onaylandı.");

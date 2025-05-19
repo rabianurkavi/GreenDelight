@@ -8,6 +8,7 @@ using GreenDelight.Domain.Concrete;
 using GreenDelight.Domain.Results;
 using Mapster;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,55 @@ namespace GreenDelight.Persistence.Services.BasketItemServices
                 return new ErrorDataResult<bool>("Ürün sepete eklenirken bir hata oluştu.");
             }
         }
+
+        public async Task<Domain.Results.IResult> BasketItemRemove(int basketItemId)
+        {
+            try
+            {
+                var basketItem = await _unitOfWork.GetGenericRepository<BasketItem>().GetAsync(x => x.ID == basketItemId);
+                if (basketItem == null)
+                {
+                    return new ErrorResult("Kullanıcı kimliği alınamadı veya geçersiz.");
+                }
+                await _unitOfWork.GetGenericRepository<BasketItem>().DeleteAsync(basketItem);
+                await _unitOfWork.CommitAsync();
+                return new SuccessResult(Messages.BasketItemDeleted);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Sepet ürünü silme hatası: {ex.Message}");
+                return new ErrorResult($"Sepete ürünü silme hatası: {ex.Message}");
+            }
+        }
+
+        public async Task<IDataResult<List<BasketItemDto>>> GetBasketItemAsync()
+        {
+            try
+            {
+                int? basketId = _httpContextAccessor.HttpContext?.Session.GetInt32("BasketID");
+
+                if (basketId == null || basketId == 0)
+                    return new ErrorDataResult<List<BasketItemDto>>("Sepetinizde ürün bulunmamaktadır.");
+
+                var basketItems = await _unitOfWork.GetGenericRepository<BasketItem>()
+                    .GetAllAsync(
+                        x => x.BasketId == basketId.Value,
+                        include: query => query.Include(bi => bi.Product),
+                        enableTracking: true
+                    );
+
+                if (basketItems == null || !basketItems.Any())
+                    return new ErrorDataResult<List<BasketItemDto>>("Sepetinizde ürün bulunmamaktadır.");
+
+                var basketItemDto = basketItems.Adapt<List<BasketItemDto>>();
+                return new SuccessDataResult<List<BasketItemDto>>(basketItemDto, Messages.BasketItemListed);
+            }
+            catch (Exception ex)
+            {
+                return new ErrorDataResult<List<BasketItemDto>>($"Sepete gelirken bir hata oluştu: {ex.Message}");
+            }
+        }
+
 
     }
 }

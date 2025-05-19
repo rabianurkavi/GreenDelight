@@ -90,10 +90,23 @@ namespace GreenDelight.Application.Mapping
                 .Map(dest => dest.FullName, src => src.FullName)
                 .Map(dest => dest.Email, src => src.Email)
                 .Map(dest => dest.UserName, src => src.UserName);
+
             config.NewConfig<BasketItemAddDto, BasketItem>()
                 .Map(dest => dest.ProductId, src => src.ProductId)
                 .Map(dest => dest.Quantity, src => src.Quantity)
                 .Map(dest => dest.UnitPrice, src => src.UnitPrice);
+
+            config.NewConfig<BasketItemDto, BasketItem>()
+                .Map(dest => dest.ID, src => src.BasketItemId)
+                .Map(dest => dest.ProductId, src => src.ProductId)
+                .Map(dest => dest.Product.ProductName, src => src.ProductName)
+                .Map(dest => dest.Product.ImageUrls, src => src.ImageUrl);
+
+            config.NewConfig<BasketItem, BasketItemDto>()
+                .Map(dest=>dest.BasketItemId,src=>src.ID)
+                .Map(dest => dest.ProductId, src => src.ProductId)
+                .Map(dest => dest.ProductName, src => src.Product.ProductName)
+                .Map(dest => dest.ImageUrl, src => src.Product.ImageUrls);
 
 
             //DEMİRYOLU PROJESİ İÇİN

@@ -12,5 +12,7 @@ namespace GreenDelight.Application.Interfaces.Services.BasketItemServices
     public interface IBasketItemService
     {
         Task<IResult> AddAsync(BasketItemAddDto basketItemAddDto);
+        Task<IDataResult<List<BasketItemDto>>> GetBasketItemAsync();
+        Task<IResult> BasketItemRemove(int basketItemId);
     }
 }

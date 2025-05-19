@@ -40,6 +40,8 @@ namespace GreenDelight.Application.Constants
         public static string OrderItemAdded = "Ürün sepetinize eklendi.";
 
         public static string AboutList = "Hakkımızda yazısı geldi.";
+        public static string BasketItemListed = "Sepet başarıyla getirildi";
+        public static string BasketItemDeleted = "Ürün başarıyla sepetten silindi.";
 
 
 

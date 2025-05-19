@@ -26,6 +26,32 @@ namespace GreenDelight.WebUI.Controllers
             var comment = await _basketItemService.AddAsync(basketItemAddDto);
             return PartialView(basketItemAddDto);
         }
-       
+
+        [HttpGet]
+        public async Task<PartialViewResult> PartialGetBasketItem()
+        {
+            var result = await _basketItemService.GetBasketItemAsync();
+            if (result.Data!=null)
+            {
+                ViewBag.BasketItemCount = result.Data.Count;
+                return PartialView(result.Data);
+            }
+
+            ViewBag.ErrorMessage = result.Message;
+            ViewBag.BasketItemCount = 0;
+            return PartialView(result.Data);
+        }
+        [HttpDelete]
+        public async Task<IActionResult> BasketItemRemove(int basketItemId)
+        {
+            var result = await _basketItemService.BasketItemRemove(basketItemId);
+            if (result.Success)
+            {
+                return Json(new { success = true, message = "Ürün başarıyla silindi." });
+            }
+
+            return Json(new { success = false, message = "Ürün silinemedi." });
+        }
+
     }
 }
