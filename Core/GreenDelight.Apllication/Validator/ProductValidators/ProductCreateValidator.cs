@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GreenDelight.Apllication.Validator.ProductValidators
+namespace GreenDelight.Application.Validator.ProductValidators
 {
     public class ProductCreateValidator : AbstractValidator<ProductUpdateDto>
     {
         public ProductCreateValidator()
         {
-            
+
         }
     }
 }

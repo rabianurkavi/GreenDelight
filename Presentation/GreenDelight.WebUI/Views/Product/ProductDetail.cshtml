@@ -52,7 +52,7 @@
                             </div>
                         </li>
                     </ul>
-                   @await Html.PartialAsync("~/Views/Basket/PartialAddOrderItem.cshtml", new { ProductId = Model.Data.ID ,UnitPrice = Model.Data.Price})
+                            @await Html.PartialAsync("~/Views/Basket/PartialAddBasketItem.cshtml", new { ProductId = Model.Data.ID, UnitPrice = Model.Data.Price })
 
                     <div class="add-to-btn">
                         <div class="add-comp">

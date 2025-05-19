@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace GreenDelight.Domain.Concrete
 {
-    public class OrderItem:AuditableEntity
+    public class OrderItem : AuditableEntity
     {
+        public int OrderItemID { get; set; }
         public int OrderID { get; set; }
         public int ProductID { get; set; }
         public short Quantity { get; set; }

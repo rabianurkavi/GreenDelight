@@ -1,6 +1,6 @@
-﻿using GreenDelight.Application.DTOs.CommentDtos;
-using GreenDelight.Application.DTOs.OrderItemDtos;
-using GreenDelight.Application.Interfaces.Services.OrterItemServices;
+﻿using GreenDelight.Application.DTOs.BasketItemDtos;
+using GreenDelight.Application.DTOs.CommentDtos;
+using GreenDelight.Application.Interfaces.Services.BasketItemServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,23 +9,22 @@ namespace GreenDelight.WebUI.Controllers
 
     public class BasketController : Controller
     {
-        private readonly IOrderItemService _orderItemService;
-        public BasketController(IOrderItemService orderItemService)
+        private readonly IBasketItemService _basketItemService;
+        public BasketController(IBasketItemService basketItemService)
         {
-            _orderItemService = orderItemService;
+            _basketItemService = basketItemService;
         }
         [HttpGet]
-        public async Task<PartialViewResult> PartialAddOrderItem(int productId, decimal unitPrice)
+        public async Task<PartialViewResult> PartialAddBasketItem(int productId, decimal unitPrice)
         {
-            var model = new OrderItemAddDto { ProductId = productId, UnitPrice = unitPrice };
+            var model = new BasketItemAddDto { ProductId = productId, UnitPrice = unitPrice };
             return PartialView(model);
         }
         [HttpPost]
-        public async Task<IActionResult> PartialAddOrderItem(OrderItemAddDto orderItemAddDto)
+        public async Task<IActionResult> PartialAddBasketItem(BasketItemAddDto basketItemAddDto)
         {
-            orderItemAddDto.OrderID = 1;
-            var comment = await _orderItemService.AddAsync(orderItemAddDto);
-            return PartialView(orderItemAddDto);
+            var comment = await _basketItemService.AddAsync(basketItemAddDto);
+            return PartialView(basketItemAddDto);
         }
        
     }

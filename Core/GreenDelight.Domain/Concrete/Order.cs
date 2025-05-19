@@ -16,6 +16,6 @@ namespace GreenDelight.Domain.Concrete
 
         public virtual User User { get; set; }
 
-        public ICollection<OrderItem> OrderItems { get; set; }
+        public virtual ICollection<OrderItem> OrderItems { get; set; }
     }
 }

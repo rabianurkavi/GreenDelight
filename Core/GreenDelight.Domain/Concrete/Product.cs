@@ -17,6 +17,7 @@ namespace GreenDelight.Domain.Concrete
         public bool InStock { get; set; }
         public string ImageUrls { get; set; }
         public virtual Category Category { get; set; }
+        public ICollection<BasketItem> BasketItems { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; }
         public ICollection<Comment> Comments { get; set; }
 

@@ -21,9 +21,9 @@ using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.PersonelDtos;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.MasaDtos;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.SablonDtos;
-using GreenDelight.Application.DTOs.OrderItemDtos;
+using GreenDelight.Application.DTOs.BasketItemDtos;
 
-namespace GreenDelight.Apllication.Mapping
+namespace GreenDelight.Application.Mapping
 {
     public class MapsterConfig
     {
@@ -90,9 +90,8 @@ namespace GreenDelight.Apllication.Mapping
                 .Map(dest => dest.FullName, src => src.FullName)
                 .Map(dest => dest.Email, src => src.Email)
                 .Map(dest => dest.UserName, src => src.UserName);
-            config.NewConfig<OrderItemAddDto, OrderItem>()
-                .Map(dest => dest.ProductID, src => src.ProductId) 
-                .Map(dest => dest.OrderID, src => src.OrderID)
+            config.NewConfig<BasketItemAddDto, BasketItem>()
+                .Map(dest => dest.ProductId, src => src.ProductId)
                 .Map(dest => dest.Quantity, src => src.Quantity)
                 .Map(dest => dest.UnitPrice, src => src.UnitPrice);
 

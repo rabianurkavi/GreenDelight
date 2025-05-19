@@ -1,9 +1,9 @@
-using GreenDelight.Apllication.Mapping;
 using GreenDelight.Persistence;
 using GreenDelight.Infrastructure;
-using GreenDelight.Apllication;
 using GreenDelight.Application.Exceptions;
 using Mapster;
+using GreenDelight.Application;
+using GreenDelight.Application.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +29,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseSession();
+app.UseAuthentication();
 app.UseAuthorization();
 app.ConfigureExceptionHandlingMiddleware();
 

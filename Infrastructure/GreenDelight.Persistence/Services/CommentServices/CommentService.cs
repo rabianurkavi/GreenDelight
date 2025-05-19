@@ -33,7 +33,6 @@ namespace GreenDelight.Persistence.Services.CommentServices
 
         public async Task<IResult> AddAsync(CommentAddDto commentAddDto)
         {
-            // Oturum açan kullanıcının ID'sini al
             var userIdString = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (userIdString == null)
             {
@@ -42,7 +41,6 @@ namespace GreenDelight.Persistence.Services.CommentServices
             var comment=commentAddDto.Adapt<Comment>();
             if (Guid.TryParse(userIdString, out Guid userId))
             {
-                // userId artık bir Guid türünde kullanılabilir
                 comment.UserId = userId;
             }
             //comment.ProductId = ;

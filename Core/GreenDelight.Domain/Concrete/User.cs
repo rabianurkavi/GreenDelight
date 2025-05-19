@@ -18,5 +18,6 @@ namespace GreenDelight.Domain.Concrete
         public ICollection<Adress> Adresses { get; set; }
         public ICollection<Order> Orders { get; set; }
         public ICollection<Comment> Comments { get; set; }
+        public ICollection<BasketItem> BasketItems { get; set; }
     }
 }

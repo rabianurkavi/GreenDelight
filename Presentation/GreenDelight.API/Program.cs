@@ -1,10 +1,10 @@
-using GreenDelight.Apllication.Mapping;
 using GreenDelight.Persistence;
 using GreenDelight.Infrastructure;
 using Microsoft.OpenApi.Models;
-using GreenDelight.Apllication;
 using GreenDelight.Application.Exceptions;
 using Mapster;
+using GreenDelight.Application;
+using GreenDelight.Application.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 

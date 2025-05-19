@@ -30,8 +30,10 @@ using GreenDelight.Application.Interfaces.Services.ContactServices;
 using GreenDelight.Persistence.Services.ContactServices;
 using GreenDelight.Application.Interfaces.Services.AboutServices;
 using GreenDelight.Persistence.Services.AboutServices;
-using GreenDelight.Application.Interfaces.Services.OrterItemServices;
-using GreenDelight.Persistence.Services.OrderItemServices;
+using GreenDelight.Persistence.Services.BasketItemServices;
+using GreenDelight.Application.Interfaces.Services.BasketItemServices;
+using GreenDelight.Application.Interfaces.Services.BasketServices;
+using GreenDelight.Persistence.Services.BasketServices;
 
 namespace GreenDelight.Persistence
 {
@@ -50,7 +52,8 @@ namespace GreenDelight.Persistence
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IAboutService, AboutService>();
-            services.AddScoped<IOrderItemService, OrderItemService>();
+            services.AddScoped<IBasketItemService, BasketItemService>();
+            services.AddScoped<IBasketService, BasketService>();
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -66,6 +69,21 @@ namespace GreenDelight.Persistence
                 opt.Password.RequireDigit = false;
                 opt.SignIn.RequireConfirmedEmail = false;
             }).AddRoles<UserRole>().AddEntityFrameworkStores<GreenDelightDbContext>();
+            services.AddAuthentication("GreenDelightCookie").AddCookie("GreenDelightCookie", opt =>
+            {
+                opt.LoginPath = "/Auth/Login";
+                opt.LogoutPath = "/Auth/Logout";
+                opt.ExpireTimeSpan = TimeSpan.FromDays(30);
+                opt.SlidingExpiration = true;
+                opt.Cookie.Name = ".GreenDelight.Cookie";
+            });
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".GreenDelight.Session";
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
         }
     }
 }
