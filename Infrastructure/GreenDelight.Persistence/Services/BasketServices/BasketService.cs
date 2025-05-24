@@ -16,59 +16,84 @@ namespace GreenDelight.Persistence.Services.BasketServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BasketService(IUnitOfWork unitOfWork,IHttpContextAccessor httpContextAccessor)
+        public BasketService(IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _httpContextAccessor = httpContextAccessor;
         }
+
         public async Task<Domain.Results.IResult> ConfirmBasketAsync(int basketId)
         {
-            var basket = await _unitOfWork.GetGenericRepository<Basket>().GetAsync(x=>x.ID==basketId);
+            try
+            {
+                var basket = await _unitOfWork.GetGenericRepository<Basket>().GetAsync(x => x.ID == basketId);
 
-            if (basket == null)
-                return new ErrorResult("Sepet bulunamadı.");
+                if (basket == null)
+                    return new ErrorResult("Sepet bulunamadı.");
 
-            basket.IsActive = false;
-            await _unitOfWork.GetGenericRepository<Basket>().UpdateAsync(basket);
-            await _unitOfWork.CommitAsync();
+                basket.IsActive = false;
+                await _unitOfWork.GetGenericRepository<Basket>().UpdateAsync(basket);
+                await _unitOfWork.CommitAsync();
 
-            _httpContextAccessor.HttpContext.Session.Remove("BasketID");
+                _httpContextAccessor.HttpContext.Session.Remove("BasketID");
 
-            return new SuccessResult("Sepet başarıyla onaylandı.");
+                return new SuccessResult("Sepet başarıyla onaylandı.");
+            }
+            catch (Exception ex)
+            {
+                return new ErrorResult($"Sepet onaylanırken bir hata oluştu: {ex.Message}");
+            }
         }
 
         public async Task<IDataResult<Basket>> GetBasketAsync(int basketId)
         {
-            var basket = await _unitOfWork.GetGenericRepository<Basket>().GetAsync(x=>x.ID==basketId);
-            if (basket == null)
-                return new ErrorDataResult<Basket>("Sepet bulunamadı.");
+            try
+            {
+                var basket = await _unitOfWork.GetGenericRepository<Basket>().GetAsync(x => x.ID == basketId);
+                if (basket == null)
+                    return new ErrorDataResult<Basket>("Sepet bulunamadı.");
 
-            return new SuccessDataResult<Basket>(basket, "Sepet başarıyla getirildi.");
+                return new SuccessDataResult<Basket>(basket, "Sepet başarıyla getirildi.");
+            }
+            catch (Exception ex)
+            {
+                return new ErrorDataResult<Basket>($"Sepet getirilirken hata oluştu: {ex.Message}");
+            }
         }
 
         public async Task<int> GetOrCreateBasketId(Guid userId)
         {
-            var sessionBasketId = _httpContextAccessor.HttpContext.Session.GetInt32("BasketID");
-            if (sessionBasketId.HasValue)
-                return sessionBasketId.Value;
-            var newBasket = new Basket
+            try
             {
-                UserID = userId,
-                IsActive = true,
-                CreatedDate = DateTime.Now
-            };
-            await _unitOfWork.GetGenericRepository<Basket>().AddAsync(newBasket);
-            await _unitOfWork.CommitAsync();
-            var savedBasket = await _unitOfWork.GetGenericRepository<Basket>()
-                .GetAsync(b => b.UserID == userId && b.IsActive);
+                var sessionBasketId = _httpContextAccessor.HttpContext.Session.GetInt32("BasketID");
+                if (sessionBasketId.HasValue)
+                    return sessionBasketId.Value;
 
-            if (savedBasket != null)
-            {
-                _httpContextAccessor.HttpContext.Session.SetInt32("BasketID", savedBasket.ID);
-                return savedBasket.ID;
+                var newBasket = new Basket
+                {
+                    UserID = userId,
+                    IsActive = true,
+                    CreatedDate = DateTime.Now
+                };
+
+                await _unitOfWork.GetGenericRepository<Basket>().AddAsync(newBasket);
+                await _unitOfWork.CommitAsync();
+
+                var savedBasket = await _unitOfWork.GetGenericRepository<Basket>()
+                    .GetAsync(b => b.UserID == userId && b.IsActive);
+
+                if (savedBasket != null)
+                {
+                    _httpContextAccessor.HttpContext.Session.SetInt32("BasketID", savedBasket.ID);
+                    return savedBasket.ID;
+                }
+
+                return 0;
             }
-
-            return 0;
+            catch (Exception ex)
+            {
+                return 0; 
+            }
         }
     }
 }
