@@ -22,87 +22,107 @@ namespace GreenDelight.Persistence.Services.CategoryServices
         {
             _unitOfWork = unitOfWork;
         }
+
         public async Task<IResult> AddAsync(CategoryAddDto categoryAddDto)
         {
-            if (categoryAddDto == null)
+            try
             {
-                return new ErrorResult("Kategori bilgileri eksik.");
+                if (categoryAddDto == null)
+                    return new ErrorResult("Kategori bilgileri eksik.");
+
+                var category = categoryAddDto.Adapt<Category>();
+                await _unitOfWork.GetGenericRepository<Category>().AddAsync(category);
+                await _unitOfWork.CommitAsync();
+
+                return new SuccessResult(Messages.CategoryAdded);
             }
-
-            var category = categoryAddDto.Adapt<Category>();
-            await _unitOfWork.GetGenericRepository<Category>().AddAsync(category);
-            await _unitOfWork.CommitAsync();
-
-            return new SuccessResult(Messages.CategoryAdded);
+            catch (Exception ex)
+            {
+                return new ErrorResult($"Kategori eklenirken bir hata oluştu: {ex.Message}");
+            }
         }
 
         public async Task<IDataResult<List<CategoryDetailDto>>> GetAllAsync()
         {
-            var categories = await _unitOfWork.GetGenericRepository<Category>().GetAllAsync();
-
-            if (categories == null || !categories.Any())
+            try
             {
-                return new ErrorDataResult<List<CategoryDetailDto>>("Kategori bulunamadı.");
-            }
+                var categories = await _unitOfWork.GetGenericRepository<Category>().GetAllAsync();
 
-            var categoriesDto = categories.Adapt<List<CategoryDetailDto>>();
-            return new SuccessDataResult<List<CategoryDetailDto>>(categoriesDto, Messages.CategorysListed);
+                if (categories == null || !categories.Any())
+                    return new ErrorDataResult<List<CategoryDetailDto>>("Kategori bulunamadı.");
+
+                var categoriesDto = categories.Adapt<List<CategoryDetailDto>>();
+                return new SuccessDataResult<List<CategoryDetailDto>>(categoriesDto, Messages.CategorysListed);
+            }
+            catch (Exception ex)
+            {
+                return new ErrorDataResult<List<CategoryDetailDto>>($"Kategoriler getirilirken hata oluştu: {ex.Message}");
+            }
         }
 
         public async Task<IDataResult<CategoryDetailDto>> GetByIdAsync(int id)
         {
-            if (id <= 0)
+            try
             {
-                return new ErrorDataResult<CategoryDetailDto>("Geçersiz kategori ID.");
-            }
+                if (id <= 0)
+                    return new ErrorDataResult<CategoryDetailDto>("Geçersiz kategori ID.");
 
-            var category = await _unitOfWork.GetGenericRepository<Category>().GetAsync(x => x.ID == id);
-            if (category == null)
+                var category = await _unitOfWork.GetGenericRepository<Category>().GetAsync(x => x.ID == id);
+                if (category == null)
+                    return new ErrorDataResult<CategoryDetailDto>("Kategori bulunamadı.");
+
+                var categoryDto = category.Adapt<CategoryDetailDto>();
+                return new SuccessDataResult<CategoryDetailDto>(categoryDto, Messages.CategorysListed);
+            }
+            catch (Exception ex)
             {
-                return new ErrorDataResult<CategoryDetailDto>("Kategori bulunamadı.");
+                return new ErrorDataResult<CategoryDetailDto>($"Kategori getirilirken bir hata oluştu: {ex.Message}");
             }
-
-            var categoryDto = category.Adapt<CategoryDetailDto>();
-            return new SuccessDataResult<CategoryDetailDto>(categoryDto, Messages.CategorysListed);
         }
 
         public async Task<IResult> RemoveAsync(int id)
         {
-            if (id <= 0)
+            try
             {
-                return new ErrorResult("Geçersiz kategori ID.");
-            }
+                if (id <= 0)
+                    return new ErrorResult("Geçersiz kategori ID.");
 
-            var category = await _unitOfWork.GetGenericRepository<Category>().GetAsync(x => x.ID == id);
-            if (category == null)
+                var category = await _unitOfWork.GetGenericRepository<Category>().GetAsync(x => x.ID == id);
+                if (category == null)
+                    return new ErrorResult("Silinecek kategori bulunamadı.");
+
+                await _unitOfWork.GetGenericRepository<Category>().DeleteAsync(category);
+                await _unitOfWork.CommitAsync();
+
+                return new SuccessResult(Messages.CategoryDeleted);
+            }
+            catch (Exception ex)
             {
-                return new ErrorResult("Silinecek kategori bulunamadı.");
+                return new ErrorResult($"Kategori silinirken hata oluştu: {ex.Message}");
             }
-
-            await _unitOfWork.GetGenericRepository<Category>().DeleteAsync(category);
-            await _unitOfWork.CommitAsync();
-
-            return new SuccessResult(Messages.CategoryDeleted);
         }
 
         public async Task<IResult> UpdateAsync(CategoryDetailDto categoryDetailDto)
         {
-            if (categoryDetailDto == null)
+            try
             {
-                return new ErrorResult("Kategori bilgileri eksik.");
-            }
+                if (categoryDetailDto == null)
+                    return new ErrorResult("Kategori bilgileri eksik.");
 
-            var category = await _unitOfWork.GetGenericRepository<Category>().GetAsync(x => x.ID == categoryDetailDto.ID);
-            if (category == null)
+                var category = await _unitOfWork.GetGenericRepository<Category>().GetAsync(x => x.ID == categoryDetailDto.ID);
+                if (category == null)
+                    return new ErrorResult("Güncellenecek kategori bulunamadı.");
+
+                category = categoryDetailDto.Adapt(category);
+                await _unitOfWork.GetGenericRepository<Category>().UpdateAsync(category);
+                await _unitOfWork.CommitAsync();
+
+                return new SuccessResult(Messages.CategoryUpdated);
+            }
+            catch (Exception ex)
             {
-                return new ErrorResult("Güncellenecek kategori bulunamadı.");
+                return new ErrorResult($"Kategori güncellenirken hata oluştu: {ex.Message}");
             }
-            category = categoryDetailDto.Adapt(category);
-
-            await _unitOfWork.GetGenericRepository<Category>().UpdateAsync(category);
-            await _unitOfWork.CommitAsync();
-
-            return new SuccessResult(Messages.CategoryUpdated);
         }
     }
 }
