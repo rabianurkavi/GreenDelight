@@ -21,17 +21,26 @@ namespace GreenDelight.Persistence.Services.AboutServices
         {
             _unitOfWork = unitOfWork;
         }
+
         public async Task<IDataResult<AboutDto>> GetAbout()
         {
-            var result = await _unitOfWork.GetGenericRepository<About>().GetAsync(x => x.Status == true);
-            var aboutDto = result.Adapt<AboutDto>();
-            if (result == null) 
+            try
             {
-                return new ErrorDataResult<AboutDto>("Herhangi bir hakkımızda yazısı bulunmamaktadır.");
+                var result = await _unitOfWork.GetGenericRepository<About>().GetAsync(x => x.Status == true);
+
+                if (result == null)
+                {
+                    return new ErrorDataResult<AboutDto>("Herhangi bir hakkımızda yazısı bulunmamaktadır.");
+                }
+
+                var aboutDto = result.Adapt<AboutDto>();
+                return new SuccessDataResult<AboutDto>(aboutDto, Messages.AboutList);
             }
-            return new SuccessDataResult<AboutDto>(aboutDto, Messages.AboutList);
-
+            catch (Exception ex)
+            {
+                return new ErrorDataResult<AboutDto>($"Hakkımızda bilgisi getirilirken bir hata oluştu: {ex.Message}");
+            }
         }
-
     }
+
 }
