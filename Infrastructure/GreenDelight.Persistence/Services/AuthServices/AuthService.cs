@@ -81,87 +81,23 @@ namespace GreenDelight.Persistence.Services.AuthServices
 
         public async Task<IDataResult<bool>> LoginAsync(LoginDto loginDto)
         {
-            var user = await _userManager.FindByEmailAsync(loginDto.Email);
-            if (user == null)
-                return new ErrorDataResult<bool>("E-posta adresi bulunamadı.");
-
-            if (!await _userManager.CheckPasswordAsync(user, loginDto.Password))
-                return new ErrorDataResult<bool>("Girdiğiniz şifre yanlıştır.");
-
-            IList<string> roles = await _userManager.GetRolesAsync(user);
-
-            var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        new Claim(ClaimTypes.Name, user.UserName),
-        new Claim(ClaimTypes.Email, user.Email)
-    };
-
-            foreach (var role in roles)
+            try
             {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
+                var user = await _userManager.FindByEmailAsync(loginDto.Email);
+                if (user == null)
+                    return new ErrorDataResult<bool>("E-posta adresi bulunamadı.");
 
-            foreach (var claim in claims)
-            {
-                var existingClaim = await _userManager.GetClaimsAsync(user);
-                if (!existingClaim.Any(c => c.Type == claim.Type && c.Value == claim.Value))
-                {
-                    await _userManager.AddClaimAsync(user, claim);
-                }
-            }
+                if (!await _userManager.CheckPasswordAsync(user, loginDto.Password))
+                    return new ErrorDataResult<bool>("Girdiğiniz şifre yanlıştır.");
 
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                IList<string> roles = await _userManager.GetRolesAsync(user);
 
-            var authProperties = new AuthenticationProperties
-            {
-                IsPersistent = true, //oturum kalıcı
-                ExpiresUtc = DateTime.UtcNow.AddHours(1)
-            };
-
-            await _httpContextAccessor.HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                authProperties);
-
-            return new SuccessDataResult<bool>(true, "Giriş başarılı.");
-        }
-        public async Task LogoutAsync()
-        {
-            await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        }
-        public async Task RegisterAsync(RegisterDto registerDto)
-        {
-            // Kullanıcı varlığını kontrol et
-            await _authRules.UserShouldNotBeExist(await _userManager.FindByEmailAsync(registerDto.Email));
-
-            var user = registerDto.Adapt<User>();
-            IdentityResult result = await _userManager.CreateAsync(user, registerDto.Password);
-            if (result.Succeeded)
-            {
-                // Varsayılan 'user' rolünü oluştur
-                if (!await _roleManager.RoleExistsAsync("user"))
-                {
-                    await _roleManager.CreateAsync(new UserRole
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "user",
-                        NormalizedName = "USER",
-                        ConcurrencyStamp = Guid.NewGuid().ToString(),
-                    });
-                }
-
-                // Kullanıcıyı 'user' rolüne ekle
-                await _userManager.AddToRoleAsync(user, "user");
-
-                // Kullanıcının Claims'lerini oluştur
-                var roles = await _userManager.GetRolesAsync(user);
                 var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.Email, user.Email)
-        };
+                {
+                   new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                   new Claim(ClaimTypes.Name, user.UserName),
+                   new Claim(ClaimTypes.Email, user.Email)
+                };
 
                 foreach (var role in roles)
                 {
@@ -170,16 +106,14 @@ namespace GreenDelight.Persistence.Services.AuthServices
 
                 foreach (var claim in claims)
                 {
-                    var existingClaims = await _userManager.GetClaimsAsync(user);
-                    if (!existingClaims.Any(c => c.Type == claim.Type && c.Value == claim.Value))
+                    var existingClaim = await _userManager.GetClaimsAsync(user);
+                    if (!existingClaim.Any(c => c.Type == claim.Type && c.Value == claim.Value))
                     {
                         await _userManager.AddClaimAsync(user, claim);
                     }
                 }
 
-
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
 
                 var authProperties = new AuthenticationProperties
                 {
@@ -191,12 +125,87 @@ namespace GreenDelight.Persistence.Services.AuthServices
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity),
                     authProperties);
-            }
-            else
-            {
 
-                throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
+                return new SuccessDataResult<bool>(true, "Giriş başarılı.");
+            }
+            catch (Exception ex)
+            {
+                return new ErrorDataResult<bool>($"Giriş sırasında bir hata oluştu: {ex.Message}");
             }
         }
+
+        public async Task LogoutAsync()
+        {
+            await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        }
+        public async Task RegisterAsync(RegisterDto registerDto)
+        {
+            try
+            {
+                var existingUser = await _userManager.FindByEmailAsync(registerDto.Email);
+                await _authRules.UserShouldNotBeExist(existingUser);
+
+                var user = registerDto.Adapt<User>();
+                IdentityResult result = await _userManager.CreateAsync(user, registerDto.Password);
+
+                if (!result.Succeeded)
+                {
+                    var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                    throw new Exception($"Kayıt oluşturulamadı: {errors}");
+                }
+
+                if (!await _roleManager.RoleExistsAsync("user"))
+                {
+                    await _roleManager.CreateAsync(new UserRole
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "user",
+                        NormalizedName = "USER",
+                        ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    });
+                }
+
+                await _userManager.AddToRoleAsync(user, "user");
+
+                var roles = await _userManager.GetRolesAsync(user);
+                var claims = new List<Claim>
+                {
+                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                 new Claim(ClaimTypes.Name, user.UserName),
+                 new Claim(ClaimTypes.Email, user.Email)
+                };
+
+                foreach (var role in roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
+
+                var existingClaims = await _userManager.GetClaimsAsync(user);
+                foreach (var claim in claims)
+                {
+                    if (!existingClaims.Any(c => c.Type == claim.Type && c.Value == claim.Value))
+                    {
+                        await _userManager.AddClaimAsync(user, claim);
+                    }
+                }
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    ExpiresUtc = DateTime.UtcNow.AddHours(1)
+                };
+
+                await _httpContextAccessor.HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    authProperties);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Kayıt işlemi sırasında bir hata oluştu: {ex.Message}");
+            }
+        }
+
     }
 }
