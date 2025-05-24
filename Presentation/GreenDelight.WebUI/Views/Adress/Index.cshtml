@@ -1,0 +1,54 @@
+﻿@model GreenDelight.Domain.Results.SuccessDataResult<List<GreenDelight.Application.DTOs.AddressDtos.AddressDto>>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold" style="color: #333; font-size: 28px;">📍 Adreslerim</h2>
+        <a href="/Adress/AddAdress" class="btn" style="background-color: #b0b435; color: white;">
+            ➕ Yeni Adres Ekle
+        </a>
+    </div>
+
+    @if (Model != null && Model.Data.Any())
+    {
+        <div class="row">
+            @foreach (var item in Model.Data)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm border-0 p-3" style="background-color: #f8f9fa;">
+                        <h5 style="color: #b0b435;">@item.AdressName</h5>
+                        <p class="mb-2"><strong>Ad Soyad:</strong> @item.RecipientFullName</p>
+                        <p class="mb-2"><strong>Telefon:</strong> @item.PhoneNumber</p>
+
+                        <div class="d-flex justify-content-end mt-3" style="gap: 10px;">
+                            <a href="/Adress/UpdateAdress/@item.ID"
+                               class="btn btn-sm me-2 px-3"
+                               style="background-color: #b0b435; color: white; border-radius: 5px;">
+                                ✏️ Düzenle
+                            </a>
+
+                            <a href="/Adress/RemoveAdress/@item.ID"
+                               class="btn btn-sm px-3"
+                               style="background-color: #dc3545; color: white; border-radius: 5px;"
+                               onclick="return confirm('Bu adresi silmek istediğinizden emin misiniz?');">
+                                🗑️ Sil
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            Henüz bir adresiniz yok. <br />
+            <a href="/Adres/Ekle" class="btn mt-2" style="background-color: #b0b435; color: white;">Adres Ekle</a>
+        </div>
+    }
+</div>
+
+

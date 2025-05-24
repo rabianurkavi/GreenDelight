@@ -4,6 +4,7 @@ using GreenDelight.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GreenDelight.Persistence.Migrations
 {
     [DbContext(typeof(GreenDelightDbContext))]
-    partial class GreenDelightDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250524122900_mig_city_district_neigh")]
+    partial class mig_city_district_neigh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,24 +67,22 @@ namespace GreenDelight.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("AdressName")
+                    b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("NeighborhoodId")
-                        .HasColumnType("int");
+                    b.Property<string>("District")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Neighborhood")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("No")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RecipientFullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -96,8 +97,6 @@ namespace GreenDelight.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("NeighborhoodId");
 
                     b.HasIndex("UserId");
 
@@ -196,29 +195,6 @@ namespace GreenDelight.Persistence.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("GreenDelight.Domain.Concrete.City", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("CityName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Cities");
-                });
-
             modelBuilder.Entity("GreenDelight.Domain.Concrete.Comment", b =>
                 {
                     b.Property<int>("ID")
@@ -291,34 +267,6 @@ namespace GreenDelight.Persistence.Migrations
                     b.ToTable("Contacts");
                 });
 
-            modelBuilder.Entity("GreenDelight.Domain.Concrete.District", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DistrictName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("CityId");
-
-                    b.ToTable("Districts");
-                });
-
             modelBuilder.Entity("GreenDelight.Domain.Concrete.ErrorLog", b =>
                 {
                     b.Property<int>("ID")
@@ -361,34 +309,6 @@ namespace GreenDelight.Persistence.Migrations
                     b.ToTable("ErrorLogs");
                 });
 
-            modelBuilder.Entity("GreenDelight.Domain.Concrete.Neighborhood", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DistrictId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NeighborhoodName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("DistrictId");
-
-                    b.ToTable("Neighborhoods");
-                });
-
             modelBuilder.Entity("GreenDelight.Domain.Concrete.Order", b =>
                 {
                     b.Property<int>("ID")
@@ -397,7 +317,10 @@ namespace GreenDelight.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("AdressId")
+                    b.Property<int>("AdresId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AdressID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -417,7 +340,7 @@ namespace GreenDelight.Persistence.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AdressId");
+                    b.HasIndex("AdressID");
 
                     b.HasIndex("UserId");
 
@@ -794,19 +717,11 @@ namespace GreenDelight.Persistence.Migrations
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.Adress", b =>
                 {
-                    b.HasOne("GreenDelight.Domain.Concrete.Neighborhood", "Neighborhood")
-                        .WithMany("Adresses")
-                        .HasForeignKey("NeighborhoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("GreenDelight.Domain.Concrete.User", "User")
                         .WithMany("Adresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Neighborhood");
 
                     b.Navigation("User");
                 });
@@ -853,33 +768,11 @@ namespace GreenDelight.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("GreenDelight.Domain.Concrete.District", b =>
-                {
-                    b.HasOne("GreenDelight.Domain.Concrete.City", "City")
-                        .WithMany("Districts")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("City");
-                });
-
-            modelBuilder.Entity("GreenDelight.Domain.Concrete.Neighborhood", b =>
-                {
-                    b.HasOne("GreenDelight.Domain.Concrete.District", "District")
-                        .WithMany("Neighborhoods")
-                        .HasForeignKey("DistrictId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("District");
-                });
-
             modelBuilder.Entity("GreenDelight.Domain.Concrete.Order", b =>
                 {
                     b.HasOne("GreenDelight.Domain.Concrete.Adress", "Adress")
                         .WithMany("Orders")
-                        .HasForeignKey("AdressId")
+                        .HasForeignKey("AdressID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -988,21 +881,6 @@ namespace GreenDelight.Persistence.Migrations
             modelBuilder.Entity("GreenDelight.Domain.Concrete.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("GreenDelight.Domain.Concrete.City", b =>
-                {
-                    b.Navigation("Districts");
-                });
-
-            modelBuilder.Entity("GreenDelight.Domain.Concrete.District", b =>
-                {
-                    b.Navigation("Neighborhoods");
-                });
-
-            modelBuilder.Entity("GreenDelight.Domain.Concrete.Neighborhood", b =>
-                {
-                    b.Navigation("Adresses");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.Order", b =>

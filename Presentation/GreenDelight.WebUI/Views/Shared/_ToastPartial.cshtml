@@ -1,15 +1,15 @@
-﻿@* Dinamik ve Şık Toast Bildirim Partial View *@
-<div id="toastContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
+﻿@using System.Text.Json
+
+<div id="toastContainer">
     <div id="dynamicToast" class="toast-custom" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
         <div id="toastHeader" class="toast-header-custom">
             <i id="toastIcon" class="fas toast-icon"></i>
-            <span id="toastBody" class="toast-body">Ürün başarıyla sepete eklendi!</span>
+            <span id="toastBody" class="toast-body">Bildirim mesajı buraya gelecek</span>
         </div>
     </div>
 </div>
 
 <style>
-    /* Toast Genel Yapısı */
     #toastContainer {
         position: fixed;
         top: 20px;
@@ -43,20 +43,12 @@
     .toast-icon {
         font-size: 24px;
         margin-right: 10px;
-        color: #b0b435; /* İkon rengi */
+        color: #b0b435;
     }
 
     .toast-body {
         font-size: 16px;
         color: #000;
-    }
-
-    /* Başarılı Durum */
-    .bg-success-custom {
-        background-color: #28a745;
-        color: #fff;
-        border-radius: 50%;
-        padding: 4px;
     }
 </style>
 
@@ -66,31 +58,26 @@
         var toastIcon = $("#toastIcon");
         var toastBody = $("#toastBody");
 
-        // İkon ve Renk Ayarlama
-        var iconClass;
+        let iconClass;
         switch (type) {
-            case "success":
-                iconClass = "fa-check";
-                break;
-            case "error":
-                iconClass = "fa-times";
-                break;
-            case "warning":
-                iconClass = "fa-exclamation";
-                break;
-            case "info":
-                iconClass = "fa-info";
-                break;
-            default:
-                iconClass = "fa-info";
-                break;
+            case "success": iconClass = "fa-check"; break;
+            case "error": iconClass = "fa-times"; break;
+            case "warning": iconClass = "fa-exclamation"; break;
+            case "info": iconClass = "fa-info"; break;
+            default: iconClass = "fa-info"; break;
         }
 
-        // Toast yapısını güncelleme
         toastIcon.removeClass().addClass("fas " + iconClass + " toast-icon");
         toastBody.text(message);
-
-        // Toast'u gösterme
         toastEl.fadeIn(300).delay(3000).fadeOut(400);
     }
+
+    $(document).ready(function () {
+        var toastType = '@TempData["ToastType"]';
+        var toastMessage = @Html.Raw(JsonSerializer.Serialize(TempData["ToastMessage"]));
+
+        if (toastType && toastMessage) {
+            showToast(toastType, toastMessage);
+        }
+    });
 </script>

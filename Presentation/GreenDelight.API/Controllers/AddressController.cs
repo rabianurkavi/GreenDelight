@@ -1,5 +1,6 @@
 ﻿using GreenDelight.Application.DTOs.AddressDtos;
 using GreenDelight.Application.Interfaces.Services.AdressServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +30,57 @@ namespace GreenDelight.API.Controllers
         {
             var result= await _addressService.GetByIdAsync(id);
             if(result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllAddress()
+        {
+            var result = await _addressService.GetAllAsync();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet]
+        [Route("ByUser")]
+        public async Task<IActionResult> GetAllByUserAdress()
+        {
+            var result = await _addressService.GetAllByUserIdAsync();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllCity()
+        {
+            var result = await _addressService.GetAllCity();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllDistrict(int cityId)
+        {
+            var result = await _addressService.GetAllDistrict(cityId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllNeighborhood(int districtId)
+        {
+            var result = await _addressService.GetAllNeighborhood(districtId);
+            if (result.Success)
             {
                 return Ok(result);
             }

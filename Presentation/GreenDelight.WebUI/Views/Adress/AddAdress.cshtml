@@ -1,0 +1,119 @@
+﻿@model GreenDelight.Application.DTOs.AddressDtos.AddressAddDto
+@{
+    ViewData["Title"] = "Yeni Adres Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5 p-4 rounded shadow" style="background-color: #fefefe; max-width: 750px;">
+    <h3 class="mb-4 text-center" style="color:#444; font-weight: bold;">
+        ➕ Yeni Adres Ekle
+    </h3>
+
+    <form asp-action="AddAdress" method="post">
+        <div class="form-group mb-3">
+            <label class="font-weight-bold">Adres Adı</label>
+            <input asp-for="AdressName" class="form-control rounded-pill px-3 py-2" />
+        </div>
+        <div class="form-group mb-3">
+            <label class="font-weight-bold">Alıcı Adı Soyadı</label>
+            <input asp-for="RecipientFullName" class="form-control rounded-pill px-3 py-2" />
+        </div>
+        <div class="form-group mb-3">
+            <label class="font-weight-bold">İl</label>
+            <select id="CitySelect" class="form-control rounded-pill px-3 py-2">
+                <option>Seçiniz</option>
+                @foreach (var city in ViewBag.Cities)
+                {
+                    <option value="@city.Id">@city.CityName</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="font-weight-bold">İlçe</label>
+            <select id="DistrictSelect" class="form-control rounded-pill px-3 py-2"></select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="font-weight-bold">Mahalle</label>
+            <select asp-for="NeighborhoodId" class="form-control rounded-pill px-3 py-2" id="NeighborhoodSelect"></select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="font-weight-bold">Sokak</label>
+            <input asp-for="Street" class="form-control rounded-pill px-3 py-2" />
+        </div>
+
+        <div class="form-group mb-3">
+            <label class="font-weight-bold">No</label>
+            <input asp-for="No" class="form-control rounded-pill px-3 py-2" />
+        </div>
+
+        <div class="form-group mb-4">
+            <label class="font-weight-bold">Telefon</label>
+            <input asp-for="PhoneNumber" class="form-control rounded-pill px-3 py-2" />
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn px-4 py-2" style="background-color: #b0b435; color: white; border-radius: 30px; font-weight: bold;">
+                📥 Kaydet
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        $("#CitySelect").change(function () {
+            var cityId = $(this).val();
+            $("#DistrictSelect").empty();
+            $("#NeighborhoodSelect").empty();
+            $.getJSON('/Adress/GetDistricts', { cityId: cityId }, function (data) {
+                $.each(data, function (i, district) {
+                    $("#DistrictSelect").append($('<option>', {
+                        value: district.id,
+                        text: district.districtName
+                    }));
+                });
+            });
+        });
+
+        $("#DistrictSelect").change(function () {
+            var districtId = $(this).val();
+            $("#NeighborhoodSelect").empty();
+            $.getJSON('/Adress/GetNeighborhoods', { districtId: districtId }, function (data) {
+                $.each(data, function (i, neighborhood) {
+                    $("#NeighborhoodSelect").append($('<option>', {
+                        value: neighborhood.id,
+                        text: neighborhood.neighborhoodName
+                    }));
+                });
+            });
+        });
+    </script>
+}
+
+<style>
+    label {
+        color: #333;
+    }
+
+    .form-control:focus {
+        border-color: #b0b435;
+        box-shadow: 0 0 6px rgba(176, 180, 53, 0.3);
+    }
+
+    .btn:hover {
+        background-color: #9cae2d !important;
+    }
+
+    .container h3::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 3px;
+        background: #b0b435;
+        margin: 10px auto 0;
+        border-radius: 2px;
+    }
+</style>

@@ -19,8 +19,4 @@
     <ProjectReference Include="..\GreenDelight.Domain\GreenDelight.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\OrderDtos\" />
-  </ItemGroup>
-
 </Project>

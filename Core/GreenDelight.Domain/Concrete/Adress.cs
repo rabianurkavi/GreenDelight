@@ -9,14 +9,16 @@ namespace GreenDelight.Domain.Concrete
 {
     public class Adress:AuditableEntity
     {
-        public string City { get; set; }
-        public string District { get; set; }
+        public int NeighborhoodId { get; set; }
+        public string? AdressName { get; set; }
         public Guid UserId { get; set; }
-        public string Neighborhood { get; set; }
         public string Street { get; set; }
+        public string RecipientFullName { get; set; }
         public string No { get; set; }
-
+        public string PhoneNumber { get; set; }
         public virtual User User { get; set; }
-        
+        public virtual Neighborhood Neighborhood { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+
     }
 }

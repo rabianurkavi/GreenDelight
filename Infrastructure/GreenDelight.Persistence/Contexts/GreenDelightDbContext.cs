@@ -37,7 +37,9 @@ namespace GreenDelight.Persistence.Contexts
         DbSet<User> Users { get; set; }
         DbSet<UserRole> UserRoles { get; set; }
         DbSet<Product> Products { get; set; }
-
+        DbSet<Neighborhood> Neighborhoods { get; set; }
+        DbSet<City> Cities { get; set; }
+        DbSet<District> Districts { get; set; }
         DbSet<ErrorLog> ErrorLogs { get; set; }
         DbSet<Comment> Comments { get; set; }
         DbSet<Contact> Contacts { get; set; }

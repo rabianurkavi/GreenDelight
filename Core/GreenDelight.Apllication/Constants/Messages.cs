@@ -22,9 +22,12 @@ namespace GreenDelight.Application.Constants
         public static string CategoryInvalid = "Kategori ismi geçersiz";
         public static string CategorysListed = "Kategoriler listelendi";
 
-        public static string AddressAdded = "Adres eklendi";
-        public static string AddressDeleted = "Adres silindi";
-        public static string AddressUpdated = "Adres güncellendi";
+        public static string AddressAdded = "Adres başarıyla eklendi";
+        public static string AddressNotAdded = "Adres eklenirken bir hata oluştu";
+        public static string AddressDeleted = "Adres başarıyla silindi";
+        public static string AddressNotDeleted = "Adres silinirken bir hata oluştu";
+        public static string AddressUpdated = "Adres başarıyla güncellendi";
+        public static string AddressNotUpdated = "Adres güncellenirken bir hata oluştu";
         public static string AddressMaintenanceTime = "Zaman hatası";
         public static string AddressInvalid = "Adres ismi geçersiz";
         public static string AddressesListed = "Adresler listelendi";
@@ -42,6 +45,11 @@ namespace GreenDelight.Application.Constants
         public static string AboutList = "Hakkımızda yazısı geldi.";
         public static string BasketItemListed = "Sepet başarıyla getirildi";
         public static string BasketItemDeleted = "Ürün başarıyla sepetten silindi.";
+
+        public static string CityListed = "Şehirler listelendi";
+        public static string NeighborhoodListed = "Mahalleler listelendi";
+        public static string DistrictListed = "İlçeler listelendi";
+
 
 
 

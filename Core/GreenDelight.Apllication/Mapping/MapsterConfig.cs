@@ -22,6 +22,9 @@ using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.PersonelDtos;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.MasaDtos;
 using GreenDelight.Application.DTOs.OtherProjectDto.VardiyaDtos.SablonDtos;
 using GreenDelight.Application.DTOs.BasketItemDtos;
+using GreenDelight.Application.DTOs.AddressDtos.City;
+using GreenDelight.Application.DTOs.AddressDtos.Neighborhood;
+using GreenDelight.Application.DTOs.AddressDtos.District;
 
 namespace GreenDelight.Application.Mapping
 {
@@ -58,7 +61,7 @@ namespace GreenDelight.Application.Mapping
             config.NewConfig<Adress, AddressAddDto>();
 
             config.NewConfig<Adress, AddressDetailDto>()
-                .Map(dest => dest.UserFullName, src => src.User.FullName)
+                .Map(dest => dest.RecipientFullName, src => src.RecipientFullName)
                 .Map(dest => dest.PhoneNumber, src => src.User.PhoneNumber);
 
             config.NewConfig<Adress, AddressDto>();
@@ -103,10 +106,46 @@ namespace GreenDelight.Application.Mapping
                 .Map(dest => dest.Product.ImageUrls, src => src.ImageUrl);
 
             config.NewConfig<BasketItem, BasketItemDto>()
-                .Map(dest=>dest.BasketItemId,src=>src.ID)
+                .Map(dest => dest.BasketItemId, src => src.ID)
                 .Map(dest => dest.ProductId, src => src.ProductId)
                 .Map(dest => dest.ProductName, src => src.Product.ProductName)
                 .Map(dest => dest.ImageUrl, src => src.Product.ImageUrls);
+
+
+            config.NewConfig<AddressAddDto, Adress>();
+
+            config.NewConfig<Adress, AddressDetailDto>()
+                .Map(dest => dest.Id, src => src.ID)
+                .Map(dest => dest.RecipientFullName, src => src.RecipientFullName)
+                .Map(dest => dest.NeighborhoodName, src => src.Neighborhood.NeighborhoodName)
+                .Map(dest => dest.DistrictName, src => src.Neighborhood.District.DistrictName)
+                .Map(dest => dest.PhoneNumber, src => src.PhoneNumber)
+                .Map(dest => dest.CityName, src => src.Neighborhood.District.City.CityName)
+                .Map(dest => dest.CityId, src => src.Neighborhood.District.CityId)
+                .Map(dest => dest.DistrictId, src => src.Neighborhood.DistrictId)
+                .Map(dest => dest.NeighborhoodId, src => src.NeighborhoodId);
+
+            config.NewConfig<AddressDetailDto, Adress>()
+                .Map(dest => dest.ID, src => src.Id)
+                .Map(dest => dest.RecipientFullName, src => src.RecipientFullName)
+                .Map(dest => dest.Neighborhood.NeighborhoodName, src => src.NeighborhoodName)
+                .Map(dest => dest.Neighborhood.District.DistrictName, src => src.DistrictName)
+                .Map(dest => dest.Neighborhood.District.City.CityName, src => src.CityName);
+
+            config.NewConfig<City, CityDto>()
+                .Map(dest => dest.Id, src => src.ID);
+
+            config.NewConfig<Neighborhood, NeighborhoodDto>()
+                .Map(dest => dest.Id, src => src.ID)
+                .Map(dest => dest.NeighborhoodName, src => src.NeighborhoodName);
+
+            config.NewConfig<District, DistrictDto>()
+                .Map(dest => dest.Id, src => src.ID)
+                .Map(dest => dest.DistrictName, src => src.DistrictName);
+
+
+
+
 
 
             //DEMİRYOLU PROJESİ İÇİN

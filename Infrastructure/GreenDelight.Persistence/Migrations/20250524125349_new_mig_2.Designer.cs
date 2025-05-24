@@ -4,6 +4,7 @@ using GreenDelight.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GreenDelight.Persistence.Migrations
 {
     [DbContext(typeof(GreenDelightDbContext))]
-    partial class GreenDelightDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250524125349_new_mig_2")]
+    partial class new_mig_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,24 +67,19 @@ namespace GreenDelight.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("AdressName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("DistrictId")
+                        .HasColumnType("int");
 
                     b.Property<int>("NeighborhoodId")
                         .HasColumnType("int");
 
                     b.Property<string>("No")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RecipientFullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -96,6 +94,10 @@ namespace GreenDelight.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("DistrictId");
 
                     b.HasIndex("NeighborhoodId");
 
@@ -794,6 +796,18 @@ namespace GreenDelight.Persistence.Migrations
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.Adress", b =>
                 {
+                    b.HasOne("GreenDelight.Domain.Concrete.City", "City")
+                        .WithMany("Adresses")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GreenDelight.Domain.Concrete.District", "District")
+                        .WithMany("Adresses")
+                        .HasForeignKey("DistrictId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("GreenDelight.Domain.Concrete.Neighborhood", "Neighborhood")
                         .WithMany("Adresses")
                         .HasForeignKey("NeighborhoodId")
@@ -805,6 +819,10 @@ namespace GreenDelight.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("District");
 
                     b.Navigation("Neighborhood");
 
@@ -992,11 +1010,15 @@ namespace GreenDelight.Persistence.Migrations
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.City", b =>
                 {
+                    b.Navigation("Adresses");
+
                     b.Navigation("Districts");
                 });
 
             modelBuilder.Entity("GreenDelight.Domain.Concrete.District", b =>
                 {
+                    b.Navigation("Adresses");
+
                     b.Navigation("Neighborhoods");
                 });
 
