@@ -30,7 +30,7 @@ namespace GreenDelight.Application.Constants
         public static string AddressNotUpdated = "Adres güncellenirken bir hata oluştu";
         public static string AddressMaintenanceTime = "Zaman hatası";
         public static string AddressInvalid = "Adres ismi geçersiz";
-        public static string AddressesListed = "Adresler listelendi";
+        public static string AddressesListed = "Adresler listelvndi";
 
         public static string CommentAdded = "Yorum eklendi";
         public static string CommentDeleted = "Yorum silindi";
@@ -43,8 +43,11 @@ namespace GreenDelight.Application.Constants
         public static string OrderItemAdded = "Ürün sepetinize eklendi.";
 
         public static string AboutList = "Hakkımızda yazısı geldi.";
+
         public static string BasketItemListed = "Sepet başarıyla getirildi";
         public static string BasketItemDeleted = "Ürün başarıyla sepetten silindi.";
+        public static string BasketItemQuantityAdded = "Zaten var olan ürünün miktarı arttırıldı.";
+        public static string BasketItemAdded = "Ürün başarıyla sepete eklendi..";
 
         public static string CityListed = "Şehirler listelendi";
         public static string NeighborhoodListed = "Mahalleler listelendi";

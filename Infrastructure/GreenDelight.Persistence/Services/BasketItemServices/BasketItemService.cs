@@ -36,13 +36,34 @@ namespace GreenDelight.Persistence.Services.BasketItemServices
         {
             try
             {
+                var basketRepo = _unitOfWork.GetGenericRepository<Basket>();
+                var basketItemRepo = _unitOfWork.GetGenericRepository<BasketItem>();
                 var userIdString = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                int basketId = 1; // Default basketId, will be updated if a valid basket is found
                 if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out Guid userId))
                 {
                     return new ErrorResult("Kullanıcı kimliği alınamadı veya geçersiz.");
                 }
-                int basketId = await _basketService.GetOrCreateBasketId(userId);
-                var basketItem = basketItemAddDto.Adapt<BasketItem>();
+                var existingBasket = await basketRepo.GetAsync(x => x.UserID == userId && x.IsActive);
+                if(existingBasket == null)
+                {
+                    basketId = await _basketService.GetOrCreateBasketId(userId);
+                }
+                else
+                {
+                    basketId = existingBasket.ID;
+                }
+                var existingItem = await _unitOfWork.GetGenericRepository<BasketItem>()
+                    .GetAsync(x => x.ProductId == basketItemAddDto.ProductId && x.Basket.UserID == userId && x.Basket.IsActive==true);
+                if(existingItem != null)
+                {
+                    existingItem.Quantity += basketItemAddDto.Quantity;
+                    await _unitOfWork.GetGenericRepository<BasketItem>().UpdateAsync(existingItem);
+                    await _unitOfWork.CommitAsync();
+                    return new SuccessDataResult<bool>(true, Messages.BasketItemQuantityAdded);
+                }
+
+                    var basketItem = basketItemAddDto.Adapt<BasketItem>();
                 basketItem.BasketId = basketId;
                 await _unitOfWork.GetGenericRepository<BasketItem>().AddAsync(basketItem);
                 await _unitOfWork.CommitAsync();
