@@ -8,11 +8,12 @@ namespace GreenDelight.Domain.Enums
 {
     public enum OrderStatus
     {
-        Pending = 1,        //  bekliyor
-        Processed = 2,      //  işlendi
-        Shipped = 3,        //  gönderildi
-        Delivered = 4,      //  teslim edildi
-        Canceled = 5,       //  iptal edildi
-        Returned = 6        //  iade edildi
+        Pending = 1,          // bekliyor
+        PaymentPending = 2,   // ödeme bekleniyor
+        Processed = 3,        // işlendi
+        Shipped = 4,          // gönderildi
+        Delivered = 5,        // teslim edildi
+        Canceled = 6,         // iptal edildi
+        Returned = 7          // iade edildi
     }
 }

@@ -14,6 +14,7 @@ namespace GreenDelight.Domain.Concrete
         public int AdressId { get; set; }
         public decimal TotalAmount { get; set; }
         public OrderStatus Status { get; set; }
+        public DateTime OrderDate { get; set; } = DateTime.Now;
 
         public virtual User User { get; set; }
         public virtual Adress Adress { get; set; }

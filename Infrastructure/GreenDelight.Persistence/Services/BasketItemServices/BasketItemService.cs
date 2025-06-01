@@ -47,7 +47,7 @@ namespace GreenDelight.Persistence.Services.BasketItemServices
                 var existingBasket = await basketRepo.GetAsync(x => x.UserID == userId && x.IsActive);
                 if(existingBasket == null)
                 {
-                    basketId = await _basketService.GetOrCreateBasketId(userId);
+                    basketId = await _basketService.GetOrCreateBasketId();
                 }
                 else
                 {
@@ -60,7 +60,7 @@ namespace GreenDelight.Persistence.Services.BasketItemServices
                     existingItem.Quantity += basketItemAddDto.Quantity;
                     await _unitOfWork.GetGenericRepository<BasketItem>().UpdateAsync(existingItem);
                     await _unitOfWork.CommitAsync();
-                    return new SuccessDataResult<bool>(true, Messages.BasketItemQuantityAdded);
+                    return new SuccessDataResult<bool>(true, Messages.BasketItemListed);
                 }
 
                     var basketItem = basketItemAddDto.Adapt<BasketItem>();
@@ -101,14 +101,15 @@ namespace GreenDelight.Persistence.Services.BasketItemServices
         {
             try
             {
-                int? basketId = _httpContextAccessor.HttpContext?.Session.GetInt32("BasketID");
+
+                var basketId = await _basketService.GetOrCreateBasketId();
 
                 if (basketId == null || basketId == 0)
                     return new ErrorDataResult<List<BasketItemDto>>("Sepetinizde ürün bulunmamaktadır.");
 
                 var basketItems = await _unitOfWork.GetGenericRepository<BasketItem>()
                     .GetAllAsync(
-                        x => x.BasketId == basketId.Value,
+                        x => x.BasketId == basketId,
                         include: query => query.Include(bi => bi.Product),
                         enableTracking: true
                     );

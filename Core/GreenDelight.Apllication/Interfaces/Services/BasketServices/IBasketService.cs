@@ -10,10 +10,11 @@ namespace GreenDelight.Application.Interfaces.Services.BasketServices
 {
     public interface IBasketService
     {
-        Task<int> GetOrCreateBasketId(Guid userId);
+        Task<int> GetOrCreateBasketId();
 
         Task<IResult> ConfirmBasketAsync(int basketId);
 
         Task<IDataResult<Basket>> GetBasketAsync(int basketId);
+        Task<IDataResult<Basket>> BasketIsActiveFalse(int basketId);
     }
 }

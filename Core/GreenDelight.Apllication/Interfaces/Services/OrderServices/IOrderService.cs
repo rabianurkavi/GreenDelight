@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GreenDelight.Application.DTOs.OrderDtos;
+using GreenDelight.Application.DTOs.OrderItemDtos;
+using GreenDelight.Domain.Results;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +11,11 @@ namespace GreenDelight.Application.Interfaces.Services.OrderServices
 {
     public interface IOrderService
     {
-        Task<bool> CreateOrderAsync(int basketId, string address, string phoneNumber, string note);
+        #region Order
+        Task<IDataResult<int>> CreateOrderAsync(OrderAddDto orderAddDto, int basketId);
+        #endregion
+        #region OrderItem
+        Task<IResult> CreateOrderItemsAsync(List<OrderItemAddDto> orderItems);
+        #endregion
     }
 }

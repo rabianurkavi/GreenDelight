@@ -27,7 +27,7 @@
                 <strong>Toplam:</strong>
                 <span>@Model.Sum(x => x.UnitPrice * x.Quantity) ₺</span>
             </div>
-            <a href="@Url.Action("Index", "Basket")" class="btn-checkout">Siparişi Onayla</a>
+            <a href="@Url.Action("CreateOrder", "Order", new { basketId = ViewBag.BasketId })" class="btn-checkout">Siparişi Onayla</a>
         </li>
     }
     else

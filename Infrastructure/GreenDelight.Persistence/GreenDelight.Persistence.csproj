@@ -26,8 +26,4 @@
     <ProjectReference Include="..\..\Core\GreenDelight.Domain\GreenDelight.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\OrderServices\" />
-  </ItemGroup>
-
 </Project>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +22,37 @@ namespace GreenDelight.Persistence.Services.BasketServices
             _unitOfWork = unitOfWork;
             _httpContextAccessor = httpContextAccessor;
         }
+
+        public async Task<IDataResult<Basket>> BasketIsActiveFalse(int basketId)
+        {
+            try
+            {
+                var basketRepo = _unitOfWork.GetGenericRepository<Basket>();
+                var userIdStr = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(userIdStr))
+                    return new ErrorDataResult<Basket>("Kullanıcı kimliği alınamadı.");
+
+                var userId = Guid.Parse(userIdStr);
+
+                var basket = await basketRepo.GetAsync(x => x.ID == basketId && x.IsActive == true && x.UserID == userId);
+
+                if (basket == null)
+                    return new ErrorDataResult<Basket>("Aktif sepet bulunamadı.");
+
+                basket.IsActive = false;
+
+                await basketRepo.UpdateAsync(basket);
+                await _unitOfWork.CommitAsync();
+
+                return new SuccessDataResult<Basket>(basket, "Sepet başarıyla kapatıldı.");
+            }
+            catch (Exception ex)
+            {
+                return new ErrorDataResult<Basket>($"Sepet kapatılırken bir hata oluştu: {ex.Message}");
+            }
+        }
+
 
         public async Task<Domain.Results.IResult> ConfirmBasketAsync(int basketId)
         {
@@ -61,17 +93,22 @@ namespace GreenDelight.Persistence.Services.BasketServices
             }
         }
 
-        public async Task<int> GetOrCreateBasketId(Guid userId)
+        public async Task<int> GetOrCreateBasketId()
         {
             try
             {
-                var sessionBasketId = _httpContextAccessor.HttpContext.Session.GetInt32("BasketID");
-                if (sessionBasketId.HasValue)
-                    return sessionBasketId.Value;
+                var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var existingBasket = await _unitOfWork.GetGenericRepository<Basket>()
+                    .GetAsync(b => b.UserID == Guid.Parse(userId) && b.IsActive);
+
+                if (existingBasket != null)
+                {
+                    return existingBasket.ID;
+                }
 
                 var newBasket = new Basket
                 {
-                    UserID = userId,
+                    UserID = Guid.Parse(userId),
                     IsActive = true,
                     CreatedDate = DateTime.Now
                 };
@@ -79,21 +116,13 @@ namespace GreenDelight.Persistence.Services.BasketServices
                 await _unitOfWork.GetGenericRepository<Basket>().AddAsync(newBasket);
                 await _unitOfWork.CommitAsync();
 
-                var savedBasket = await _unitOfWork.GetGenericRepository<Basket>()
-                    .GetAsync(b => b.UserID == userId && b.IsActive);
-
-                if (savedBasket != null)
-                {
-                    _httpContextAccessor.HttpContext.Session.SetInt32("BasketID", savedBasket.ID);
-                    return savedBasket.ID;
-                }
-
-                return 0;
+                return newBasket.ID; 
             }
             catch (Exception ex)
             {
-                return 0; 
+                return 0;
             }
         }
+
     }
 }

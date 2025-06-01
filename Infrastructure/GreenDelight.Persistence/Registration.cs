@@ -34,6 +34,8 @@ using GreenDelight.Persistence.Services.BasketItemServices;
 using GreenDelight.Application.Interfaces.Services.BasketItemServices;
 using GreenDelight.Application.Interfaces.Services.BasketServices;
 using GreenDelight.Persistence.Services.BasketServices;
+using GreenDelight.Application.Interfaces.Services.OrderServices;
+using GreenDelight.Persistence.Services.OrderServices;
 
 namespace GreenDelight.Persistence
 {
@@ -54,6 +56,7 @@ namespace GreenDelight.Persistence
             services.AddScoped<IAboutService, AboutService>();
             services.AddScoped<IBasketItemService, BasketItemService>();
             services.AddScoped<IBasketService, BasketService>();
+            services.AddScoped<IOrderService, OrderService>();
 
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();

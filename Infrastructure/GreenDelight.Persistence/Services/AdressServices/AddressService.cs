@@ -29,13 +29,13 @@ namespace GreenDelight.Persistence.Services.AdressServices
         private readonly IHttpClientFactory _httpclientFactory;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        #region Adress
         public AddressService(IUnitOfWork unitOfWork, IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _httpclientFactory = httpClientFactory;
             _httpContextAccessor = httpContextAccessor;
         }
+        #region Adress
         public async Task<IResult> AddAsync(AddressAddDto addressAddDto)
         {
             try

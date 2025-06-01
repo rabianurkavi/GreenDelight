@@ -1,6 +1,7 @@
 ﻿using GreenDelight.Application.DTOs.BasketItemDtos;
 using GreenDelight.Application.DTOs.CommentDtos;
 using GreenDelight.Application.Interfaces.Services.BasketItemServices;
+using GreenDelight.Application.Interfaces.Services.BasketServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +11,11 @@ namespace GreenDelight.WebUI.Controllers
     public class BasketController : Controller
     {
         private readonly IBasketItemService _basketItemService;
-        public BasketController(IBasketItemService basketItemService)
+        private readonly IBasketService _basketService;
+        public BasketController(IBasketItemService basketItemService, IBasketService basketService)
         {
             _basketItemService = basketItemService;
+            _basketService = basketService;
         }
         [HttpGet]
         public async Task<PartialViewResult> PartialAddBasketItem(int productId, decimal unitPrice)
@@ -34,9 +37,10 @@ namespace GreenDelight.WebUI.Controllers
             if (result.Data!=null)
             {
                 ViewBag.BasketItemCount = result.Data.Count;
+                ViewBag.BasketId = _basketService.GetOrCreateBasketId().Result;
                 return PartialView(result.Data);
             }
-
+            
             ViewBag.ErrorMessage = result.Message;
             ViewBag.BasketItemCount = 0;
             return PartialView(result.Data);
