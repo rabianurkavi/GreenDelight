@@ -25,6 +25,7 @@ using GreenDelight.Application.DTOs.BasketItemDtos;
 using GreenDelight.Application.DTOs.AddressDtos.City;
 using GreenDelight.Application.DTOs.AddressDtos.Neighborhood;
 using GreenDelight.Application.DTOs.AddressDtos.District;
+using GreenDelight.Application.DTOs.OrderDtos;
 
 namespace GreenDelight.Application.Mapping
 {
@@ -82,6 +83,8 @@ namespace GreenDelight.Application.Mapping
             config.NewConfig<About, AboutDto>();
 
             config.NewConfig<Comment, CommentAddDto>();
+            config.NewConfig<Order, OrderDto>();
+            config.NewConfig<OrderDto, Order>();
 
             config.NewConfig<Comment, CommentDto>()
                 .Map(dest => dest.UserName, src => src.User.FullName)

@@ -31,7 +31,7 @@ namespace GreenDelight.Persistence.Services.OrderServices
             _httpContextAccessor = httpContextAccessor;
             _basketService = basketService;
         }
-
+        #region Order
         public async Task<IDataResult<int>> CreateOrderAsync(OrderAddDto orderAddDto, int basketId)
         {
             try
@@ -84,8 +84,24 @@ namespace GreenDelight.Persistence.Services.OrderServices
                 return new ErrorDataResult<int>($"Sipariş oluşturulamadı: {ex.Message}");
             }
         }
+        public async Task<IDataResult<OrderDto>> GetOrderAsync(int id)
+        {
+            try
+            {
+                var order = await _unitOfWork.GetGenericRepository<Order>().GetAsync(x=>x.ID ==id);
 
-
+                if (order == null)
+                    return await Task.FromResult<IDataResult<OrderDto>>(new ErrorDataResult<OrderDto>("Sipariş bulunamadı."));
+                var orderDto = order.Adapt<OrderDto>();
+                return new SuccessDataResult<OrderDto>(orderDto, "Sipariş başarıyla getirildi.");
+            }
+            catch
+            {
+                return new ErrorDataResult<OrderDto>("Sipariş getirilirken bir hata oluştu.");
+            }
+        }
+        #endregion
+        #region OrderItem
         public async Task<Domain.Results.IResult> CreateOrderItemsAsync(List<OrderItemAddDto> orderItems)
         {
             try
@@ -115,5 +131,6 @@ namespace GreenDelight.Persistence.Services.OrderServices
             }
         }
 
+        #endregion
     }
 }

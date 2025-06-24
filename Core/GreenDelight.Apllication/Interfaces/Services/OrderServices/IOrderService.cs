@@ -13,6 +13,7 @@ namespace GreenDelight.Application.Interfaces.Services.OrderServices
     {
         #region Order
         Task<IDataResult<int>> CreateOrderAsync(OrderAddDto orderAddDto, int basketId);
+        Task<IDataResult<OrderDto>> GetOrderAsync(int id);
         #endregion
         #region OrderItem
         Task<IResult> CreateOrderItemsAsync(List<OrderItemAddDto> orderItems);
