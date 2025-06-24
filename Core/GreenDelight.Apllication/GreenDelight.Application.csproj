@@ -19,4 +19,8 @@
     <ProjectReference Include="..\GreenDelight.Domain\GreenDelight.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\Services\PaymentService\" />
+  </ItemGroup>
+
 </Project>
