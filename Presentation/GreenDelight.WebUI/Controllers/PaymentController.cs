@@ -13,7 +13,8 @@ namespace GreenDelight.WebUI.Controllers
         private readonly IOrderService _orderService;
         private readonly StripeSettings _stripeSettings;
         public string SessionId { get; set; }
-
+        public string SessiondId { get; set; }
+        
         public PaymentController(IOptions<StripeSettings> stripeSettings,IOrderService orderService)
         {
             _stripeSettings = stripeSettings.Value;
