@@ -100,6 +100,44 @@ namespace GreenDelight.Persistence.Services.OrderServices
                 return new ErrorDataResult<OrderDto>("Sipariş getirilirken bir hata oluştu.");
             }
         }
+        public async Task<IDataResult<List<OrderListDto>>> GetListOrdersAsync()
+        {
+            try
+            {
+                var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                var orderRepo = _unitOfWork.GetGenericRepository<Order>();
+                var orderList = await orderRepo.GetAllAsync(x => x.UserId == Guid.Parse(userId), include: x => x.Include(b => b.Adress));
+
+                if (orderList == null || !orderList.Any())
+                    return new ErrorDataResult<List<OrderListDto>>("Kullanıcıya ait sipariş bulunamadı.");
+
+                var orderDtos = orderList.Select(x => x.Adapt<OrderListDto>()).ToList();
+                return new SuccessDataResult<List<OrderListDto>>(orderDtos, "Siparişler başarıyla getirildi.");
+            }
+            catch
+            {
+                return new ErrorDataResult<List<OrderListDto>>("Siparişler getirilirken bir hata oluştu.");
+            }
+        }
+        public async Task<Domain.Results.IResult> UpdateOrderAsync(OrderDto orderDto)
+        {
+            try
+            {
+                var orderRepo = _unitOfWork.GetGenericRepository<Order>();
+                var order = orderDto.Adapt<Order>();
+                if (order == null)
+                    return await new Task<Domain.Results.IResult>(() => new ErrorResult("Güncellenecek sipariş bulunamadı."));
+                await orderRepo.UpdateAsync(order);
+                await _unitOfWork.CommitAsync();
+                return await new Task<Domain.Results.IResult>(() => new SuccessResult("Sipariş başarıyla güncellendi."));
+            }
+            catch
+            {
+                return await new Task<Domain.Results.IResult>(() => new ErrorResult("Sipariş güncellenirken bir hata oluştu."));
+            }
+        }
+
         #endregion
         #region OrderItem
         public async Task<Domain.Results.IResult> CreateOrderItemsAsync(List<OrderItemAddDto> orderItems)
@@ -130,6 +168,9 @@ namespace GreenDelight.Persistence.Services.OrderServices
                 return new ErrorResult($"Sipariş ürünleri eklenirken hata oluştu: {ex.Message}");
             }
         }
+
+
+
 
         #endregion
     }

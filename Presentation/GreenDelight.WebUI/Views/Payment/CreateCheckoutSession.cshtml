@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "CreateCheckoutSession";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post" action="/Payment/CreateCheckOutSession">
+    <div>
+        <label for="name">Amount</label>
+        <input type="text" id="amount" name="amount" value="" />
+    </div>
+    <button type="submit">CheckOut</button>
+</form>

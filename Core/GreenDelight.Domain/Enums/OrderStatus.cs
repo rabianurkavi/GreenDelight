@@ -10,7 +10,7 @@ namespace GreenDelight.Domain.Enums
     {
         Pending = 1,          // bekliyor
         PaymentPending = 2,   // ödeme bekleniyor
-        Processed = 3,        // işlendi
+        PaymentMade = 3,        // işlendi
         Shipped = 4,          // gönderildi
         Delivered = 5,        // teslim edildi
         Canceled = 6,         // iptal edildi

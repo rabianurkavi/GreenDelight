@@ -83,8 +83,10 @@ namespace GreenDelight.Application.Mapping
             config.NewConfig<About, AboutDto>();
 
             config.NewConfig<Comment, CommentAddDto>();
-            config.NewConfig<Order, OrderDto>();
-            config.NewConfig<OrderDto, Order>();
+            config.NewConfig<Order, OrderListDto>()
+                .Map(dest => dest.AdressName, src => src.Adress.AdressName);
+            config.NewConfig<OrderListDto, Order>()
+                .Map(dest => dest.Adress.AdressName, src => src.AdressName);
 
             config.NewConfig<Comment, CommentDto>()
                 .Map(dest => dest.UserName, src => src.User.FullName)

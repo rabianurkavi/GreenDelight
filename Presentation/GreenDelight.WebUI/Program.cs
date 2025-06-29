@@ -4,6 +4,7 @@ using GreenDelight.Application.Exceptions;
 using Mapster;
 using GreenDelight.Application;
 using GreenDelight.Application.Mapping;
+using GreenDelight.WebUI.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
 MapsterConfig.RegisterMappings(TypeAdapterConfig.GlobalSettings);
 var app = builder.Build();
 

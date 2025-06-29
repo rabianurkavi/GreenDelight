@@ -2,6 +2,7 @@
 using GreenDelight.Application.Interfaces.Services.AdressServices;
 using GreenDelight.Application.Interfaces.Services.BasketItemServices;
 using GreenDelight.Application.Interfaces.Services.OrderServices;
+using GreenDelight.Persistence.Services.AdressServices;
 using GreenDelight.WebUI.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,8 +52,23 @@ namespace GreenDelight.WebUI.Controllers
 
             var result = await _orderService.CreateOrderAsync(orderDto, basketId);
 
-            TempData["ErrorMessage"] = result.Message;
-            return RedirectToAction("Create", new { basketId }); 
+            if (!result.Success)
+            {
+                TempData["ErrorMessage"] = result.Message;
+                return RedirectToAction("CreateOrder", new { basketId });
+            }
+
+            var orderId = result.Data;
+
+            // Ödeme sayfasına yönlendir
+            return RedirectToAction("CreateCheckoutSession", "Payment", new { id = orderId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllOrderByUser()
+        {
+            var result = await _orderService.GetListOrdersAsync();
+            return View(result);
         }
 
     }
