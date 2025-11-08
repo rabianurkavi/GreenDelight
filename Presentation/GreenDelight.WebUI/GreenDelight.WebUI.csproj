@@ -4,6 +4,9 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>a62e5b8b-1a42-4f8a-bc7e-8e9adf3af7f7</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,11 +14,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
     <PackageReference Include="Stripe.net" Version="48.2.0" />
   </ItemGroup>
-
-  <ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+	</ItemGroup> 
+	<ItemGroup>
     <ProjectReference Include="..\..\Core\GreenDelight.Apllication\GreenDelight.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\GreenDelight.Infrastructure\GreenDelight.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\GreenDelight.Persistence\GreenDelight.Persistence.csproj" />

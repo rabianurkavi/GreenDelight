@@ -1,0 +1,39 @@
+﻿services:
+  postgres:
+    image: postgres:15
+    container_name: greendelight-postgres
+    environment:
+      POSTGRES_DB: GreenDelightDB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - greendelight-network
+
+  webui:
+    build:
+      context: ./Presentation/GreenDelight.WebUI
+      dockerfile: Dockerfile
+    container_name: greendelight-webui
+    depends_on:
+      - postgres
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=GreenDelightDB;Username=postgres;Password=1234
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "8080:8080"   # HTTP
+      - "8081:8081"   # HTTPS
+    networks:
+      - greendelight-network
+
+volumes:
+  pgdata:
+
+networks:
+  greendelight-network:
+    driver: bridge

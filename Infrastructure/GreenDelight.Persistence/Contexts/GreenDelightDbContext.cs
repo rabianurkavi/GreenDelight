@@ -25,7 +25,7 @@ namespace GreenDelight.Persistence.Contexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=RABIA\\SQLEXPRESS;Database=GreenDelightDB;Trusted_Connection=True;TrustServerCertificate=true");
+                optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=GreenDelightDB;Username=postgres;Password=1234");
             }
         }
         DbSet<Adress> Adresses { get; set; }

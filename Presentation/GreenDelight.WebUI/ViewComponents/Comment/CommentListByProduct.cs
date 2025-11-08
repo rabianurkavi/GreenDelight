@@ -1,5 +1,4 @@
-﻿using Azure;
-using GreenDelight.Application.Interfaces.Services.CommentServices;
+﻿using GreenDelight.Application.Interfaces.Services.CommentServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GreenDelight.WebUI.ViewComponents.Comment

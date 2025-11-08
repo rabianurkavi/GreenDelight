@@ -5,25 +5,18 @@
 namespace GreenDelight.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class new_mig4 : Migration
+    public partial class migration_postgresql : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "PhoneNumber",
-                table: "Adresses",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
+
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "PhoneNumber",
-                table: "Adresses");
+
         }
     }
 }

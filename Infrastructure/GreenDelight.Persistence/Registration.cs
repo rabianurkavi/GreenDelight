@@ -43,7 +43,7 @@ namespace GreenDelight.Persistence
     {
         public static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<GreenDelightDbContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<GreenDelightDbContext>(opt => opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
